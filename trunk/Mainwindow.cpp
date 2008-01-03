@@ -51,7 +51,7 @@ void    Mainwindow::createMenus()
 void    Mainwindow::doConnects()
 {
     connect(this->quitAction, SIGNAL(triggered()), this, SLOT(close()));
-    connect(this->setOptionsAction, SIGNAL(triggered()), this, SLOT(showOptionsWindow()));
+    connect(this->optionsAction, SIGNAL(triggered()), this, SLOT(showOptionsWindow()));
 }
 
 void    Mainwindow::showOptionsWindow()
