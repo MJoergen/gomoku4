@@ -6,6 +6,7 @@
 # include <QMainWindow>
 
 # include "Button.h"
+# include "AlgorithmType.h"
 # include "SetBoardSizeWindow.h"
 
 # define DEFAULT_BOARDSIZE  5
@@ -20,6 +21,7 @@ class Mainwindow : public QMainWindow
 
     private:
         int                 boardSize;
+        AlgorithmType       algo;
         QMenu               *fileMenu;
         QMenu               *preferenceMenu;
         QAction             *quitAction;
@@ -33,6 +35,7 @@ class Mainwindow : public QMainWindow
     public:
         void    CreateBoard();
         void    SetBoardSize(int boardSize);
+        void    SetAlgorithm(AlgorithmType algo);
 
     private:
         void    init();

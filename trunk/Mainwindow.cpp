@@ -14,6 +14,7 @@ Mainwindow::Mainwindow()
 void    Mainwindow::init()
 {
     this->boardSize = DEFAULT_BOARDSIZE;
+    this->algo = ALPHABETA;
     this->buttonsArray = NULL;
 }
 
@@ -25,6 +26,11 @@ void    Mainwindow::setSize()
     this->resize(width, height);
     this->setMinimumSize(width, height);
     this->setMaximumSize(width, height);
+}
+
+void    Mainwindow::SetAlgorithm(AlgorithmType algo)
+{
+    this->algo = algo;
 }
 
 void    Mainwindow::createMenus()

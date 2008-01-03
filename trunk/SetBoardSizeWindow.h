@@ -9,6 +9,7 @@
 # include <QGroupBox>
 # include <QLabel>
 
+# include "AlgorithmType.h"
 # include "Mainwindow.h"
 
 # define MIN    5
