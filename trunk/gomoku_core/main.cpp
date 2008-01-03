@@ -11,15 +11,15 @@ int	 main(void)
   IA	*player2 = new NegaMax();
 
     player1->findMove();
-    Gomoku::GetInstance()->dump(cout);
+    //Gomoku::GetInstance()->dump(cout);
     while (!Gomoku::GetInstance()->getState())
     {
         player2->findMove();
-	Gomoku::GetInstance()->dump(cout);
+	//Gomoku::GetInstance()->dump(cout);
         if (Gomoku::GetInstance()->getState())
             break;
         player1->findMove();
-	Gomoku::GetInstance()->dump(cout);
+	//Gomoku::GetInstance()->dump(cout);
     }
 
     cout << "Winner: ";
