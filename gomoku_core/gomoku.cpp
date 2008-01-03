@@ -54,11 +54,11 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
 
 void	         Gomoku::commitMove(const Move *move)
 {
-    unsigned int p = Game::GetInstance()->getPlayerToMove();
+    unsigned int p = Gomoku::GetInstance()->getPlayerToMove();
     unsigned int x = move->getX();
     unsigned int y = move->getY();
 
-    Game::GetInstance()->IncNbMoves();
+    Gomoku::GetInstance()->IncNbMoves();
     stones++;
     board[x][y] = p;
     for (uint d = 0; d < 4; d++)
@@ -74,23 +74,23 @@ void	         Gomoku::commitMove(const Move *move)
             backward++;
 
         if (forward + backward > LINE_SIZE)
-            Game::GetInstance()->SetState(p);
+            Gomoku::GetInstance()->SetState(p);
     }
     if (stones == (BOARD_SIZE * BOARD_SIZE))
-        Game::GetInstance()->SetState(FULL_BOARD);
+        Gomoku::GetInstance()->SetState(FULL_BOARD);
 }
 
 void	    Gomoku::undoMove(const Move *move)
 {
     board[move->getX()][move->getY()] = 0;
-    Game::GetInstance()->DecNbMoves();
+    Gomoku::GetInstance()->DecNbMoves();
     stones--;
-    Game::GetInstance()->SetState(0);
+    Gomoku::GetInstance()->SetState(0);
 }
 
 uint	Gomoku::evaluate() const
 {
-    unsigned int p = Game::GetInstance()->getPlayerToMove();
+    unsigned int p = Gomoku::GetInstance()->getPlayerToMove();
     unsigned int eval = 0;
 
     for (unsigned int x = 0; x < BOARD_SIZE; x++)

@@ -4,7 +4,6 @@
 # include <vector>
 # include <iostream>
 
-# include "game.h"
 # include "Move.h"
 # include "defines.h"
 
@@ -13,8 +12,11 @@ class Gomoku
     private:
         static	 int dx[4];
         static	 int dy[4];
+        static  Gomoku    *Instance;
 
     protected:
+        unsigned int	nb_moves;
+        unsigned int	state;
         unsigned int    stones;
         unsigned char	board[BOARD_SIZE][BOARD_SIZE];
 
@@ -27,6 +29,13 @@ class Gomoku
         unsigned int            evaluate() const;
         std::vector< ::Move *>  getCorrectMoves() const;
         std::vector< ::Move *>  initAlgo(unsigned int x = 0) const;
+
+        static Gomoku  *GetInstance();
+        void         IncNbMoves();
+        void         DecNbMoves();
+        void         SetState(unsigned int state);
+        unsigned int getPlayerToMove() const;
+        unsigned int getState() const;
 
     public:
 

@@ -2,10 +2,10 @@
 # define __IA_ALPHABETA_H__
 
 # include "Move.h"
-# include "game.h"
 # include "defines.h"
+# include "gomoku.h"
 
-class AlphaBeta
+class AlphaBeta : public Gomoku
 {
     private:
         unsigned int			    treeNodes;

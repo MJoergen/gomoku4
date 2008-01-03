@@ -1,4 +1,4 @@
-#include "IA_negamax.h"
+/*#include "IA_negamax.h"
 
 int	NegaMax::AlgoNegaMax(Move **bestMove, int level)
 {
@@ -68,3 +68,4 @@ Move	*NegaMax::makeMove(const Move *opponent)
       return (*it);
     }
 }
+*/
