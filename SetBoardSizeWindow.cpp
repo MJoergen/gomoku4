@@ -12,6 +12,7 @@ SetBoardSizeWindow::SetBoardSizeWindow(Mainwindow *mainwindow) : mainwindow(main
     this->groupBox->setGeometry(QRect(10, 10, 171, 80));
 
     this->rb_alphaBeta = new QRadioButton("Alpha Beta", this->groupBox);
+    this->rb_alphaBeta->setChecked(true);
     this->rb_alphaBeta->setGeometry(QRect(10, 20, 99, 23));
 
     this->rb_negaMax = new QRadioButton("Nega Max", this->groupBox);
@@ -45,6 +46,7 @@ void    SetBoardSizeWindow::doConnects()
 void    SetBoardSizeWindow::valid()
 {
     this->mainwindow->SetBoardSize(this->spinBox_boardSize->value());
+    this->mainwindow->SetAlgorithm(this->rb_alphaBeta->isChecked() ? ALPHABETA : NEGAMAX);
     this->mainwindow->CreateBoard();
     this->close();
 }
