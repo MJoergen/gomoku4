@@ -8,6 +8,9 @@
 # include "Button.h"
 # include "AlgorithmType.h"
 # include "OptionsWindow.h"
+# include "IA_alphabeta.h"
+# include "IA_negamax.h"
+# include "IA.h"
 
 # define DEFAULT_BOARDSIZE  5
 # define DEFAULT_BUTTONSIZE 50
@@ -24,29 +27,39 @@ class Mainwindow : public QMainWindow
         AlgorithmType       algo;
         QMenu               *fileMenu;
         QMenu               *preferenceMenu;
+        QAction             *newGameAction;
         QAction             *quitAction;
         QAction             *optionsAction;
         Button              **buttonsArray;
         OptionsWindow       *optionsWindow;
+        IA                  *ia;
+        static Mainwindow   *instance;
 
-    public:
+    private:
         Mainwindow();
+        ~Mainwindow();
 
     public:
-        void    CreateBoard();
-        void    SetBoardSize(int boardSize);
-        void    SetAlgorithm(AlgorithmType algo);
+        void               IaPlay();
+        void               CreateBoard();
+        void               SetBoardSize(int boardSize);
+        void               SetAlgorithm(AlgorithmType algo);
+        static Mainwindow  *GetInstance();
+        static void        DestroyInstance();
 
     private:
         void    init();
         void    doConnects();
         void    setSize();
         void    createMenus();
+        void    createIa();
         void    createButtons();
         void    cleanButtonsArray();
 
     public slots:
+        void    startNewGame();
         void    showOptionsWindow();
+        void    buttonClicked();
 };
 
 #endif //!_MAINWINDOW_H_

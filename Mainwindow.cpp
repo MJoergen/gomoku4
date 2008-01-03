@@ -2,20 +2,47 @@
 #include <iostream>
 #include "Mainwindow.h"
 
+Mainwindow *Mainwindow::instance = NULL;
+
 Mainwindow::Mainwindow()
 {
     this->init();
     this->createMenus();
     this->CreateBoard();
+    this->createIa();
     this->doConnects();
     this->show();
 }
 
+Mainwindow    *Mainwindow::GetInstance()
+{
+    if (instance == NULL)
+        instance = new Mainwindow();
+    return (instance);
+}
+
 void    Mainwindow::init()
 {
+    this->ia = NULL;
     this->boardSize = DEFAULT_BOARDSIZE;
     this->algo = ALPHABETA;
     this->buttonsArray = NULL;
+}
+
+void    Mainwindow::createIa()
+{
+    if (this->ia)
+        delete ia;
+    switch(this->algo)
+    {
+        case ALPHABETA:
+            this->ia = new AlphaBeta();
+            break;
+
+        case NEGAMAX:
+            this->ia = new NegaMax();
+            break;
+    }
 }
 
 void    Mainwindow::setSize()
@@ -31,17 +58,25 @@ void    Mainwindow::setSize()
 void    Mainwindow::SetAlgorithm(AlgorithmType algo)
 {
     this->algo = algo;
+    this->createIa();
 }
 
 void    Mainwindow::createMenus()
 {
     this->fileMenu = this->menuBar()->addMenu("&File");
+
+    this->newGameAction = new QAction(tr("&New game"), this);
+    this->newGameAction->setShortcut(tr("Ctrl+N"));
+    this->newGameAction->setStatusTip(tr("Start a new game"));
+    this->fileMenu->addAction(this->newGameAction);
+
     this->quitAction = new QAction(tr("&Quit"), this);
     this->quitAction->setShortcut(tr("Ctrl+Q"));
     this->quitAction->setStatusTip(tr("Quit application"));
     this->fileMenu->addAction(this->quitAction);
 
     this->preferenceMenu = this->menuBar()->addMenu("&Preference");
+
     this->optionsAction = new QAction(tr("&Options"), this);
     this->optionsAction->setShortcut(tr("Ctrl+O"));
     this->optionsAction->setStatusTip(tr("Set game options"));
@@ -50,13 +85,25 @@ void    Mainwindow::createMenus()
 
 void    Mainwindow::doConnects()
 {
+    connect(this->newGameAction, SIGNAL(triggered()), this, SLOT(startNewGame()));
     connect(this->quitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(this->optionsAction, SIGNAL(triggered()), this, SLOT(showOptionsWindow()));
 }
 
+void    Mainwindow::startNewGame()
+{
+    this->cleanButtonsArray();
+    this->createButtons();
+}
+
 void    Mainwindow::showOptionsWindow()
 {
-    this->optionsWindow = new OptionsWindow(this);
+    this->optionsWindow = new OptionsWindow();
+}
+
+void    Mainwindow::buttonClicked()
+{
+    this->IaPlay();
 }
 
 void    Mainwindow::cleanButtonsArray()
@@ -86,6 +133,7 @@ void    Mainwindow::createButtons()
         this->buttonsArray[i]->resize(DEFAULT_BUTTONSIZE, DEFAULT_BUTTONSIZE);
         this->buttonsArray[i]->move(x * DEFAULT_BUTTONSIZE, y * DEFAULT_BUTTONSIZE + MENU_HEIGHT);
         this->buttonsArray[i]->show();
+        connect(this->buttonsArray[i], SIGNAL(clicked()), this, SLOT(buttonClicked()));
     }
 }
 
@@ -95,8 +143,24 @@ void    Mainwindow::SetBoardSize(int boardSize)
     this->boardSize = boardSize;
 }
 
+void    Mainwindow::IaPlay()
+{
+    if (this->ia)
+        this->ia->findMove();
+}
+
 void    Mainwindow::CreateBoard()
 {
     this->setSize();
     this->createButtons();
+}
+
+void    Mainwindow::DestroyInstance()
+{
+    if (instance)
+        delete instance;
+}
+
+Mainwindow::~Mainwindow()
+{
 }

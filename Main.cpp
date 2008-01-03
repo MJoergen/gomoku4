@@ -4,8 +4,13 @@
 
 int              main(int ac, char **av)
 {
+    int          res;
     QApplication app(ac, av);
-    Mainwindow   mainwindow;
+    Mainwindow   *mainwindow = Mainwindow::GetInstance();
 
-    return (app.exec());
+    res = app.exec();
+    if (mainwindow)
+        Mainwindow::DestroyInstance();
+
+    return (res);
 }
