@@ -1,6 +1,7 @@
+#include <cstdlib>
+
 #include "gomoku.h"
 #include "Move.h"
-#include <cstdlib>
 
 int Gomoku::dx[4] = { 0,-1,-1,-1};
 int Gomoku::dy[4] = {-1,-1, 0, 1};
