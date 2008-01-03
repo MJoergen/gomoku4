@@ -15,6 +15,9 @@ class	Game
 
     public:
         static Game  *GetInstance();
+        void         IncNbMoves();
+        void         DecNbMoves();
+        void         SetState(unsigned int state);
         unsigned int getPlayerToMove() const;
         unsigned int getState() const;
 };

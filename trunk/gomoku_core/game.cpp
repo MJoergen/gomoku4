@@ -15,6 +15,21 @@ Game    *Game::GetInstance()
     return (Instance);
 }
 
+void    Game::IncNbMoves()
+{
+    this->nb_moves++;
+}
+
+void    Game::DecNbMoves()
+{
+    this->nb_moves--;
+}
+
+void    Game::SetState(unsigned int state)
+{
+    this->state = state;
+}
+
 unsigned int	Game::getPlayerToMove() const
 {
     return (nb_moves % 2) + 1;
