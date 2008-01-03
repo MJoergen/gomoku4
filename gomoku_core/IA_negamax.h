@@ -1,19 +1,19 @@
 #ifndef __IA_NEGAMAX_H__
-#define __IA_NEGAMAX_H__
+# define __IA_NEGAMAX_H__
 
-#include "player.h"
-#include "game.h"
-#include "defines.h"
+# include "Move.h"
+# include "game.h"
+# include "defines.h"
 
-class NegaMax : public Player
+class NegaMax
 {
     private:
-        uint			treeNodes;
-        static const uint	DEEP_MAX = 2;
+        unsigned int              treeNodes;
+        static const unsigned int DEEP_MAX = 2;
 
     public:
-        int	AlgoNegaMax(Move **bestMove, int level);
+        int	  AlgoNegaMax(Move **bestMove, int level);
         void  findMove();
 };
 
-#endif /* __IA_NEGAMAX_H__ */
+#endif //!__IA_NEGAMAX_H__

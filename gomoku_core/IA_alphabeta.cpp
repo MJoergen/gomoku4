@@ -1,3 +1,7 @@
+#include <cstdlib>
+#include <vector>
+#include <iostream>
+
 #include "IA_alphabeta.h"
 
 int	AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
@@ -12,13 +16,13 @@ int	AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
     if (!level)
         return (-(Game::GetInstance()->evaluate()));
 
-    vector<Move*>	moves = Game::GetInstance()->getCorrectMoves();
+    std::vector<Move*>	moves = Game::GetInstance()->getCorrectMoves();
     Move *child;
     int val;
 
     *bestMove = moves[0];
-    vector<Move*>::iterator it = moves.begin();
-    vector<Move*>::iterator eit = moves.end();
+    std::vector<Move*>::iterator it = moves.begin();
+    std::vector<Move*>::iterator eit = moves.end();
 
     for (; it != eit; it++)
     {
@@ -49,7 +53,7 @@ void    AlphaBeta::findMove()
     Move	*bestMove;
     treeNodes = 0;
     AlgoAlphaBeta(&bestMove, -INFINITY, INFINITY, DEEP_MAX);
-    cout << "<< alphabeta >>" << endl << "noeuds: " << treeNodes << endl;
+    std::cout << "<< alphabeta >>" << std::endl << "noeuds: " << treeNodes << std::endl;
     Game::GetInstance()->commitMove(bestMove);
 }
 

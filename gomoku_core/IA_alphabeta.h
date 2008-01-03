@@ -1,19 +1,19 @@
 #ifndef __IA_ALPHABETA_H__
-#define __IA_ALPHABETA_H__
+# define __IA_ALPHABETA_H__
 
-#include "player.h"
-#include "game.h"
-#include "defines.h"
+# include "Move.h"
+# include "game.h"
+# include "defines.h"
 
-class AlphaBeta : public Player
+class AlphaBeta
 {
- private:
-  uint			treeNodes;
-  static const uint	DEEP_MAX = 3;
-  
- public:
-  int	AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level);
-  void  findMove();
+    private:
+        unsigned int			    treeNodes;
+        static const unsigned int	DEEP_MAX = 3;
+
+    public:
+        int	    AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level);
+        void    findMove();
 };
 
-#endif /* __IA_ALPHABETA_H__ */
+#endif //!__IA_ALPHABETA_H__
