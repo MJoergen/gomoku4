@@ -1,15 +1,36 @@
 #include "gomoku.h"
+#include "Move.h"
+#include <cstdlib>
 
 int Gomoku::dx[4] = { 0,-1,-1,-1};
 int Gomoku::dy[4] = {-1,-1, 0, 1};
 
-Gomoku::Gomoku() : stones(0)
+Gomoku    *Gomoku::Instance = NULL;
+
+unsigned int Gomoku::getPlayerToMove() const
+{
+  return (nb_moves % 2) + 1;
+}
+
+unsigned int Gomoku::getState() const
+{
+  return (state);
+}
+
+Gomoku::Gomoku() : stones(0), nb_moves(0), state(0)
 {
     for (unsigned int i = 0; i < BOARD_SIZE; i++)
     {
         for (unsigned int j = 0; j < BOARD_SIZE; j++)
             board[i][j] = 0;
     }
+}
+
+Gomoku    *Gomoku::GetInstance()
+{
+  if (Instance == NULL)
+    Instance = new Gomoku();
+  return (Instance);
 }
 
 void		    Gomoku::dump(std::ostream &o) const
@@ -54,11 +75,11 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
 
 void	         Gomoku::commitMove(const Move *move)
 {
-    unsigned int p = Gomoku::GetInstance()->getPlayerToMove();
+    unsigned int p = getPlayerToMove();
     unsigned int x = move->getX();
     unsigned int y = move->getY();
 
-    Gomoku::GetInstance()->IncNbMoves();
+    nb_moves++;
     stones++;
     board[x][y] = p;
     for (uint d = 0; d < 4; d++)
@@ -74,23 +95,23 @@ void	         Gomoku::commitMove(const Move *move)
             backward++;
 
         if (forward + backward > LINE_SIZE)
-            Gomoku::GetInstance()->SetState(p);
+	  state = p;
     }
     if (stones == (BOARD_SIZE * BOARD_SIZE))
-        Gomoku::GetInstance()->SetState(FULL_BOARD);
+        state = FULL_BOARD;
 }
 
 void	    Gomoku::undoMove(const Move *move)
 {
     board[move->getX()][move->getY()] = 0;
-    Gomoku::GetInstance()->DecNbMoves();
+    nb_moves--;
     stones--;
-    Gomoku::GetInstance()->SetState(0);
+    state = 0;
 }
 
 uint	Gomoku::evaluate() const
 {
-    unsigned int p = Gomoku::GetInstance()->getPlayerToMove();
+    unsigned int p = getPlayerToMove();
     unsigned int eval = 0;
 
     for (unsigned int x = 0; x < BOARD_SIZE; x++)

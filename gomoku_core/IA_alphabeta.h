@@ -1,18 +1,18 @@
 #ifndef __IA_ALPHABETA_H__
 # define __IA_ALPHABETA_H__
 
-# include "Move.h"
 # include "defines.h"
 # include "gomoku.h"
+# include "IA.h"
 
-class AlphaBeta : public Gomoku
+class AlphaBeta : public IA
 {
     private:
         unsigned int			    treeNodes;
         static const unsigned int	DEEP_MAX = 3;
 
     public:
-        int	    AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level);
+        int	AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level);
         void    findMove();
 };
 

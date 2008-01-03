@@ -1,11 +1,11 @@
 #ifndef __IA_NEGAMAX_H__
 # define __IA_NEGAMAX_H__
 
-# include "Move.h"
-# include "game.h"
 # include "defines.h"
+# include "gomoku.h"
+# include "IA.h"
 
-class NegaMax
+class NegaMax : public IA
 {
     private:
         unsigned int              treeNodes;
