@@ -27,6 +27,8 @@ void    Mainwindow::init()
     this->boardSize = DEFAULT_BOARDSIZE;
     this->algo = ALPHABETA;
     this->buttonsArray = NULL;
+    Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
+    Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
 }
 
 void    Mainwindow::createIa()
@@ -53,12 +55,14 @@ void    Mainwindow::setSize()
     this->resize(width, height);
     this->setMinimumSize(width, height);
     this->setMaximumSize(width, height);
+    Gomoku::GetInstance()->SetSize(this->boardSize);
 }
 
 void    Mainwindow::SetAlgorithm(AlgorithmType algo)
 {
     this->algo = algo;
     this->createIa();
+    Gomoku::GetInstance()->SetAlgorithm(this->algo);
 }
 
 void    Mainwindow::createMenus()

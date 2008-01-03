@@ -1,4 +1,5 @@
 #include "Button.h"
+#include <iostream>
 #include "Images/red.xpm"
 #include "Images/cyan.xpm"
 #include "Images/white.xpm"
