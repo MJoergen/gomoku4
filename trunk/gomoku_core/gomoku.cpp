@@ -19,11 +19,21 @@ unsigned int Gomoku::getState() const
 
 Gomoku::Gomoku() : stones(0), nb_moves(0), state(0)
 {
-    for (unsigned int i = 0; i < BOARD_SIZE; i++)
-    {
-        for (unsigned int j = 0; j < BOARD_SIZE; j++)
-            board[i][j] = 0;
-    }
+}
+
+void	Gomoku::SetSize(unsigned int size)
+{
+  this->size = size;
+}
+
+void	Gomoku::SetAlgorithm(AlgorithmType algo)
+{
+  this->AlgoType = algo;
+}
+
+void	Gomoku::SetBoard(Button **board)
+{
+  this->board = board;
 }
 
 Gomoku    *Gomoku::GetInstance()
@@ -35,38 +45,38 @@ Gomoku    *Gomoku::GetInstance()
 
 void		    Gomoku::dump(std::ostream &o) const
 {
-    const char	symbol[3] = {'.','X','O'};
+  /*const char	symbol[3] = {'.','X','O'};
 
     for (unsigned int i = 0; i < BOARD_SIZE; i++)
     {
         for (unsigned int j = 0; j < BOARD_SIZE; j++)
             o << symbol[board[i][j]];
         o << std::endl;
-    }
+	}*/
 }
 
 std::vector<Move *>	    Gomoku::initAlgo(unsigned int x) const
 {
     std::vector<Move *>	move;
 
-    move.push_back(new Move(BOARD_SIZE / 2 - x, BOARD_SIZE / 2 - x));
+    move.push_back(new Move(this->size / 2 - x, this->size / 2 - x));
     return (move);
 }
 
 bool	Gomoku::isCorrect(int x, int y) const
 {
-    return ((x >= 0) && (y >= 0) && (x < BOARD_SIZE) && (y < BOARD_SIZE));
+    return ((x >= 0) && (y >= 0) && (x < this->size) && (y < this->size));
 }
 
 std::vector<Move *>	Gomoku::getCorrectMoves() const
 {
     std::vector<Move *>	moves;
 
-    for (unsigned int i = 0; i < BOARD_SIZE; i++)
+    for (unsigned int i = 0; i < this->size; i++)
     {
-        for (unsigned int j = 0; j < BOARD_SIZE; j++)
+        for (unsigned int j = 0; j < this->size; j++)
         {
-            if (!board[i][j])
+	  if (!board[i][j])
                 moves.push_back(new Move(i, j));
         }
     }
@@ -97,7 +107,7 @@ void	         Gomoku::commitMove(const Move *move)
         if (forward + backward > LINE_SIZE)
 	  state = p;
     }
-    if (stones == (BOARD_SIZE * BOARD_SIZE))
+    if (stones == (this->size * this->size))
         state = FULL_BOARD;
 }
 
@@ -114,9 +124,9 @@ uint	Gomoku::evaluate() const
     unsigned int p = getPlayerToMove();
     unsigned int eval = 0;
 
-    for (unsigned int x = 0; x < BOARD_SIZE; x++)
+    for (unsigned int x = 0; x < this->size; x++)
     {
-        for (unsigned int y = 0; y < BOARD_SIZE; y++)
+        for (unsigned int y = 0; y < this->size; y++)
         {
             if (board[x][y] == p)
             {

@@ -5,6 +5,8 @@
 # include <iostream>
 # include "Move.h"
 # include "defines.h"
+# include "../Button.h"
+# include "../AlgorithmType.h"
 
 class Gomoku
 {
@@ -13,11 +15,13 @@ class Gomoku
         static	 int dy[4];
         static  Gomoku    *Instance;
 
-    protected:
         unsigned int    stones;
         unsigned int	nb_moves;
         unsigned int	state;
-        unsigned char	board[BOARD_SIZE][BOARD_SIZE];
+	unsigned int	size;
+	Button		**board;
+	AlgorithmType	AlgoType;
+	
 
     public:
         Gomoku();
@@ -25,9 +29,12 @@ class Gomoku
     public:
         bool                    isCorrect(int x, int y) const;
         void	                dump(std::ostream& o) const;
+	void			SetSize(unsigned int size);
+	void			SetAlgorithm(AlgorithmType algo);
+	void			SetBoard(Button **button);
         unsigned int            evaluate() const;
-        std::vector< ::Move *>  getCorrectMoves() const;
-        std::vector< ::Move *>  initAlgo(unsigned int x = 0) const;
+        std::vector<Move *>  getCorrectMoves() const;
+        std::vector<Move *>  initAlgo(unsigned int x = 0) const;
 
         static Gomoku  *GetInstance();
         unsigned int getPlayerToMove() const;
