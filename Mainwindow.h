@@ -25,7 +25,7 @@ class Mainwindow : public QMainWindow
         QMenu               *fileMenu;
         QMenu               *preferenceMenu;
         QAction             *quitAction;
-        QAction             *setOptionsAction;
+        QAction             *optionsAction;
         Button              **buttonsArray;
         OptionsWindow       *optionsWindow;
 
