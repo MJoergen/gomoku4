@@ -1,8 +1,8 @@
 #include "Images/valid.xpm"
 #include "Images/cancel.xpm"
-#include "SetBoardSizeWindow.h"
+#include "OptionsWindow.h"
 
-SetBoardSizeWindow::SetBoardSizeWindow(Mainwindow *mainwindow) : mainwindow(mainwindow)
+OptionsWindow::OptionsWindow(Mainwindow *mainwindow) : mainwindow(mainwindow)
 {
     this->resize(WIDTH, HEIGHT);
     this->setMinimumSize(WIDTH, HEIGHT);
@@ -37,13 +37,13 @@ SetBoardSizeWindow::SetBoardSizeWindow(Mainwindow *mainwindow) : mainwindow(main
     this->show();
 }
 
-void    SetBoardSizeWindow::doConnects()
+void    OptionsWindow::doConnects()
 {
     connect(this->button_valid, SIGNAL(clicked()), this, SLOT(valid()));
     connect(this->button_cancel, SIGNAL(clicked()), this, SLOT(close()));
 }
 
-void    SetBoardSizeWindow::valid()
+void    OptionsWindow::valid()
 {
     this->mainwindow->SetBoardSize(this->spinBox_boardSize->value());
     this->mainwindow->SetAlgorithm(this->rb_alphaBeta->isChecked() ? ALPHABETA : NEGAMAX);
@@ -51,7 +51,7 @@ void    SetBoardSizeWindow::valid()
     this->close();
 }
 
-SetBoardSizeWindow::~SetBoardSizeWindow()
+OptionsWindow::~OptionsWindow()
 {
     delete this->hboxLayout;
     delete this->spinBox_boardSize;
