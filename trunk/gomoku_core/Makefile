@@ -1,5 +1,5 @@
 NAME	=	gomoku
-SRC	=	main.cpp gomoku.cpp IA_alphabeta.cpp #IA_negamax.cpp
+SRC	=	main.cpp gomoku.cpp IA_alphabeta.cpp Move.cpp IA_negamax.cpp
 OBJ	=	$(SRC:.cpp=.o)
 CC 	=	g++
 CFLAGS	=	-O3 -W -Wall -Werror -ansi -march=i386 -mtune=i386 -I ./

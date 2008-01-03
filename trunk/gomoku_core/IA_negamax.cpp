@@ -1,33 +1,37 @@
-/*#include "IA_negamax.h"
+#include <cstdlib>
+#include <vector>
+#include <iostream>
+
+#include "IA_negamax.h"
 
 int	NegaMax::AlgoNegaMax(Move **bestMove, int level)
 {
   treeNodes++;
   *bestMove = NULL;
   
-  if (game->getState() == FULL_BOARD)
+  if (Gomoku::GetInstance()->getState() == FULL_BOARD)
     return (0);
-  else if (game->getState())
+  else if (Gomoku::GetInstance()->getState())
     return (-INFINITY);
   if (!level)
-    return (-(game->evaluate()));
+    return (-(Gomoku::GetInstance()->evaluate()));
   
-  vector<Move *> moves = game->getCorrectMoves();
+  std::vector<Move *> moves = Gomoku::GetInstance()->getCorrectMoves();
   Move *child;
   int best, val;
   
   *bestMove = moves[0];
   best = -INFINITY;
-  vector<Move *>::iterator it = moves.begin();
-  vector<Move *>::iterator eit = moves.end();
+  std::vector<Move *>::iterator it = moves.begin();
+  std::vector<Move *>::iterator eit = moves.end();
 
   for (; it != eit; it++)
     {
-      game->commitMove(*it);
+      Gomoku::GetInstance()->commitMove(*it);
       val = -AlgoNegaMax(&child, level - 1);
       if (child)
 	delete child;
-      game->undoMove(*it);
+      Gomoku::GetInstance()->undoMove(*it);
       if (val > best)
 	{
 	  best = val;
@@ -40,32 +44,11 @@ int	NegaMax::AlgoNegaMax(Move **bestMove, int level)
   return (best);
 }
 
-Move	*NegaMax::findMove()
+void	NegaMax::findMove()
 {
   Move *bestMove;
   treeNodes = 0;
   AlgoNegaMax(&bestMove, DEEP_MAX);
-  cout << "<< negamax >>" << endl << "noeuds : " << treeNodes << endl;
-  return (bestMove);
+  std::cout << "<< negamax >>" << std::endl << "noeuds : " << treeNodes << std::endl;
+  Gomoku::GetInstance()->commitMove(bestMove);
 }
-
-Move	*NegaMax::makeMove(const Move *opponent)
-{
-  if (opponent)
-    {
-      Move *move;
-      game->commitMove(opponent);
-      move = findMove();
-      game->commitMove(move);
-      return (move);
-    }
-  else
-    {
-      vector<Move *>	onemove;
-      onemove = game->initAlgo();
-      vector<Move*>::iterator it = onemove.begin();
-      game->commitMove(*it);
-      return (*it);
-    }
-}
-*/
