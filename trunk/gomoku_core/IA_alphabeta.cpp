@@ -9,14 +9,14 @@ int	AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
     treeNodes++;
     *bestMove = NULL;
 
-    if (Game::GetInstance()->getState() == FULL_BOARD)
+    if (Gomoku::GetInstance()->getState() == FULL_BOARD)
         return (0);
-    else if (Game::GetInstance()->getState())
+    else if (Gomoku::GetInstance()->getState())
         return (-INFINITY);
     if (!level)
-        return (-(Game::GetInstance()->evaluate()));
+        return (-(Gomoku::GetInstance()->evaluate()));
 
-    std::vector<Move*>	moves = Game::GetInstance()->getCorrectMoves();
+    std::vector<Move*>	moves = Gomoku::GetInstance()->getCorrectMoves();
     Move *child;
     int val;
 
@@ -26,11 +26,11 @@ int	AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
 
     for (; it != eit; it++)
     {
-        Game::GetInstance()->commitMove(*it);
+        Gomoku::GetInstance()->commitMove(*it);
         val = -AlgoAlphaBeta(&child, -beta, -alpha, level - 1);
         if (child)
             delete child;
-        Game::GetInstance()->undoMove(*it);
+        Gomoku::GetInstance()->undoMove(*it);
         if (val > alpha)
         {
             alpha = val;
@@ -54,6 +54,6 @@ void    AlphaBeta::findMove()
     treeNodes = 0;
     AlgoAlphaBeta(&bestMove, -INFINITY, INFINITY, DEEP_MAX);
     std::cout << "<< alphabeta >>" << std::endl << "noeuds: " << treeNodes << std::endl;
-    Game::GetInstance()->commitMove(bestMove);
+    Gomoku::GetInstance()->commitMove(bestMove);
 }
 
