@@ -7,13 +7,13 @@
 
 # include "Button.h"
 # include "AlgorithmType.h"
-# include "SetBoardSizeWindow.h"
+# include "OptionsWindow.h"
 
 # define DEFAULT_BOARDSIZE  5
 # define DEFAULT_BUTTONSIZE 50
 # define MENU_HEIGHT        25
 
-class SetBoardSizeWindow;
+class OptionsWindow;
 
 class Mainwindow : public QMainWindow
 {
@@ -25,9 +25,9 @@ class Mainwindow : public QMainWindow
         QMenu               *fileMenu;
         QMenu               *preferenceMenu;
         QAction             *quitAction;
-        QAction             *setBoardSizeAction;
+        QAction             *setOptionsAction;
         Button              **buttonsArray;
-        SetBoardSizeWindow  *setBoardSizeWindow;
+        OptionsWindow       *optionsWindow;
 
     public:
         Mainwindow();
@@ -46,7 +46,7 @@ class Mainwindow : public QMainWindow
         void    cleanButtonsArray();
 
     public slots:
-        void    showSetBoardSizeWindow();
+        void    showOptionsWindow();
 };
 
 #endif //!_MAINWINDOW_H_

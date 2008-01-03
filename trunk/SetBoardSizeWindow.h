@@ -1,5 +1,5 @@
-#ifndef _SETBOARDSIZEWINDOW_H_
-# define _SETBOARDSIZEWINDOW_H_
+#ifndef _OPTIONSWINDOW_H_
+# define _OPTIONSWINDOW_H_
 
 # include <QSpinBox>
 # include <QHBoxLayout>
@@ -19,7 +19,7 @@
 
 class Mainwindow;
 
-class SetBoardSizeWindow : public QWidget
+class OptionsWindow : public QWidget
 {
     Q_OBJECT
 
@@ -35,8 +35,8 @@ class SetBoardSizeWindow : public QWidget
         QLabel       *label;
 
     public:
-       SetBoardSizeWindow(Mainwindow *mainwindow);
-       ~SetBoardSizeWindow();
+       OptionsWindow(Mainwindow *mainwindow);
+       ~OptionsWindow();
 
     private:
         void    doConnects();

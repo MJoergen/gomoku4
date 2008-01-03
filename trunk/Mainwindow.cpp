@@ -42,21 +42,21 @@ void    Mainwindow::createMenus()
     this->fileMenu->addAction(this->quitAction);
 
     this->preferenceMenu = this->menuBar()->addMenu("&Preference");
-    this->setBoardSizeAction = new QAction(tr("&Board size"), this);
-    this->setBoardSizeAction->setShortcut(tr("Ctrl+S"));
-    this->setBoardSizeAction->setStatusTip(tr("Set board size"));
-    this->preferenceMenu->addAction(this->setBoardSizeAction);
+    this->optionsAction = new QAction(tr("&Options"), this);
+    this->optionsAction->setShortcut(tr("Ctrl+O"));
+    this->optionsAction->setStatusTip(tr("Set game options"));
+    this->preferenceMenu->addAction(this->optionsAction);
 }
 
 void    Mainwindow::doConnects()
 {
     connect(this->quitAction, SIGNAL(triggered()), this, SLOT(close()));
-    connect(this->setBoardSizeAction, SIGNAL(triggered()), this, SLOT(showSetBoardSizeWindow()));
+    connect(this->setOptionsAction, SIGNAL(triggered()), this, SLOT(showOptionsWindow()));
 }
 
-void    Mainwindow::showSetBoardSizeWindow()
+void    Mainwindow::showOptionsWindow()
 {
-    this->setBoardSizeWindow = new SetBoardSizeWindow(this);
+    this->optionsWindow = new OptionsWindow(this);
 }
 
 void    Mainwindow::cleanButtonsArray()
