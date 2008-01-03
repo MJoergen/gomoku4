@@ -133,6 +133,7 @@ void    Mainwindow::createButtons()
         this->buttonsArray[i]->resize(DEFAULT_BUTTONSIZE, DEFAULT_BUTTONSIZE);
         this->buttonsArray[i]->move(x * DEFAULT_BUTTONSIZE, y * DEFAULT_BUTTONSIZE + MENU_HEIGHT);
         this->buttonsArray[i]->show();
+        Gomoku::GetInstance()->SetBoard(this->buttonsArray);
         connect(this->buttonsArray[i], SIGNAL(clicked()), this, SLOT(buttonClicked()));
     }
 }

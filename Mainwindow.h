@@ -6,6 +6,7 @@
 # include <QMainWindow>
 
 # include "Button.h"
+# include "gomoku.h"
 # include "AlgorithmType.h"
 # include "OptionsWindow.h"
 # include "IA_alphabeta.h"
