@@ -2,7 +2,7 @@
 #include "Images/cancel.xpm"
 #include "OptionsWindow.h"
 
-OptionsWindow::OptionsWindow(Mainwindow *mainwindow) : mainwindow(mainwindow)
+OptionsWindow::OptionsWindow()
 {
     this->resize(WIDTH, HEIGHT);
     this->setMinimumSize(WIDTH, HEIGHT);
@@ -45,9 +45,9 @@ void    OptionsWindow::doConnects()
 
 void    OptionsWindow::valid()
 {
-    this->mainwindow->SetBoardSize(this->spinBox_boardSize->value());
-    this->mainwindow->SetAlgorithm(this->rb_alphaBeta->isChecked() ? ALPHABETA : NEGAMAX);
-    this->mainwindow->CreateBoard();
+    Mainwindow::GetInstance()->SetBoardSize(this->spinBox_boardSize->value());
+    Mainwindow::GetInstance()->SetAlgorithm(this->rb_alphaBeta->isChecked() ? ALPHABETA : NEGAMAX);
+    Mainwindow::GetInstance()->CreateBoard();
     this->close();
 }
 

@@ -31,11 +31,10 @@ class OptionsWindow : public QWidget
         QRadioButton *rb_alphaBeta;
         QRadioButton *rb_negaMax;
         QGroupBox    *groupBox;
-        Mainwindow   *mainwindow;
         QLabel       *label;
 
     public:
-       OptionsWindow(Mainwindow *mainwindow);
+       OptionsWindow();
        ~OptionsWindow();
 
     private:
