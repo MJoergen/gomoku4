@@ -50,3 +50,13 @@ int Button::GetId()
 {
     return (this->id);
 }
+
+buttonState Button::GetState()
+{
+    return (this->state);
+}
+
+void    Button::SetState(buttonState state)
+{
+    this->state = state;
+}

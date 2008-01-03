@@ -3,17 +3,11 @@
 
 # include <QPushButton>
 
+# include "ButtonState.h"
+
 class Button : public QPushButton
 {
     Q_OBJECT
-
-    private:
-        typedef enum
-        {
-            NEUTRAL,
-            PLAYER1,
-            PLAYER2
-        }   buttonState;
 
     private:
         int         id;
@@ -27,7 +21,9 @@ class Button : public QPushButton
         Button(QWidget *parent, int size);
 
     public:
-        int     GetId();
+        int         GetId();
+        buttonState GetState();
+        void        SetState(buttonState state);
 
     private slots:
         void    changeState();
