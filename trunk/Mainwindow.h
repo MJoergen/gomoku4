@@ -56,6 +56,7 @@ class Mainwindow : public QMainWindow
         void    createIa();
         void    createButtons();
         void    cleanButtonsArray();
+        void    moveToCenter();
 
     public slots:
         void    startNewGame();

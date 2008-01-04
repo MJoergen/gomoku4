@@ -3,6 +3,7 @@
 
 # include <QPushButton>
 
+# include "Move.h"
 # include "ButtonState.h"
 
 class Button : public QPushButton
@@ -12,17 +13,20 @@ class Button : public QPushButton
     private:
         int         id;
         int         size;
+        Move        *pos;
         buttonState state;
 
     private:
         void    changeIcon();
 
     public:
-        Button(QWidget *parent, int size);
+        Button(QWidget *parent, int size, int x, int y);
+        ~Button();
 
     public:
         int         GetId();
         buttonState GetState();
+        Move*       GetPos();
         void        SetState(buttonState state);
 
     public slots:

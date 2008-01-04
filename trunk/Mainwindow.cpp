@@ -1,5 +1,6 @@
 #include <QMenuBar>
-
+#include <QDesktopWidget>
+#include <iostream>
 #include "Mainwindow.h"
 
 Mainwindow *Mainwindow::instance = NULL;
@@ -27,8 +28,16 @@ void    Mainwindow::init()
     this->boardSize = DEFAULT_BOARDSIZE;
     this->algo = ALPHABETA;
     this->buttonsArray = NULL;
+    this->moveToCenter();
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
     Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
+}
+
+void    Mainwindow::moveToCenter()
+{
+    QDesktopWidget desktop;
+    this->move(desktop.screenGeometry().width() / 2 - this->width() / 2,
+               desktop.screenGeometry().height() / 2 - this->height() / 2);
 }
 
 void    Mainwindow::createIa()
@@ -107,7 +116,10 @@ void    Mainwindow::showOptionsWindow()
 
 void    Mainwindow::buttonClicked()
 {
-    Gomoku::GetInstance()->IncMove();
+    Button *button = dynamic_cast<Button *>(sender());
+
+    if (button)
+        Gomoku::GetInstance()->commitMove(button->GetPos(), false);
     this->IaPlay();
 }
 
@@ -123,9 +135,10 @@ void    Mainwindow::cleanButtonsArray()
     }
 }
 
-void    Mainwindow::createButtons()
+void             Mainwindow::createButtons()
 {
     int nbButtons = this->boardSize * this->boardSize;
+
     this->buttonsArray = new Button*[nbButtons];
     for (int i = 0, x = 0, y = 0; i < nbButtons; i++, x++)
     {
@@ -134,7 +147,7 @@ void    Mainwindow::createButtons()
             x = 0;
             y++;
         }
-        this->buttonsArray[i] = new Button(this, DEFAULT_BUTTONSIZE);
+        this->buttonsArray[i] = new Button(this, DEFAULT_BUTTONSIZE, x, y);
         this->buttonsArray[i]->resize(DEFAULT_BUTTONSIZE, DEFAULT_BUTTONSIZE);
         this->buttonsArray[i]->move(x * DEFAULT_BUTTONSIZE, y * DEFAULT_BUTTONSIZE + MENU_HEIGHT);
         this->buttonsArray[i]->show();

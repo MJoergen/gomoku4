@@ -18,11 +18,6 @@ unsigned int Gomoku::getState() const
   return (state);
 }
 
-void    Gomoku::IncMove()
-{
-    this->nb_moves++;
-}
-
 Gomoku::Gomoku() : stones(0), nb_moves(0), state(0)
 {
 }

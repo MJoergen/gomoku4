@@ -4,14 +4,14 @@
 class Move
 {
     private:
-        unsigned int	x, y;
+        int	x, y;
 
     public:
-        Move(unsigned int _x, unsigned int _y);
+        Move(int _x, int _y);
 
     public:
-        unsigned int	getX() const;
-        unsigned int	getY() const;
+        int	getX() const;
+        int	getY() const;
 };
 
 #endif //!_MOVE_H_
