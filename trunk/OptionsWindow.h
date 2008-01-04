@@ -13,7 +13,6 @@
 # include "Mainwindow.h"
 
 # define MIN    5
-# define MIN    5
 # define WIDTH  195
 # define HEIGHT 180
 
@@ -34,7 +33,7 @@ class OptionsWindow : public QWidget
         QLabel       *label;
 
     public:
-       OptionsWindow();
+       OptionsWindow(int boardSize);
        ~OptionsWindow();
 
     private:

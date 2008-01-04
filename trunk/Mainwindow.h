@@ -10,6 +10,7 @@
 # include "gomoku.h"
 # include "AlgorithmType.h"
 # include "OptionsWindow.h"
+# include "StatisticsPanel.h"
 # include "IA_alphabeta.h"
 # include "IA_negamax.h"
 # include "IA.h"
@@ -17,10 +18,12 @@
 # define DEFAULT_BOARDSIZE  5
 # define DEFAULT_BUTTONSIZE 50
 # define MENU_HEIGHT        25
+# define STATS_PANEL_WIDTH  150
 
 class OptionsWindow;
 class Alphabeta;
 class NegaMax;
+class StatisticsPanel;
 
 class Mainwindow : public QMainWindow
 {
@@ -28,16 +31,16 @@ class Mainwindow : public QMainWindow
 
     private:
         int                 boardSize;
+        IA                  *ia;
         AlgorithmType       algo;
         QMenu               *fileMenu;
         QMenu               *preferenceMenu;
-        QLabel              *infos;
         QAction             *newGameAction;
         QAction             *quitAction;
         QAction             *optionsAction;
         Button              ***buttonsArray;
         OptionsWindow       *optionsWindow;
-        IA                  *ia;
+        StatisticsPanel     *statisticsPanel;
         static Mainwindow   *instance;
 
     private:

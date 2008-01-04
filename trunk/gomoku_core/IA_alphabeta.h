@@ -12,7 +12,7 @@ class AlphaBeta : public IA
 {
     private:
         unsigned int			    treeNodes;
-        static const unsigned int	DEEP_MAX = 3;
+        static const unsigned int	DEEP_MAX = 4;
 
     public:
         int	AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level);

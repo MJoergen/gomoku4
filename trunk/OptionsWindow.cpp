@@ -4,7 +4,7 @@
 #include "Images/cancel.xpm"
 #include "OptionsWindow.h"
 
-OptionsWindow::OptionsWindow()
+OptionsWindow::OptionsWindow(int boardSize)
 {
     this->setWindowTitle("Options");
     this->resize(WIDTH, HEIGHT);
@@ -24,6 +24,7 @@ OptionsWindow::OptionsWindow()
 
     this->spinBox_boardSize = new QSpinBox(this);
     this->spinBox_boardSize->setMinimum(MIN);
+    this->spinBox_boardSize->setValue(boardSize);
     this->spinBox_boardSize->setGeometry(QRect(100, 96, 80, 27));
 
     this->label = new QLabel("Board size", this);
