@@ -1,10 +1,14 @@
+#include <QDesktopWidget>
+
 #include "Images/valid.xpm"
 #include "Images/cancel.xpm"
 #include "OptionsWindow.h"
 
 OptionsWindow::OptionsWindow()
 {
+    this->setWindowTitle("Options");
     this->resize(WIDTH, HEIGHT);
+    this->moveToCenter();
     this->setMinimumSize(WIDTH, HEIGHT);
     this->setMaximumSize(WIDTH, HEIGHT);
 
@@ -35,6 +39,13 @@ OptionsWindow::OptionsWindow()
 
     this->doConnects();
     this->show();
+}
+
+void    OptionsWindow::moveToCenter()
+{
+    QDesktopWidget desktop;
+    this->move(desktop.screenGeometry().width() / 2 - this->width() / 2,
+               desktop.screenGeometry().height() / 2 - this->height() / 2);
 }
 
 void    OptionsWindow::doConnects()

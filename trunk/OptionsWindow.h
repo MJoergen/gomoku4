@@ -39,6 +39,7 @@ class OptionsWindow : public QWidget
 
     private:
         void    doConnects();
+        void    moveToCenter();
 
     private slots:
         void    valid();
