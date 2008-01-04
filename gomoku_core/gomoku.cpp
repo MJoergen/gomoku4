@@ -78,7 +78,9 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
         for (unsigned int j = 0; j < this->size; j++)
         {
 			if (board[i][j].GetState() == NEUTRAL)
+            {
                 moves.push_back(new Move(i, j));
+            }
         }
     }
     return (moves);

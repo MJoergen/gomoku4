@@ -25,7 +25,7 @@ class Button : public QPushButton
         buttonState GetState();
         void        SetState(buttonState state);
 
-    private slots:
+    public slots:
         void    changeState();
 };
 
