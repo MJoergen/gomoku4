@@ -28,7 +28,6 @@ void    Mainwindow::init()
     this->boardSize = DEFAULT_BOARDSIZE;
     this->algo = ALPHABETA;
     this->buttonsArray = NULL;
-    this->moveToCenter();
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
     Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
 }
@@ -172,6 +171,7 @@ void    Mainwindow::CreateBoard()
 {
     this->setSize();
     this->createButtons();
+    this->moveToCenter();
 }
 
 void    Mainwindow::DestroyInstance()
