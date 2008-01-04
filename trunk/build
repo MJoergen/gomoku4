@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# file:        build
+# brief:       Gomoku builder
+#
+# author  Arnaud Auroux (aa), auroux_a@epitech.net
+#
+# Compiler:    gcc/g++
+# Company:     Epitech
+# Copyright:   Copyright (c) 2007, Arnaud Auroux
+# Licence:     Arnaud Auroux wrote this file. As long as you retain this
+#              notice you can do whatever you want with this stuff.
+
+error()
+{
+    echo '--------------------------------'
+    echo 'Gomoku build error. Sorry :('
+    echo '--------------------------------'
+    exit 1
+}
+
+echo '-------------------------------------'
+echo 'Building Gomoku...'
+echo '-------------------------------------'
+qmake-qt4 -project || error
+qmake-qt4 || error
+make clean
+make || error 
+echo '-------------------------------------'
+echo 'Gomoku successfully built. Enjoy :'
+echo '-------------------------------------'
+
