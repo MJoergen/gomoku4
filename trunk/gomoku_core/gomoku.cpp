@@ -83,17 +83,8 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
     return (moves);
 }
 
-void	         Gomoku::commitMove(const Move *move, bool setState)
+void		Gomoku::CheckGameState(unsigned int x, unsigned int y, unsigned int p)
 {
-    unsigned int p = getPlayerToMove();
-    unsigned int x = move->getX();
-    unsigned int y = move->getY();
-
-    nb_moves++;
-    stones++;
-    board[x][y]->SetState((buttonState)p);
-    if (setState)
-        board[x][y]->ChangeState();
     for (uint d = 0; d < 4; d++)
     {
         int forward = 1;
@@ -111,6 +102,20 @@ void	         Gomoku::commitMove(const Move *move, bool setState)
     }
     if (stones == (this->size * this->size))
         state = FULL_BOARD;
+}
+
+void	         Gomoku::commitMove(const Move *move, bool setState)
+{
+    unsigned int p = getPlayerToMove();
+    unsigned int x = move->getX();
+    unsigned int y = move->getY();
+
+    nb_moves++;
+    stones++;
+    board[x][y]->SetState((buttonState)p);
+    if (setState)
+        board[x][y]->ChangeState();
+	CheckGameState(x, y, p);
 }
 
 void	    Gomoku::undoMove(const Move *move)
