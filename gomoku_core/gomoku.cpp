@@ -1,5 +1,4 @@
 #include <cstdlib>
-
 #include "gomoku.h"
 #include "Move.h"
 
@@ -78,15 +77,16 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
         for (unsigned int j = 0; j < this->size; j++)
         {
 			if (board[i][j].GetState() == NEUTRAL)
-            {
+			{
+				std::cout << i << " " << j << std::endl;
                 moves.push_back(new Move(i, j));
-            }
+			}
         }
     }
     return (moves);
 }
 
-void	         Gomoku::commitMove(const Move *move)
+void	         Gomoku::commitMove(const Move *move, bool setState)
 {
     unsigned int p = getPlayerToMove();
     unsigned int x = move->getX();
@@ -94,7 +94,10 @@ void	         Gomoku::commitMove(const Move *move)
 
     nb_moves++;
     stones++;
-    board[x][y].SetState((buttonState)p);
+	if (setState) 
+		board[x][y].ChangeState();
+	else
+		board[x][y].SetState((buttonState)p);
     for (uint d = 0; d < 4; d++)
     {
         int forward = 1;
