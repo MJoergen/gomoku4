@@ -94,8 +94,11 @@ void	         Gomoku::commitMove(const Move *move, bool setState)
 
     nb_moves++;
     stones++;
-	if (setState) 
+	if (setState)
+	{
+		board[x][y].SetState((buttonState)p);
 		board[x][y].ChangeState();
+	}	
 	else
 		board[x][y].SetState((buttonState)p);
     for (uint d = 0; d < 4; d++)
