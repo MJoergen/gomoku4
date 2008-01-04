@@ -1,5 +1,6 @@
 #include <QMenuBar>
-#include <iostream>
+//#include <QScreen>
+
 #include "Mainwindow.h"
 
 Mainwindow *Mainwindow::instance = NULL;
