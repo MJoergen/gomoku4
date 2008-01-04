@@ -39,6 +39,7 @@ class Gomoku
         static Gomoku  *GetInstance();
         unsigned int getPlayerToMove() const;
         unsigned int getState() const;
+        void    IncMove();
 
     public:
 
