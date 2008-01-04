@@ -93,11 +93,7 @@ void	         Gomoku::commitMove(const Move *move, bool setState)
     stones++;
     board[x][y]->SetState((buttonState)p);
     if (setState)
-    {
-        std::cout << x << std::endl;
-        std::cout << y << std::endl;
         board[x][y]->ChangeState();
-    }
     for (uint d = 0; d < 4; d++)
     {
         int forward = 1;
