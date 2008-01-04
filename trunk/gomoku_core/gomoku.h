@@ -15,11 +15,11 @@ class Gomoku
         static	        int dy[4];
         static Gomoku   *Instance;
 
-        unsigned int    stones;
+        int	size;
+        int stones;
         unsigned int	nb_moves;
         unsigned int	state;
-        unsigned int	size;
-        Button		    **board;
+        Button		    ***board;
         AlgorithmType	AlgoType;
 
     public:
@@ -28,9 +28,9 @@ class Gomoku
     public:
         bool                isCorrect(int x, int y) const;
         void	            dump(std::ostream& o) const;
-        void			    SetSize(unsigned int size);
+        void			    SetSize(int size);
         void			    SetAlgorithm(AlgorithmType algo);
-        void			    SetBoard(Button **button);
+        void			    SetBoard(Button ***button);
         unsigned int        evaluate() const;
         unsigned int        getPlayerToMove() const;
         unsigned int        getState() const;

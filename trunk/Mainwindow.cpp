@@ -118,7 +118,7 @@ void    Mainwindow::buttonClicked()
     Button *button = dynamic_cast<Button *>(sender());
 
     if (button)
-        Gomoku::GetInstance()->commitMove(button->GetPos(), false);
+        Gomoku::GetInstance()->commitMove(button->GetPos(), true);
     this->IaPlay();
 }
 
@@ -126,31 +126,32 @@ void    Mainwindow::cleanButtonsArray()
 {
     if (this->buttonsArray)
     {
-        int nbButtons = this->boardSize * this->boardSize;
-        for (int i = 0; i < nbButtons; i++)
-            delete this->buttonsArray[i];
+        for (int x = 0; x < this->boardSize; x++)
+        {
+            for (int y = 0; y < this->boardSize; y++)
+                delete this->buttonsArray[x][y];
+        }
         delete [] this->buttonsArray;
         this->buttonsArray = NULL;
     }
 }
 
-void             Mainwindow::createButtons()
+void    Mainwindow::createButtons()
 {
-    int nbButtons = this->boardSize * this->boardSize;
+    this->buttonsArray = new Button**[this->boardSize];
+    for(int i = 0; i < this->boardSize; i++)
+        this->buttonsArray[i] = new Button*[this->boardSize];
 
-    this->buttonsArray = new Button*[nbButtons];
-    for (int i = 0, x = 0, y = 0; i < nbButtons; i++, x++)
+    for (int x = 0; x < this->boardSize; x++)
     {
-        if (x == this->boardSize)
+        for (int y = 0; y < this->boardSize; y++)
         {
-            x = 0;
-            y++;
+            this->buttonsArray[x][y] = new Button(this, DEFAULT_BUTTONSIZE, x, y);
+            this->buttonsArray[x][y]->resize(DEFAULT_BUTTONSIZE, DEFAULT_BUTTONSIZE);
+            this->buttonsArray[x][y]->move(x * DEFAULT_BUTTONSIZE, y * DEFAULT_BUTTONSIZE + MENU_HEIGHT);
+            this->buttonsArray[x][y]->show();
+            connect(this->buttonsArray[x][y], SIGNAL(clicked()), this, SLOT(buttonClicked()));
         }
-        this->buttonsArray[i] = new Button(this, DEFAULT_BUTTONSIZE, x, y);
-        this->buttonsArray[i]->resize(DEFAULT_BUTTONSIZE, DEFAULT_BUTTONSIZE);
-        this->buttonsArray[i]->move(x * DEFAULT_BUTTONSIZE, y * DEFAULT_BUTTONSIZE + MENU_HEIGHT);
-        this->buttonsArray[i]->show();
-        connect(this->buttonsArray[i], SIGNAL(clicked()), this, SLOT(buttonClicked()));
     }
     Gomoku::GetInstance()->SetBoard(this->buttonsArray);
 }

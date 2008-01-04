@@ -31,7 +31,7 @@ class Mainwindow : public QMainWindow
         QAction             *newGameAction;
         QAction             *quitAction;
         QAction             *optionsAction;
-        Button              **buttonsArray;
+        Button              ***buttonsArray;
         OptionsWindow       *optionsWindow;
         IA                  *ia;
         static Mainwindow   *instance;
