@@ -1,6 +1,6 @@
 #include <QMenuBar>
 #include <QDesktopWidget>
-#include <iostream>
+
 #include "Mainwindow.h"
 
 Mainwindow *Mainwindow::instance = NULL;

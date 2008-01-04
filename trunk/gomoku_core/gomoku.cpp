@@ -1,5 +1,4 @@
 #include <cstdlib>
-#include <iostream>
 #include "gomoku.h"
 #include "Move.h"
 
@@ -34,10 +33,6 @@ void	Gomoku::SetAlgorithm(AlgorithmType algo)
 
 void	Gomoku::SetBoard(Button ***board)
 {
-    for (int i = 0; i < size; i++)
-        for (int j = 0; j < size; j++)
-            std::cout << board[i][j]->GetState() << std::endl;
-
     this->board = board;
 }
 
