@@ -24,6 +24,7 @@ Gomoku::Gomoku() : stones(0), nb_moves(0), state(0)
 void	Gomoku::SetSize(int size)
 {
     this->size = size;
+    this->nb_moves = 0;
 }
 
 void	Gomoku::SetAlgorithm(AlgorithmType algo)
