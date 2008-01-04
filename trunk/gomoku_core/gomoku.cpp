@@ -72,15 +72,43 @@ bool	Gomoku::isCorrect(int x, int y) const
 std::vector<Move *>	Gomoku::getCorrectMoves() const
 {
     std::vector<Move *>	moves;
+	unsigned int 		p = getPlayerToMove();
 
+	if (p == PLAYER1) p = PLAYER2;
+	else p = PLAYER1;
     for (int i = 0; i < this->size; i++)
-    {
         for (int j = 0; j < this->size; j++)
         {
+			bool hasStone = false;
             if (board[i][j]->GetState() == NEUTRAL)
-                moves.push_back(new Move(i, j));
+			{
+				if (isCorrect(i + 1, j))
+					if (board[i + 1][j]->GetState() != NEUTRAL)
+						hasStone = true;
+				if (isCorrect(i - 1, j))
+					if (board[i - 1][j]->GetState()  != NEUTRAL)
+						hasStone = true;				
+				if	(isCorrect(i, j + 1))
+					if (board[i][j + 1]->GetState()  != NEUTRAL)
+						hasStone = true;				
+				if	(isCorrect(i, j - 1))
+					if (board[i][j - 1]->GetState()  != NEUTRAL)
+						hasStone = true;				
+				if	(isCorrect(i + 1, j + 1))
+					if (board[i + 1][j + 1]->GetState()  != NEUTRAL)
+						hasStone = true;				
+				if	(isCorrect(i + 1, j - 1))
+					if (board[i + 1][j - 1]->GetState()  != NEUTRAL)
+						hasStone = true;					
+				if	(isCorrect(i - 1, j + 1))
+					if (board[i - 1][j + 1]->GetState()  != NEUTRAL)
+						hasStone = true;				
+				if	(isCorrect(i - 1, j - 1))
+					if (board[i - 1][j - 1]->GetState()  != NEUTRAL)
+						hasStone = true;					
+				if (hasStone) moves.push_back(new Move(i, j));
+			}
         }
-    }
     return (moves);
 }
 
