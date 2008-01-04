@@ -25,12 +25,12 @@ Mainwindow    *Mainwindow::GetInstance()
 
 void    Mainwindow::init()
 {
-    this->ia            = NULL;
-    this->algo          = ALPHABETA;
-    this->boardSize     = DEFAULT_BOARDSIZE;
-    this->buttonsArray  = NULL;
-    this->infos         = new QLabel();
-    this->statusBar()->addPermanentWidget(this->infos);
+    this->ia              = NULL;
+    this->buttonsArray    = NULL;
+    this->statisticsPanel = NULL;
+    this->algo            = ALPHABETA;
+    this->boardSize       = DEFAULT_BOARDSIZE;
+    this->statisticsPanel = new StatisticsPanel(this);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
     Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
     this->UpdateStatistics(0);
@@ -61,12 +61,14 @@ void    Mainwindow::createIa()
 
 void    Mainwindow::setSize()
 {
-    int width  = this->boardSize * DEFAULT_BUTTONSIZE;
-    int height = this->boardSize * DEFAULT_BUTTONSIZE + MENU_HEIGHT * 2;
+    int width  = this->boardSize * DEFAULT_BUTTONSIZE + STATS_PANEL_WIDTH + 5;
+    int height = this->boardSize * DEFAULT_BUTTONSIZE + MENU_HEIGHT;
 
     this->resize(width, height);
     this->setMinimumSize(width, height);
     this->setMaximumSize(width, height);
+    if (this->statisticsPanel)
+        this->statisticsPanel->UpdateSize(this->boardSize);
     Gomoku::GetInstance()->SetSize(this->boardSize);
 }
 
@@ -114,7 +116,7 @@ void    Mainwindow::startNewGame()
 
 void    Mainwindow::showOptionsWindow()
 {
-    this->optionsWindow = new OptionsWindow();
+    this->optionsWindow = new OptionsWindow(this->boardSize);
 }
 
 void    Mainwindow::buttonClicked()
@@ -181,10 +183,10 @@ void    Mainwindow::CreateBoard()
 
 void    Mainwindow::UpdateStatistics(int nbConsideredNode)
 {
-    if (this->algo == ALPHABETA)
-        this->infos->setText(QString("Algorithm : AlphaBeta - Nodes : %1").arg(nbConsideredNode));
-    else
-        this->infos->setText(QString("Algorithm : NegaMax - Nodes :  %1").arg(nbConsideredNode));
+    //if (this->algo == ALPHABETA)
+       // this->infos->setText(QString("Algorithm : AlphaBeta - Nodes : %1").arg(nbConsideredNode));
+    //else
+        //this->infos->setText(QString("Algorithm : NegaMax - Nodes :  %1").arg(nbConsideredNode));
 }
 
 void    Mainwindow::DestroyInstance()
@@ -195,5 +197,4 @@ void    Mainwindow::DestroyInstance()
 
 Mainwindow::~Mainwindow()
 {
-    delete infos;
 }
