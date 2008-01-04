@@ -42,7 +42,7 @@ class Gomoku
 
     public:
 
-        void	commitMove(const Move *move);
+        void	commitMove(const Move *move, bool setState);
         void	undoMove(const Move *move);
 
 };

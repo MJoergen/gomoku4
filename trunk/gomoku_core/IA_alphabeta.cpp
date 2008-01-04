@@ -26,7 +26,7 @@ int	AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
 
     for (; it != eit; it++)
     {
-        Gomoku::GetInstance()->commitMove(*it);
+        Gomoku::GetInstance()->commitMove(*it, false);
         val = -AlgoAlphaBeta(&child, -beta, -alpha, level - 1);
         if (child)
             delete child;
@@ -54,6 +54,6 @@ void    AlphaBeta::findMove()
     treeNodes = 0;
     AlgoAlphaBeta(&bestMove, -INFINITY, INFINITY, DEEP_MAX);
     std::cout << "<< alphabeta >>" << std::endl << "noeuds: " << treeNodes << std::endl;
-    Gomoku::GetInstance()->commitMove(bestMove);
+    Gomoku::GetInstance()->commitMove(bestMove, true);
 }
 
