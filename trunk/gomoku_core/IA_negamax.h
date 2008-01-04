@@ -3,7 +3,10 @@
 
 # include "defines.h"
 # include "gomoku.h"
+# include "Mainwindow.h"
 # include "IA.h"
+
+class Mainwindow;
 
 class NegaMax : public IA
 {

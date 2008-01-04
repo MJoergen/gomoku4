@@ -8,18 +8,18 @@ int	NegaMax::AlgoNegaMax(Move **bestMove, int level)
 {
   treeNodes++;
   *bestMove = NULL;
-  
+
   if (Gomoku::GetInstance()->getState() == FULL_BOARD)
     return (0);
   else if (Gomoku::GetInstance()->getState())
     return (-INFINITY);
   if (!level)
     return (-(Gomoku::GetInstance()->evaluate()));
-  
+
   std::vector<Move *> moves = Gomoku::GetInstance()->getCorrectMoves();
   Move *child;
   int best, val;
-  
+
   *bestMove = moves[0];
   best = -INFINITY;
   std::vector<Move *>::iterator it = moves.begin();
@@ -47,8 +47,9 @@ int	NegaMax::AlgoNegaMax(Move **bestMove, int level)
 void	NegaMax::findMove()
 {
   Move *bestMove;
-  treeNodes = 0;
+
+  this->treeNodes = 0;
   AlgoNegaMax(&bestMove, DEEP_MAX);
-  std::cout << "<< negamax >>" << std::endl << "noeuds : " << treeNodes << std::endl;
+  Mainwindow::GetInstance()->UpdateStatistics(this->treeNodes);
   Gomoku::GetInstance()->commitMove(bestMove, true);
 }

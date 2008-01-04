@@ -1,4 +1,5 @@
 #include <QMenuBar>
+#include <QStatusBar>
 #include <QDesktopWidget>
 
 #include "Mainwindow.h"
@@ -28,8 +29,11 @@ void    Mainwindow::init()
     this->algo          = ALPHABETA;
     this->boardSize     = DEFAULT_BOARDSIZE;
     this->buttonsArray  = NULL;
+    this->infos         = new QLabel();
+    this->statusBar()->addPermanentWidget(this->infos);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
     Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
+    this->UpdateStatistics(0);
 }
 
 void    Mainwindow::moveToCenter()
@@ -175,6 +179,14 @@ void    Mainwindow::CreateBoard()
     this->moveToCenter();
 }
 
+void    Mainwindow::UpdateStatistics(int nbConsideredNode)
+{
+    if (this->algo == ALPHABETA)
+        this->infos->setText(QString("Algorithm : AlphaBeta - Nodes : %1").arg(nbConsideredNode));
+    else
+        this->infos->setText(QString("Algorithm : NegaMax - Nodes :  %1").arg(nbConsideredNode));
+}
+
 void    Mainwindow::DestroyInstance()
 {
     if (instance)
@@ -183,4 +195,5 @@ void    Mainwindow::DestroyInstance()
 
 Mainwindow::~Mainwindow()
 {
+    delete infos;
 }
