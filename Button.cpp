@@ -9,7 +9,7 @@ Button::Button(QWidget *parent, int size) : size(size)
     this->state = NEUTRAL;
     this->setParent(parent);
     this->changeIcon();
-    connect(this, SIGNAL(clicked()), SLOT(changeState()));
+    connect(this, SIGNAL(clicked()), SLOT(ChangeState()));
     this->show();
 }
 
@@ -32,7 +32,7 @@ void    Button::changeIcon()
     }
 }
 
-void    Button::changeState()
+void    Button::ChangeState()
 {
     if (this->state == NEUTRAL || this->state == PLAYER2)
     {
