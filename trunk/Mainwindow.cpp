@@ -177,7 +177,7 @@ void    Mainwindow::IaPlay()
 void    Mainwindow::CreateBoard()
 {
     this->setSize();
-    this->createButtons();
+    this->startNewGame();
     this->moveToCenter();
 }
 
