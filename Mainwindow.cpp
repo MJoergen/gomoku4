@@ -1,5 +1,4 @@
 #include <QMenuBar>
-//#include <QScreen>
 
 #include "Mainwindow.h"
 
@@ -108,6 +107,7 @@ void    Mainwindow::showOptionsWindow()
 
 void    Mainwindow::buttonClicked()
 {
+    Gomoku::GetInstance()->IncMove();
     this->IaPlay();
 }
 

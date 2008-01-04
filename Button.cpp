@@ -34,16 +34,10 @@ void    Button::changeIcon()
 
 void    Button::ChangeState()
 {
-    if (this->state == NEUTRAL || this->state == PLAYER2)
-    {
+    if (this->state == NEUTRAL || this->state == PLAYER1)
         this->setIcon(QIcon(QPixmap(red_xpm)));
-        this->state = PLAYER1;
-    }
     else
-    {
         this->setIcon(QIcon(QPixmap(cyan_xpm)));
-        this->state = PLAYER2;
-    }
 }
 
 int Button::GetId()
