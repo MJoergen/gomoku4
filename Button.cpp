@@ -10,7 +10,7 @@ Button::Button(QWidget *parent, int size, int x, int y) : size(size)
     this->state = NEUTRAL;
     this->setParent(parent);
     this->changeIcon();
-    connect(this, SIGNAL(clicked()), SLOT(ChangeState()));
+    //connect(this, SIGNAL(clicked()), SLOT(ChangeState()));
     this->show();
 }
 

@@ -10,38 +10,42 @@ Gomoku    *Gomoku::Instance = NULL;
 
 unsigned int Gomoku::getPlayerToMove() const
 {
-  return (nb_moves % 2) + 1;
+    return (nb_moves % 2) + 1;
 }
 
 unsigned int Gomoku::getState() const
 {
-  return (state);
+    return (state);
 }
 
 Gomoku::Gomoku() : stones(0), nb_moves(0), state(0)
 {
 }
 
-void	Gomoku::SetSize(unsigned int size)
+void	Gomoku::SetSize(int size)
 {
-  this->size = size;
+    this->size = size;
 }
 
 void	Gomoku::SetAlgorithm(AlgorithmType algo)
 {
-  this->AlgoType = algo;
+    this->AlgoType = algo;
 }
 
-void	Gomoku::SetBoard(Button **board)
+void	Gomoku::SetBoard(Button ***board)
 {
-  this->board = board;
+    for (int i = 0; i < size; i++)
+        for (int j = 0; j < size; j++)
+            std::cout << board[i][j]->GetState() << std::endl;
+
+    this->board = board;
 }
 
 Gomoku    *Gomoku::GetInstance()
 {
-  if (Instance == NULL)
-    Instance = new Gomoku();
-  return (Instance);
+    if (Instance == NULL)
+        Instance = new Gomoku();
+    return (Instance);
 }
 
 /*void		    Gomoku::dump(std::ostream &o) const
@@ -73,18 +77,14 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
 {
     std::vector<Move *>	moves;
 
-    for (unsigned int i = 0; i < this->size; i++)
+    for (int i = 0; i < this->size; i++)
     {
-        for (unsigned int j = 0; j < this->size; j++)
+        for (int j = 0; j < this->size; j++)
         {
-			if (board[i][j].GetState() == NEUTRAL)
-			{
-				std::cout << "*****************"<< std::endl;
+            if (board[i][j]->GetState() == NEUTRAL)
                 moves.push_back(new Move(i, j));
-			}
         }
     }
-    std::cout << std::endl;
     return (moves);
 }
 
@@ -96,23 +96,27 @@ void	         Gomoku::commitMove(const Move *move, bool setState)
 
     nb_moves++;
     stones++;
-	board[x][y].SetState((buttonState)p);
-	if (setState)
-		board[x][y].ChangeState();
+    board[x][y]->SetState((buttonState)p);
+    if (setState)
+    {
+        std::cout << x << std::endl;
+        std::cout << y << std::endl;
+        board[x][y]->ChangeState();
+    }
     for (uint d = 0; d < 4; d++)
     {
         int forward = 1;
         while (isCorrect(x + (forward * dx[d]), y + (forward * dy[d])) &&
-               (board[x + (forward * dx[d])][y + (forward * dy[d])].GetState() == (int)p))
+                (board[x + (forward * dx[d])][y + (forward * dy[d])]->GetState() == (int)p))
             forward++;
 
         int backward = 1;
         while (isCorrect(x - (backward * dx[d]), y - (backward * dy[d])) &&
-               (board[x - (backward * dx[d])][y - (backward * dy[d])].GetState() == (int)p))
+                (board[x - (backward * dx[d])][y - (backward * dy[d])]->GetState() == (int)p))
             backward++;
 
         if (forward + backward > LINE_SIZE)
-	  state = p;
+            state = p;
     }
     if (stones == (this->size * this->size))
         state = FULL_BOARD;
@@ -120,7 +124,7 @@ void	         Gomoku::commitMove(const Move *move, bool setState)
 
 void	    Gomoku::undoMove(const Move *move)
 {
-    board[move->getX()][move->getY()].SetState(NEUTRAL);
+    board[move->getX()][move->getY()]->SetState(NEUTRAL);
     nb_moves--;
     stones--;
     state = 0;
@@ -130,18 +134,18 @@ uint	Gomoku::evaluate() const
 {
     unsigned int p = getPlayerToMove();
     unsigned int eval = 0;
-    std::cout << p << std::endl;
-    for (unsigned int x = 0; x < this->size; x++)
+
+    for (int x = 0; x < this->size; x++)
     {
-        for (unsigned int y = 0; y < this->size; y++)
+        for (int y = 0; y < this->size; y++)
         {
-            if (board[x][y].GetState() == (int)p)
+            if (board[x][y]->GetState() == (int)p)
             {
                 for (unsigned int d = 0; d < 4; d++)
                 {
                     unsigned int size = 1;
                     while (isCorrect(x + (size * dx[d]), y + (size * dy[d]))
-                            && (board[x + (size * dx[d])][y + (size * dy[d])].GetState() == (int)p))
+                            && (board[x + (size * dx[d])][y + (size * dy[d])]->GetState() == (int)p))
                         size++;
                     eval += size - 1;
                 }
