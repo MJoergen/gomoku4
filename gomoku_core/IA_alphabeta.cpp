@@ -51,9 +51,10 @@ int	AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
 void    AlphaBeta::findMove()
 {
     Move	*bestMove;
-    treeNodes = 0;
+
+    this->treeNodes = 0;
     AlgoAlphaBeta(&bestMove, -INFINITY, INFINITY, DEEP_MAX);
-    std::cout << "<< alphabeta >>" << std::endl << "noeuds: " << treeNodes << std::endl;
+    Mainwindow::GetInstance()->UpdateStatistics(this->treeNodes);
     Gomoku::GetInstance()->commitMove(bestMove, true);
 }
 

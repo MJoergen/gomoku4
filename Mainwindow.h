@@ -3,6 +3,7 @@
 
 # include <QMenu>
 # include <QAction>
+# include <QLabel>
 # include <QMainWindow>
 
 # include "Button.h"
@@ -18,6 +19,8 @@
 # define MENU_HEIGHT        25
 
 class OptionsWindow;
+class Alphabeta;
+class NegaMax;
 
 class Mainwindow : public QMainWindow
 {
@@ -28,6 +31,7 @@ class Mainwindow : public QMainWindow
         AlgorithmType       algo;
         QMenu               *fileMenu;
         QMenu               *preferenceMenu;
+        QLabel              *infos;
         QAction             *newGameAction;
         QAction             *quitAction;
         QAction             *optionsAction;
@@ -45,6 +49,7 @@ class Mainwindow : public QMainWindow
         void               CreateBoard();
         void               SetBoardSize(int boardSize);
         void               SetAlgorithm(AlgorithmType algo);
+        void               UpdateStatistics(int nbConsideredNode);
         static Mainwindow  *GetInstance();
         static void        DestroyInstance();
 
