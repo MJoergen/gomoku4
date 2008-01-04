@@ -79,11 +79,12 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
         {
 			if (board[i][j].GetState() == NEUTRAL)
 			{
-				std::cout << i << " " << j << std::endl;
+				std::cout << "*****************"<< std::endl;
                 moves.push_back(new Move(i, j));
 			}
         }
     }
+    std::cout << std::endl;
     return (moves);
 }
 

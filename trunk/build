@@ -27,6 +27,6 @@ qmake-qt4 || error
 make clean
 make || error 
 echo '-------------------------------------'
-echo 'Gomoku successfully built. Enjoy :'
+echo 'Gomoku successfully built. Enjoy :)'
 echo '-------------------------------------'
 

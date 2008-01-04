@@ -24,10 +24,10 @@ Mainwindow    *Mainwindow::GetInstance()
 
 void    Mainwindow::init()
 {
-    this->ia = NULL;
-    this->boardSize = DEFAULT_BOARDSIZE;
-    this->algo = ALPHABETA;
-    this->buttonsArray = NULL;
+    this->ia            = NULL;
+    this->algo          = ALPHABETA;
+    this->boardSize     = DEFAULT_BOARDSIZE;
+    this->buttonsArray  = NULL;
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
     Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
 }
@@ -150,9 +150,9 @@ void             Mainwindow::createButtons()
         this->buttonsArray[i]->resize(DEFAULT_BUTTONSIZE, DEFAULT_BUTTONSIZE);
         this->buttonsArray[i]->move(x * DEFAULT_BUTTONSIZE, y * DEFAULT_BUTTONSIZE + MENU_HEIGHT);
         this->buttonsArray[i]->show();
-        Gomoku::GetInstance()->SetBoard(this->buttonsArray);
         connect(this->buttonsArray[i], SIGNAL(clicked()), this, SLOT(buttonClicked()));
     }
+    Gomoku::GetInstance()->SetBoard(this->buttonsArray);
 }
 
 void    Mainwindow::SetBoardSize(int boardSize)
