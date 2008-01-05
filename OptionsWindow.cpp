@@ -4,7 +4,7 @@
 #include "Images/cancel.xpm"
 #include "OptionsWindow.h"
 
-OptionsWindow::OptionsWindow(int boardSize)
+OptionsWindow::OptionsWindow(int boardSize, AlgorithmType algo)
 {
     this->setWindowTitle("Options");
     this->resize(WIDTH, HEIGHT);
@@ -16,10 +16,13 @@ OptionsWindow::OptionsWindow(int boardSize)
     this->groupBox->setGeometry(QRect(10, 10, 171, 80));
 
     this->rb_alphaBeta = new QRadioButton("Alpha Beta", this->groupBox);
-    this->rb_alphaBeta->setChecked(true);
+    if (algo == ALPHABETA)
+        this->rb_alphaBeta->setChecked(true);
     this->rb_alphaBeta->setGeometry(QRect(10, 20, 99, 23));
 
     this->rb_negaMax = new QRadioButton("Nega Max", this->groupBox);
+    if (algo == NEGAMAX)
+        this->rb_negaMax->setChecked(true);
     this->rb_negaMax->setGeometry(QRect(10, 50, 99, 23));
 
     this->spinBox_boardSize = new QSpinBox(this);
