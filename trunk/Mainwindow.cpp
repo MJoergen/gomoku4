@@ -30,6 +30,7 @@ void    Mainwindow::init()
     this->statisticsPanel = NULL;
     this->algo            = ALPHABETA;
     this->boardSize       = DEFAULT_BOARDSIZE;
+    this->iaPlayer        = false;
     this->statisticsPanel = new StatisticsPanel(this);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
     Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
@@ -111,8 +112,8 @@ void    Mainwindow::startNewGame()
 {
     this->cleanButtonsArray();
     this->createButtons();
-    this->UpdateStatistics(0);
     Gomoku::GetInstance()->ResetNbMoves();
+    this->UpdateStatistics(0);
 }
 
 void    Mainwindow::showOptionsWindow()
@@ -125,8 +126,12 @@ void    Mainwindow::buttonClicked()
     Button *button = dynamic_cast<Button *>(sender());
 
     if (button)
+    {
+        this->iaPlayer = true;
+        this->UpdateStatistics(0);
         Gomoku::GetInstance()->commitMove(button->GetPos(), true);
-    this->IaPlay();
+        this->IaPlay();
+    }
 }
 
 void    Mainwindow::cleanButtonsArray()
@@ -173,8 +178,9 @@ void    Mainwindow::IaPlay()
 {
     if (this->ia)
     {
-        this->UpdateStatistics(0);
         this->ia->findMove();
+        this->iaPlayer = false;
+        //this->UpdateStatistics(0);
     }
 }
 
@@ -189,14 +195,12 @@ void            Mainwindow::UpdateStatistics(int nbConsideredNode)
 {
     QString     player;
     QString     algorythm;
-    static bool iaPlayer = false;
 
     algorythm = this->algo == ALPHABETA ? "AlphaBeta" : "NegaMax";
-    player = iaPlayer ? "IA" : "You";
+    player = this->iaPlayer ? "IA" : "You";
     this->statisticsPanel->UpdateStatistics(player, algorythm,
                                             nbConsideredNode, 0,
                                             Gomoku::GetInstance()->GetNbMoves());
-    iaPlayer ^= true;
 }
 
 void    Mainwindow::DestroyInstance()

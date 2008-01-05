@@ -31,6 +31,7 @@ class Mainwindow : public QMainWindow
 
     private:
         int                 boardSize;
+        bool                iaPlayer;
         IA                  *ia;
         AlgorithmType       algo;
         QMenu               *fileMenu;
