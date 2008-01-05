@@ -117,7 +117,7 @@ void    Mainwindow::startNewGame()
 
 void    Mainwindow::showOptionsWindow()
 {
-    this->optionsWindow = new OptionsWindow(this->boardSize);
+    this->optionsWindow = new OptionsWindow(this->boardSize, this->algo);
 }
 
 void    Mainwindow::buttonClicked()

@@ -33,7 +33,7 @@ class OptionsWindow : public QWidget
         QLabel       *label;
 
     public:
-       OptionsWindow(int boardSize);
+       OptionsWindow(int boardSize, AlgorithmType algo);
        ~OptionsWindow();
 
     private:
