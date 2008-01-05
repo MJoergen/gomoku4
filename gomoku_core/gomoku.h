@@ -13,8 +13,9 @@ class Gomoku
     private:
         static	        int dx[4];
         static	        int dy[4];
-        static Gomoku   *Instance;
+        static Gomoku   *instance;
 
+    private:
         int	size;
         int stones;
         unsigned int	nb_moves;
@@ -24,6 +25,10 @@ class Gomoku
 
     public:
         Gomoku();
+
+    public:
+        static Gomoku       *GetInstance();
+        static void         DestroyInstance();
 
     public:
         bool                isCorrect(int x, int y) const;
@@ -39,12 +44,10 @@ class Gomoku
         unsigned int        getState() const;
         std::vector<Move *> getCorrectMoves() const;
         std::vector<Move *> initAlgo(unsigned int x = 0) const;
-        static Gomoku       *GetInstance();
 
     public:
         void	commitMove(const Move *move, bool setState);
         void	undoMove(const Move *move);
-
 };
 
 #endif //!__GOMOKU_H__
