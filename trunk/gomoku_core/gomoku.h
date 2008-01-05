@@ -31,6 +31,8 @@ class Gomoku
         void			    SetSize(int size);
         void			    SetAlgorithm(AlgorithmType algo);
         void			    SetBoard(Button ***button);
+        int                 GetNbMoves();
+        void                ResetNbMoves();
 		void				CheckGameState(unsigned int x, unsigned int y, unsigned int p);
         unsigned int        evaluate() const;
         unsigned int        getPlayerToMove() const;

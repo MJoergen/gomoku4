@@ -33,7 +33,6 @@ void    Mainwindow::init()
     this->statisticsPanel = new StatisticsPanel(this);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
     Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
-    this->UpdateStatistics(0);
 }
 
 void    Mainwindow::moveToCenter()
@@ -112,6 +111,8 @@ void    Mainwindow::startNewGame()
 {
     this->cleanButtonsArray();
     this->createButtons();
+    this->UpdateStatistics(0);
+    Gomoku::GetInstance()->ResetNbMoves();
 }
 
 void    Mainwindow::showOptionsWindow()
@@ -171,7 +172,10 @@ void    Mainwindow::SetBoardSize(int boardSize)
 void    Mainwindow::IaPlay()
 {
     if (this->ia)
+    {
+        this->UpdateStatistics(0);
         this->ia->findMove();
+    }
 }
 
 void    Mainwindow::CreateBoard()
@@ -181,12 +185,18 @@ void    Mainwindow::CreateBoard()
     this->moveToCenter();
 }
 
-void    Mainwindow::UpdateStatistics(int nbConsideredNode)
+void            Mainwindow::UpdateStatistics(int nbConsideredNode)
 {
-    //if (this->algo == ALPHABETA)
-       // this->infos->setText(QString("Algorithm : AlphaBeta - Nodes : %1").arg(nbConsideredNode));
-    //else
-        //this->infos->setText(QString("Algorithm : NegaMax - Nodes :  %1").arg(nbConsideredNode));
+    QString     player;
+    QString     algorythm;
+    static bool iaPlayer = false;
+
+    algorythm = this->algo == ALPHABETA ? "AlphaBeta" : "NegaMax";
+    player = iaPlayer ? "IA" : "You";
+    this->statisticsPanel->UpdateStatistics(player, algorythm,
+                                            nbConsideredNode, 0,
+                                            Gomoku::GetInstance()->GetNbMoves());
+    iaPlayer ^= true;
 }
 
 void    Mainwindow::DestroyInstance()

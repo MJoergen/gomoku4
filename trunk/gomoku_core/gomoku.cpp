@@ -24,6 +24,11 @@ Gomoku::Gomoku() : stones(0), nb_moves(0), state(0)
 void	Gomoku::SetSize(int size)
 {
     this->size = size;
+    this->ResetNbMoves();
+}
+
+void    Gomoku::ResetNbMoves()
+{
     this->nb_moves = 0;
 }
 
@@ -112,7 +117,12 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
     return (moves);
 }
 
-void		Gomoku::CheckGameState(unsigned int x, unsigned int y, unsigned int p)
+int    Gomoku::GetNbMoves()
+{
+    return (this->nb_moves);
+}
+
+void	Gomoku::CheckGameState(unsigned int x, unsigned int y, unsigned int p)
 {
     for (uint d = 0; d < 4; d++)
     {
