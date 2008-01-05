@@ -3,6 +3,7 @@
 
 # include <QLabel>
 # include <QGroupBox>
+# include <QHBoxLayout>
 
 # include "Mainwindow.h"
 
@@ -21,6 +22,7 @@ class StatisticsPanel
         QLabel      *nbFreePions;
         QLabel      *nbMoves_t;
         QLabel      *nbMoves;
+        QHBoxLayout *hboxLayout;
         Mainwindow  *mainwindow;
         QGroupBox   *groupBox;
 

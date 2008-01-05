@@ -11,6 +11,7 @@
 # include "AlgorithmType.h"
 # include "OptionsWindow.h"
 # include "StatisticsPanel.h"
+# include "ButtonIconFactory.h"
 # include "IA_alphabeta.h"
 # include "IA_negamax.h"
 # include "IA.h"

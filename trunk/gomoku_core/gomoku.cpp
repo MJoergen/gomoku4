@@ -5,7 +5,7 @@
 int Gomoku::dx[4] = { 0,-1,-1,-1};
 int Gomoku::dy[4] = {-1,-1, 0, 1};
 
-Gomoku    *Gomoku::Instance = NULL;
+Gomoku    *Gomoku::instance = NULL;
 
 unsigned int Gomoku::getPlayerToMove() const
 {
@@ -44,9 +44,9 @@ void	Gomoku::SetBoard(Button ***board)
 
 Gomoku    *Gomoku::GetInstance()
 {
-    if (Instance == NULL)
-        Instance = new Gomoku();
-    return (Instance);
+    if (instance == NULL)
+        instance = new Gomoku();
+    return (instance);
 }
 
 /*void		    Gomoku::dump(std::ostream &o) const
@@ -92,25 +92,25 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
 						hasStone = true;
 				if (isCorrect(i - 1, j))
 					if (board[i - 1][j]->GetState()  != NEUTRAL)
-						hasStone = true;				
+						hasStone = true;
 				if	(isCorrect(i, j + 1))
 					if (board[i][j + 1]->GetState()  != NEUTRAL)
-						hasStone = true;				
+						hasStone = true;
 				if	(isCorrect(i, j - 1))
 					if (board[i][j - 1]->GetState()  != NEUTRAL)
-						hasStone = true;				
+						hasStone = true;
 				if	(isCorrect(i + 1, j + 1))
 					if (board[i + 1][j + 1]->GetState()  != NEUTRAL)
-						hasStone = true;				
+						hasStone = true;
 				if	(isCorrect(i + 1, j - 1))
 					if (board[i + 1][j - 1]->GetState()  != NEUTRAL)
-						hasStone = true;					
+						hasStone = true;
 				if	(isCorrect(i - 1, j + 1))
 					if (board[i - 1][j + 1]->GetState()  != NEUTRAL)
-						hasStone = true;				
+						hasStone = true;
 				if	(isCorrect(i - 1, j - 1))
 					if (board[i - 1][j - 1]->GetState()  != NEUTRAL)
-						hasStone = true;					
+						hasStone = true;
 				if (hasStone) moves.push_back(new Move(i, j));
 			}
         }
@@ -188,4 +188,13 @@ uint	Gomoku::evaluate() const
         }
     }
     return (eval);
+}
+
+void    Gomoku::DestroyInstance()
+{
+    if (instance)
+    {
+        delete instance;
+        instance = NULL;
+    }
 }

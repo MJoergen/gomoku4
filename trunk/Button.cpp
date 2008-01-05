@@ -1,7 +1,5 @@
 #include "Button.h"
-#include "Images/red.xpm"
-#include "Images/cyan.xpm"
-#include "Images/white.xpm"
+
 
 Button::Button(QWidget *parent, int size, int x, int y) : size(size)
 {
@@ -19,15 +17,15 @@ void    Button::changeIcon()
     {
         case NEUTRAL:
             this->setIconSize(QSize(this->size, this->size));
-            this->setIcon(QIcon(QPixmap(white_xpm)));
+            this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(WHITE));
             break;
         case PLAYER1:
             this->setIconSize(QSize(this->size, this->size));
-            this->setIcon(QIcon(QPixmap(red_xpm)));
+            this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(RED));
             break;
         case PLAYER2:
             this->setIconSize(QSize(this->size, this->size));
-            this->setIcon(QIcon(QPixmap(cyan_xpm)));
+            this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(CYAN));
             break;
     }
 }
@@ -35,9 +33,9 @@ void    Button::changeIcon()
 void    Button::ChangeState()
 {
     if (this->state == NEUTRAL || this->state == PLAYER1)
-        this->setIcon(QIcon(QPixmap(red_xpm)));
+        this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(RED));
     else
-        this->setIcon(QIcon(QPixmap(cyan_xpm)));
+        this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(CYAN));
 }
 
 int Button::GetId()

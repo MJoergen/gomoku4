@@ -5,6 +5,7 @@
 
 # include "Move.h"
 # include "ButtonState.h"
+# include "ButtonIconFactory.h"
 
 class Button : public QPushButton
 {

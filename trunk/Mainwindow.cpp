@@ -25,13 +25,13 @@ Mainwindow    *Mainwindow::GetInstance()
 
 void    Mainwindow::init()
 {
-    this->ia              = NULL;
-    this->buttonsArray    = NULL;
-    this->statisticsPanel = NULL;
-    this->algo            = ALPHABETA;
-    this->boardSize       = DEFAULT_BOARDSIZE;
-    this->iaPlayer        = false;
-    this->statisticsPanel = new StatisticsPanel(this);
+    this->ia                = NULL;
+    this->buttonsArray      = NULL;
+    this->statisticsPanel   = NULL;
+    this->algo              = ALPHABETA;
+    this->boardSize         = DEFAULT_BOARDSIZE;
+    this->iaPlayer          = false;
+    this->statisticsPanel   = new StatisticsPanel(this);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
     Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
 }
@@ -206,9 +206,14 @@ void            Mainwindow::UpdateStatistics(int nbConsideredNode)
 void    Mainwindow::DestroyInstance()
 {
     if (instance)
+    {
+        instance = NULL;
         delete instance;
+    }
 }
 
 Mainwindow::~Mainwindow()
 {
+    ButtonIconFactory::DestroyInstance();
+    Gomoku::DestroyInstance();
 }
