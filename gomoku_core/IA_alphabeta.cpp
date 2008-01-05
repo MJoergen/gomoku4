@@ -54,8 +54,10 @@ void    AlphaBeta::findMove()
 
     this->treeNodes = 0;
     AlgoAlphaBeta(&bestMove, -INFINITY, INFINITY, DEEP_MAX);
-    Mainwindow::GetInstance()->UpdateStatistics(this->treeNodes);
 	if (bestMove)
+	{
 		Gomoku::GetInstance()->commitMove(bestMove, true);
+        Mainwindow::GetInstance()->UpdateStatistics(this->treeNodes);
+	}
 }
 
