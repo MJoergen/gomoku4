@@ -5,6 +5,7 @@
 # include <QFrame>
 # include <QGroupBox>
 # include <QHBoxLayout>
+# include <QVBoxLayout>
 
 # include "Mainwindow.h"
 
@@ -33,6 +34,7 @@ class StatisticsPanel
         QHBoxLayout *hboxLayoutNodes;
         QHBoxLayout *hboxLayoutNbFreePions;
         QHBoxLayout *hboxLayoutNbMoves;
+        QVBoxLayout *vboxLayout;
         Mainwindow  *mainwindow;
         QGroupBox   *groupBox;
 

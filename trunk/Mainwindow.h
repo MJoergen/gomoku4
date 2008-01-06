@@ -19,7 +19,7 @@
 # define DEFAULT_BOARDSIZE  5
 # define DEFAULT_BUTTONSIZE 50
 # define MENU_HEIGHT        25
-# define STATS_PANEL_WIDTH  150
+# define STATS_PANEL_WIDTH  180
 
 class OptionsWindow;
 class Alphabeta;
@@ -41,7 +41,6 @@ class Mainwindow : public QMainWindow
         QAction             *quitAction;
         QAction             *optionsAction;
         Button              ***buttonsArray;
-        OptionsWindow       *optionsWindow;
         StatisticsPanel     *statisticsPanel;
         static Mainwindow   *instance;
 
