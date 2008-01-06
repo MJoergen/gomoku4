@@ -2,10 +2,14 @@
 #include "gomoku.h"
 #include "Move.h"
 
-int Gomoku::dx[4] = { 0,-1,-1,-1};
-int Gomoku::dy[4] = {-1,-1, 0, 1};
+int     Gomoku::dx[4] = { 0,-1,-1,-1};
+int     Gomoku::dy[4] = {-1,-1, 0, 1};
+Gomoku  *Gomoku::instance = NULL;
 
-Gomoku    *Gomoku::instance = NULL;
+
+Gomoku::Gomoku() : stones(0), nb_moves(0), state(0)
+{
+}
 
 unsigned int Gomoku::getPlayerToMove() const
 {
@@ -15,10 +19,6 @@ unsigned int Gomoku::getPlayerToMove() const
 unsigned int Gomoku::getState() const
 {
     return (state);
-}
-
-Gomoku::Gomoku() : stones(0), nb_moves(0), state(0)
-{
 }
 
 void	Gomoku::SetSize(int size)

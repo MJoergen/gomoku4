@@ -1,26 +1,29 @@
-#include <iostream>
 #include "StatisticsPanel.h"
 
 StatisticsPanel::StatisticsPanel(Mainwindow *mainwindow)
 {
     this->mainwindow = mainwindow;
     this->groupBox   = new QGroupBox("Statistics", mainwindow);
+    this->vboxLayout    = new QVBoxLayout(this->groupBox);
     this->addInfos(&this->framePlayer, &this->hboxLayoutPlayer, "Player :", &this->player_t, &this->player);
     this->addInfos(&this->frameAlgorythm, &this->hboxLayoutAlgorythm, "Algorithm :", &this->algorithm_t, &this->algorithm);
     this->addInfos(&this->frameNodes, &this->hboxLayoutNodes, "Nodes :", &this->nodes_t, &this->nodes);
     this->addInfos(&this->frameNbFreePions, &this->hboxLayoutNbFreePions, "Free pions :", &this->nbFreePions_t, &this->nbFreePions);
     this->addInfos(&this->frameNbMoves, &this->hboxLayoutNbMoves, "Moves :", &this->nbMoves_t, &this->nbMoves);
+    this->vboxLayout->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
 }
 
 void    StatisticsPanel::addInfos(QFrame **frame, QHBoxLayout **hboxLayout,
                                   QString titleText, QLabel **title, QLabel **value)
 {
-    *frame       = new QFrame(this->groupBox);
+    *frame       = new QFrame();
     *hboxLayout  = new QHBoxLayout(*frame);
-    *title       = new QLabel(titleText);
-    *value       = new QLabel();
+    *title       = new QLabel(titleText, *frame);
+    *value       = new QLabel(*frame);
+
     (*hboxLayout)->addWidget(*title);
     (*hboxLayout)->addWidget(*value);
+    this->vboxLayout->addWidget(*frame);
 }
 
 void    StatisticsPanel::UpdateSize(int nbButtonsSide)
@@ -28,11 +31,6 @@ void    StatisticsPanel::UpdateSize(int nbButtonsSide)
     this->groupBox->resize(STATS_PANEL_WIDTH,
                            this->mainwindow->height() - MENU_HEIGHT - 5);
     this->groupBox->move(nbButtonsSide * DEFAULT_BUTTONSIZE, MENU_HEIGHT);
-    this->framePlayer->move(0, 20);
-    this->frameAlgorythm->move(0, 40);
-    this->frameNodes->move(0, 60);
-    this->frameNbFreePions->move(0, 80);
-    this->frameNbMoves->move(0, 100);
 }
 
 void    StatisticsPanel::UpdateStatistics(QString player, QString algorithm,
@@ -43,7 +41,6 @@ void    StatisticsPanel::UpdateStatistics(QString player, QString algorithm,
     this->nodes->setNum(nbNodes);
     this->nbFreePions->setNum(nbFreePions);
     this->nbMoves->setNum(nbMoves);
-
 }
 
 StatisticsPanel::~StatisticsPanel()
@@ -65,4 +62,5 @@ StatisticsPanel::~StatisticsPanel()
     delete this->nbFreePions;
     delete this->frameNbFreePions;
     delete this->hboxLayoutNbFreePions;
+    delete this->vboxLayout;
 }
