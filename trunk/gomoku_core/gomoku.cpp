@@ -49,18 +49,6 @@ Gomoku    *Gomoku::GetInstance()
     return (instance);
 }
 
-/*void		    Gomoku::dump(std::ostream &o) const
-{
-  const char	symbol[3] = {'.','X','O'};
-
-    for (unsigned int i = 0; i < BOARD_SIZE; i++)
-    {
-        for (unsigned int j = 0; j < BOARD_SIZE; j++)
-            o << symbol[board[i][j]];
-        o << std::endl;
-	}
-}*/
-
 std::vector<Move *>	    Gomoku::initAlgo(unsigned int x) const
 {
     std::vector<Move *>	move;
