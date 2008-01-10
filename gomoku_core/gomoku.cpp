@@ -24,7 +24,7 @@ GameState Gomoku::getState() const
 void	Gomoku::SetSize(int size)
 {
     this->size = size;
-    this->ResetNbMoves();
+    this->Reset();
 }
 
 void    Gomoku::Reset()
