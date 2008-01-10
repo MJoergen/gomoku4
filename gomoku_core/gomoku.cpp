@@ -150,7 +150,7 @@ void	    Gomoku::undoMove(const Move *move)
     board[move->getX()][move->getY()]->SetState(NEUTRAL);
     nb_moves--;
     stones--;
-    state = INITIAL;
+    state = IN_PROGRESS;
 }
 
 uint	Gomoku::evaluate() const
