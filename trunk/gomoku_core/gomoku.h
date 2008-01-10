@@ -5,8 +5,8 @@
 # include <iostream>
 # include "Move.h"
 # include "defines.h"
-# include "../Button.h"
-# include "../AlgorithmType.h"
+# include "Button.h"
+# include "AlgorithmType.h"
 
 typedef	enum
 {
