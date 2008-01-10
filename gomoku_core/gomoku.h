@@ -10,7 +10,7 @@
 
 typedef	enum
 {
-	INITIAL,
+	IN_PROGRESS,
     VICTORY_PLAYER1,
     VICTORY_PLAYER2,
     ALLOWED,
