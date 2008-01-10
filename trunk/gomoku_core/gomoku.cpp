@@ -7,7 +7,7 @@ int     Gomoku::dy[4] = {-1,-1, 0, 1};
 Gomoku  *Gomoku::instance = NULL;
 
 
-Gomoku::Gomoku() : stones(0), nb_moves(0), state(0)
+Gomoku::Gomoku() : stones(0), nb_moves(0), state(INITIAL)
 {
 }
 
@@ -16,7 +16,7 @@ unsigned int Gomoku::getPlayerToMove() const
     return (nb_moves % 2) + 1;
 }
 
-unsigned int Gomoku::getState() const
+GameState Gomoku::getState() const
 {
     return (state);
 }
@@ -125,10 +125,10 @@ void	Gomoku::CheckGameState(unsigned int x, unsigned int y, unsigned int p)
             backward++;
 
         if (forward + backward > LINE_SIZE)
-            state = p;
+            state = (GameState)p;
     }
     if (stones == (this->size * this->size))
-        state = FULL_BOARD;
+        state = DRAW;
 }
 
 void	         Gomoku::commitMove(const Move *move, bool setState)
@@ -150,7 +150,7 @@ void	    Gomoku::undoMove(const Move *move)
     board[move->getX()][move->getY()]->SetState(NEUTRAL);
     nb_moves--;
     stones--;
-    state = 0;
+    state = INITIAL;
 }
 
 uint	Gomoku::evaluate() const

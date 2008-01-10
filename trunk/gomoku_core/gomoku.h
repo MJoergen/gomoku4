@@ -8,6 +8,14 @@
 # include "../Button.h"
 # include "../AlgorithmType.h"
 
+typedef	enum
+{
+	INITIAL,
+	PLY1,
+	PLY2,
+	DRAW
+}	GameState;		
+
 class Gomoku
 {
     private:
@@ -19,7 +27,7 @@ class Gomoku
         int	size;
         int stones;
         unsigned int	nb_moves;
-        unsigned int	state;
+        GameState		state;
         Button		    ***board;
         AlgorithmType	AlgoType;
 
@@ -41,7 +49,7 @@ class Gomoku
 		void				CheckGameState(unsigned int x, unsigned int y, unsigned int p);
         unsigned int        evaluate() const;
         unsigned int        getPlayerToMove() const;
-        unsigned int        getState() const;
+        GameState        	getState() const;
         std::vector<Move *> getCorrectMoves() const;
         std::vector<Move *> initAlgo(unsigned int x = 0) const;
 
