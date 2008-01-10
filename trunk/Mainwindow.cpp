@@ -31,6 +31,7 @@ void    Mainwindow::init()
     this->algo              = ALPHABETA;
     this->boardSize         = DEFAULT_BOARDSIZE;
     this->iaPlayer          = false;
+    this->referee           = new Referee();
     this->statisticsPanel   = new StatisticsPanel(this);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
     Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
@@ -214,6 +215,8 @@ void    Mainwindow::DestroyInstance()
 
 Mainwindow::~Mainwindow()
 {
+    delete this->statisticsPanel;
+    delete this->referee;
     ButtonIconFactory::DestroyInstance();
     Gomoku::DestroyInstance();
 }

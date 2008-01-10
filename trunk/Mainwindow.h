@@ -6,15 +6,16 @@
 # include <QLabel>
 # include <QMainWindow>
 
+# include "IA.h"
 # include "Button.h"
 # include "gomoku.h"
+# include "Referee.h"
+# include "IA_negamax.h"
+# include "IA_alphabeta.h"
 # include "AlgorithmType.h"
 # include "OptionsWindow.h"
 # include "StatisticsPanel.h"
 # include "ButtonIconFactory.h"
-# include "IA_alphabeta.h"
-# include "IA_negamax.h"
-# include "IA.h"
 
 # define DEFAULT_BOARDSIZE  5
 # define DEFAULT_BUTTONSIZE 50
@@ -41,6 +42,7 @@ class Mainwindow : public QMainWindow
         QAction             *quitAction;
         QAction             *optionsAction;
         Button              ***buttonsArray;
+        Referee             *referee;
         StatisticsPanel     *statisticsPanel;
         static Mainwindow   *instance;
 
