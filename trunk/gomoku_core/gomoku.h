@@ -14,6 +14,7 @@ typedef	enum
     VICTORY_PLAYER2,
     ALLOWED,
     FORBIDDEN,
+    INITIAL,
     BOARD_FULL
 }	GameState;
 
