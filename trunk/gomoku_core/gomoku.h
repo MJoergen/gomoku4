@@ -5,16 +5,16 @@
 # include <iostream>
 # include "Move.h"
 # include "defines.h"
-# include "Button.h"
-# include "AlgorithmType.h"
+# include "../Button.h"
+# include "../AlgorithmType.h"
 
 typedef	enum
 {
+	INITIAL,
     VICTORY_PLAYER1,
     VICTORY_PLAYER2,
     ALLOWED,
     FORBIDDEN,
-    INITIAL,
     BOARD_FULL
 }	GameState;
 
