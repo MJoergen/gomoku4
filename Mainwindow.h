@@ -26,6 +26,7 @@ class OptionsWindow;
 class Alphabeta;
 class NegaMax;
 class StatisticsPanel;
+class Referee;
 
 class Mainwindow : public QMainWindow
 {
