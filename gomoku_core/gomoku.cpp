@@ -7,7 +7,7 @@ int     Gomoku::dy[4] = {-1,-1, 0, 1};
 Gomoku  *Gomoku::instance = NULL;
 
 
-Gomoku::Gomoku() : stones(0), nb_moves(0), state(INITIAL)
+Gomoku::Gomoku() : stones(0), nb_moves(0), state(IN_PROGRESS)
 {
 }
 
