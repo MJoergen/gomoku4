@@ -27,9 +27,10 @@ void	Gomoku::SetSize(int size)
     this->ResetNbMoves();
 }
 
-void    Gomoku::ResetNbMoves()
+void    Gomoku::Reset()
 {
     this->nb_moves = 0;
+	this->stones = 0;
 }
 
 void	Gomoku::SetAlgorithm(AlgorithmType algo)
