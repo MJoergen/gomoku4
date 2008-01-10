@@ -13,7 +13,7 @@ Gomoku::Gomoku() : stones(0), nb_moves(0), state(INITIAL)
 
 unsigned int Gomoku::getPlayerToMove() const
 {
-    return (nb_moves % 2);
+    return (nb_moves % 2) + 1;
 }
 
 GameState Gomoku::getState() const
