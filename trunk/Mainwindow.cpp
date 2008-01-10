@@ -32,7 +32,7 @@ void    Mainwindow::init()
     this->algo              = ALPHABETA;
     this->boardSize         = DEFAULT_BOARDSIZE;
     this->iaPlayer          = false;
-    this->referee           = new Referee();
+    this->referee           = new Referee(this);
     this->statisticsPanel   = new StatisticsPanel(this);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
     Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
@@ -136,9 +136,6 @@ void    Mainwindow::buttonClicked()
             Gomoku::GetInstance()->commitMove(button->GetPos(), true);
             this->IaPlay();
         }
-        else
-            QMessageBox::critical(this, "Gomoku - Illegal action",
-                                  "This pion is not free. You are allowed to use it.");
     }
 }
 
