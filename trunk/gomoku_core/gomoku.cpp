@@ -31,6 +31,7 @@ void    Gomoku::Reset()
 {
     this->nb_moves = 0;
 	this->stones = 0;
+	this->state = IN_PROGRESS;
 }
 
 void	Gomoku::SetAlgorithm(AlgorithmType algo)
