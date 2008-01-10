@@ -1,5 +1,6 @@
 #include <QMenuBar>
 #include <QStatusBar>
+#include <QMessageBox>
 #include <QDesktopWidget>
 
 #include "Mainwindow.h"
@@ -128,10 +129,16 @@ void    Mainwindow::buttonClicked()
 
     if (button)
     {
-        this->iaPlayer = true;
-        this->UpdateStatistics(0);
-        Gomoku::GetInstance()->commitMove(button->GetPos(), true);
-        this->IaPlay();
+        if (this->referee->CheckMove(this->buttonsArray, button->GetPos()) == ALLOWED)
+        {
+            this->iaPlayer = true;
+            this->UpdateStatistics(0);
+            Gomoku::GetInstance()->commitMove(button->GetPos(), true);
+            this->IaPlay();
+        }
+        else
+            QMessageBox::critical(this, "Gomoku - Illegal action",
+                                  "This pion is not free. You are not allowed to use it.");
     }
 }
 
@@ -181,7 +188,6 @@ void    Mainwindow::IaPlay()
     {
         this->ia->findMove();
         this->iaPlayer = false;
-        //this->UpdateStatistics(0);
     }
 }
 
@@ -198,7 +204,7 @@ void            Mainwindow::UpdateStatistics(int nbConsideredNode)
     QString     algorythm;
 
     algorythm = this->algo == ALPHABETA ? "AlphaBeta" : "NegaMax";
-    player = this->iaPlayer ? "IA" : "You";
+    //player = this->iaPlayer ? "IA" : "You";
     this->statisticsPanel->UpdateStatistics(player, algorythm,
                                             nbConsideredNode, 0,
                                             Gomoku::GetInstance()->GetNbMoves());
