@@ -13,7 +13,7 @@ Gomoku::Gomoku() : stones(0), nb_moves(0), state(INITIAL)
 
 unsigned int Gomoku::getPlayerToMove() const
 {
-    return (nb_moves % 2) + 1;
+    return (nb_moves % 2);
 }
 
 GameState Gomoku::getState() const
@@ -128,7 +128,7 @@ void	Gomoku::CheckGameState(unsigned int x, unsigned int y, unsigned int p)
             state = (GameState)p;
     }
     if (stones == (this->size * this->size))
-        state = DRAW;
+        state = BOARD_FULL;
 }
 
 void	         Gomoku::commitMove(const Move *move, bool setState)
