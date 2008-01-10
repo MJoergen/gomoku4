@@ -138,7 +138,7 @@ void    Mainwindow::buttonClicked()
         }
         else
             QMessageBox::critical(this, "Gomoku - Illegal action",
-                                  "This pion is not free. You are not allowed to use it.");
+                                  "This pion is not free. You are allowed to use it.");
     }
 }
 

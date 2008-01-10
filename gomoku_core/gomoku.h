@@ -10,11 +10,12 @@
 
 typedef	enum
 {
-	INITIAL,
-	PLY1,
-	PLY2,
-	DRAW
-}	GameState;		
+    VICTORY_PLAYER1,
+    VICTORY_PLAYER2,
+    ALLOWED,
+    FORBIDDEN,
+    BOARD_FULL
+}	GameState;
 
 class Gomoku
 {
