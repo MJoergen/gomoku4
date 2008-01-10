@@ -114,7 +114,7 @@ void    Mainwindow::startNewGame()
 {
     this->cleanButtonsArray();
     this->createButtons();
-    Gomoku::GetInstance()->ResetNbMoves();
+    Gomoku::GetInstance()->Reset();
     this->UpdateStatistics(0);
 }
 
@@ -134,7 +134,14 @@ void    Mainwindow::buttonClicked()
             this->iaPlayer = true;
             this->UpdateStatistics(0);
             Gomoku::GetInstance()->commitMove(button->GetPos(), true);
-            this->IaPlay();
+            if (this->referee->CheckGame() == IN_PROGRESS)
+            {
+                this->IaPlay();
+                if (this->referee->CheckGame() != IN_PROGRESS)
+                    this->startNewGame();
+            }
+            else
+                this->startNewGame();
         }
     }
 }

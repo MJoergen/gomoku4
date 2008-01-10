@@ -20,7 +20,7 @@
 # define DEFAULT_BOARDSIZE  5
 # define DEFAULT_BUTTONSIZE 50
 # define MENU_HEIGHT        25
-# define STATS_PANEL_WIDTH  180
+# define STATS_PANEL_WIDTH  190
 
 class OptionsWindow;
 class Alphabeta;
