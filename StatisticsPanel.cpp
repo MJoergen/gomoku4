@@ -37,11 +37,11 @@ void    StatisticsPanel::UpdateSize(int nbButtonsSide)
 void    StatisticsPanel::UpdateStatistics(QString player, QString algorithm,
                                           int nbNodes, int nbFreePions, int nbMoves)
 {
-    this->player->setText(QString("<i>") + player + QString("</i>"));
-    this->algorithm->setText(QString("<i>") + algorithm + QString("</i>"));
-    this->nodes->setText(QString("<i>%1</i>").arg(nbNodes));
-    this->nbFreePions->setText(QString("<i>%1</i>").arg(nbFreePions));
-    this->nbMoves->setText(QString("<i>%1</i>").arg(nbMoves));
+    this->player->setText(player);
+    this->algorithm->setText(algorithm);
+    this->nodes->setNum(nbNodes);
+    this->nbFreePions->setNum(nbFreePions);
+    this->nbMoves->setNum(nbMoves);
 }
 
 StatisticsPanel::~StatisticsPanel()
