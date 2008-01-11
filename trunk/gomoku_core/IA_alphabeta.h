@@ -2,7 +2,7 @@
 # define __IA_ALPHABETA_H__
 
 # include "defines.h"
-# include "gomoku.h"
+# include "Gomoku.h"
 # include "Mainwindow.h"
 # include "IA.h"
 
