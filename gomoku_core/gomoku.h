@@ -7,6 +7,8 @@
 # include "defines.h"
 # include "../Button.h"
 # include "../AlgorithmType.h"
+# include "Player.h"
+# include "IA.h"
 
 typedef	enum
 {
@@ -18,36 +20,52 @@ typedef	enum
     BOARD_FULL
 }	GameState;
 
+typedef enum
+{
+	WAITING_PLAYER_ACTION,
+	DONE
+}	MoveState;
+
 class Gomoku
 {
     private:
-        static	        int dx[4];
-        static	        int dy[4];
-        static Gomoku   *instance;
+        static				int dx[4];
+        static				int dy[4];
+        static Gomoku		*instance;
 
     private:
-        int	size;
-        int stones;
-        unsigned int	nb_moves;
-        GameState		state;
-        Button		    ***board;
-        AlgorithmType	AlgoType;
+        int					size;
+		Player				*players[2];
+        Button				***board;
+        AlgorithmType		algo;
 
-    public:
+        int					stones;
+        unsigned int		nb_moves;
+        GameState			state;
+		int					nextPlayerNum;
+
+
+
+    private:
         Gomoku();
+		~Gomoku();
 
     public:
         static Gomoku       *GetInstance();
         static void         DestroyInstance();
 
     public:
-        bool                isCorrect(int x, int y) const;
-        void	            dump(std::ostream& o) const;
         void			    SetSize(int size);
-        void			    SetAlgorithm(AlgorithmType algo);
+		void				SetPlayer(int playerNum, PlayerType type);
         void			    SetBoard(Button ***button);
+        void			    SetAlgorithm(AlgorithmType algo);
+
+		MoveState			DoNextMove();
+
+		bool                isCorrect(int x, int y) const;
+        void	            dump(std::ostream& o) const;
         int                 GetNbMoves();
-        void                Reset();
+        void                ResetGame();
 		void				CheckGameState(unsigned int x, unsigned int y, unsigned int p);
         unsigned int        evaluate() const;
         unsigned int        getPlayerToMove() const;
@@ -56,8 +74,8 @@ class Gomoku
         std::vector<Move *> initAlgo(unsigned int x = 0) const;
 
     public:
-        void	commitMove(const Move *move, bool setState);
-        void	undoMove(const Move *move);
+        void				commitMove(const Move *move, bool setState);
+        void				undoMove(const Move *move);
 };
 
 #endif //!__GOMOKU_H__

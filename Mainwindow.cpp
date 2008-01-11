@@ -7,61 +7,102 @@
 
 Mainwindow *Mainwindow::instance = NULL;
 
+// Constructor
+
 Mainwindow::Mainwindow()
 {
     this->init();
     this->createMenus();
     this->CreateBoard();
-    this->createIa();
     this->doConnects();
-    this->show();
+	this->show();
+	this->startNewGame();
 }
 
-Mainwindow    *Mainwindow::GetInstance()
+// Destructor
+
+Mainwindow::~Mainwindow()
+{
+    delete this->statisticsPanel;
+    delete this->referee;
+    ButtonIconFactory::DestroyInstance();
+    Gomoku::DestroyInstance();
+}
+
+// Singleton methods
+
+Mainwindow		*Mainwindow::GetInstance()
 {
     if (instance == NULL)
         instance = new Mainwindow();
     return (instance);
 }
 
-void    Mainwindow::init()
+void			Mainwindow::DestroyInstance()
 {
-    this->ia                = NULL;
-    this->buttonsArray      = NULL;
-    this->statisticsPanel   = NULL;
-    this->algo              = ALPHABETA;
-    this->boardSize         = DEFAULT_BOARDSIZE;
-    this->iaPlayer          = false;
-    this->referee           = new Referee(this);
-    this->statisticsPanel   = new StatisticsPanel(this);
-    Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
-    Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
-}
-
-void    Mainwindow::moveToCenter()
-{
-    QDesktopWidget desktop;
-    this->move(desktop.screenGeometry().width() / 2 - this->width() / 2,
-               desktop.screenGeometry().height() / 2 - this->height() / 2);
-}
-
-void    Mainwindow::createIa()
-{
-    if (this->ia)
-        delete ia;
-    switch(this->algo)
+    if (instance)
     {
-        case ALPHABETA:
-            this->ia = new AlphaBeta();
-            break;
-
-        case NEGAMAX:
-            this->ia = new NegaMax();
-            break;
+        instance = NULL;
+        delete instance;
     }
 }
 
-void    Mainwindow::setSize()
+// Public methods
+
+void			Mainwindow::CreateBoard()
+{
+    this->setSize();
+    this->moveToCenter();
+}
+
+void			Mainwindow::SetBoardSize(int boardSize)
+{
+    this->cleanButtonsArray();
+    this->boardSize = boardSize;
+}
+
+void			Mainwindow::SetAlgorithm(AlgorithmType algo)
+{
+    this->algo = algo;
+    Gomoku::GetInstance()->SetAlgorithm(this->algo);
+}
+
+void			Mainwindow::UpdateStatistics(int nbConsideredNode)
+{
+    QString     player;
+    QString     algorythm;
+
+    algorythm = this->algo == ALPHABETA ? "AlphaBeta" : "NegaMax";
+    //player = this->isPlayer2Turn ? "IA" : "You";
+    this->statisticsPanel->UpdateStatistics(player, algorythm,
+                                            nbConsideredNode, 0,
+                                            Gomoku::GetInstance()->GetNbMoves());
+}
+
+// Private methods
+
+void			Mainwindow::init()
+{
+    this->buttonsArray = NULL;
+    this->statisticsPanel = NULL;
+    this->algo = ALPHABETA;
+    this->boardSize = DEFAULT_BOARDSIZE;
+    this->referee = new Referee(this);
+    this->statisticsPanel = new StatisticsPanel(this);
+    Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
+    Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
+	Gomoku::GetInstance()->SetPlayer(1, IS_HUMAN);
+	Gomoku::GetInstance()->SetPlayer(2, IS_IA);
+}
+
+void			Mainwindow::doConnects()
+{
+    connect(this->newGameAction, SIGNAL(triggered()), this, SLOT(startNewGame()));
+    connect(this->quitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(this->optionsAction, SIGNAL(triggered()), this, SLOT(showOptionsWindow()));
+}
+
+void			Mainwindow::setSize()
 {
     int width  = this->boardSize * DEFAULT_BUTTONSIZE + STATS_PANEL_WIDTH + 5;
     int height = this->boardSize * DEFAULT_BUTTONSIZE + MENU_HEIGHT;
@@ -74,14 +115,7 @@ void    Mainwindow::setSize()
     Gomoku::GetInstance()->SetSize(this->boardSize);
 }
 
-void    Mainwindow::SetAlgorithm(AlgorithmType algo)
-{
-    this->algo = algo;
-    this->createIa();
-    Gomoku::GetInstance()->SetAlgorithm(this->algo);
-}
-
-void    Mainwindow::createMenus()
+void			Mainwindow::createMenus()
 {
     this->fileMenu = this->menuBar()->addMenu("&File");
 
@@ -103,64 +137,7 @@ void    Mainwindow::createMenus()
     this->preferenceMenu->addAction(this->optionsAction);
 }
 
-void    Mainwindow::doConnects()
-{
-    connect(this->newGameAction, SIGNAL(triggered()), this, SLOT(startNewGame()));
-    connect(this->quitAction, SIGNAL(triggered()), this, SLOT(close()));
-    connect(this->optionsAction, SIGNAL(triggered()), this, SLOT(showOptionsWindow()));
-}
-
-void    Mainwindow::startNewGame()
-{
-    this->cleanButtonsArray();
-    this->createButtons();
-    Gomoku::GetInstance()->Reset();
-    this->UpdateStatistics(0);
-}
-
-void    Mainwindow::showOptionsWindow()
-{
-    new OptionsWindow(this->boardSize, this->algo);
-}
-
-void    Mainwindow::buttonClicked()
-{
-    Button *button = dynamic_cast<Button *>(sender());
-
-    if (button)
-    {
-        if (this->referee->CheckMove(this->buttonsArray, button->GetPos()) == ALLOWED)
-        {
-            this->iaPlayer = true;
-            this->UpdateStatistics(0);
-            Gomoku::GetInstance()->commitMove(button->GetPos(), true);
-            if (this->referee->CheckGame() == IN_PROGRESS)
-            {
-                this->IaPlay();
-                if (this->referee->CheckGame() != IN_PROGRESS)
-                    this->startNewGame();
-            }
-            else
-                this->startNewGame();
-        }
-    }
-}
-
-void    Mainwindow::cleanButtonsArray()
-{
-    if (this->buttonsArray)
-    {
-        for (int x = 0; x < this->boardSize; x++)
-        {
-            for (int y = 0; y < this->boardSize; y++)
-                delete this->buttonsArray[x][y];
-        }
-        delete [] this->buttonsArray;
-        this->buttonsArray = NULL;
-    }
-}
-
-void    Mainwindow::createButtons()
+void			Mainwindow::createButtons()
 {
     this->buttonsArray = new Button**[this->boardSize];
     for(int i = 0; i < this->boardSize; i++)
@@ -180,53 +157,67 @@ void    Mainwindow::createButtons()
     Gomoku::GetInstance()->SetBoard(this->buttonsArray);
 }
 
-void    Mainwindow::SetBoardSize(int boardSize)
+void			Mainwindow::cleanButtonsArray()
+{
+    if (this->buttonsArray)
+    {
+        for (int x = 0; x < this->boardSize; x++)
+        {
+            for (int y = 0; y < this->boardSize; y++)
+                delete this->buttonsArray[x][y];
+        }
+        delete [] this->buttonsArray;
+        this->buttonsArray = NULL;
+    }
+}
+
+void			Mainwindow::moveToCenter()
+{
+    QDesktopWidget desktop;
+    this->move(desktop.screenGeometry().width() / 2 - this->width() / 2,
+               desktop.screenGeometry().height() / 2 - this->height() / 2);
+}
+
+void			Mainwindow::startMoves()
+{
+	this->moveState = Gomoku::GetInstance()->DoNextMove();
+	if (this->referee->CheckGame() != IN_PROGRESS)
+		this->startNewGame();
+}
+
+// Public QT slots
+
+void			Mainwindow::startNewGame()
 {
     this->cleanButtonsArray();
-    this->boardSize = boardSize;
+    this->createButtons();
+    Gomoku::GetInstance()->ResetGame();
+    this->UpdateStatistics(0);
+	this->startMoves();
 }
 
-void    Mainwindow::IaPlay()
+void			Mainwindow::showOptionsWindow()
 {
-    if (this->ia)
+    new OptionsWindow(this->boardSize, this->algo);
+}
+
+void			Mainwindow::buttonClicked()
+{
+    Button *button = dynamic_cast<Button *>(sender());
+
+    if (button)
     {
-        this->ia->findMove();
-        this->iaPlayer = false;
+		if (this->moveState == WAITING_PLAYER_ACTION)
+		{
+			if (this->referee->CheckMove(this->buttonsArray, button->GetPos()) == ALLOWED)
+			{
+				this->UpdateStatistics(0);
+				Gomoku::GetInstance()->commitMove(button->GetPos(), true);
+                if (this->referee->CheckGame() != IN_PROGRESS)
+                    this->startNewGame();
+				else
+					this->startMoves();
+			}
+		}
     }
-}
-
-void    Mainwindow::CreateBoard()
-{
-    this->setSize();
-    this->startNewGame();
-    this->moveToCenter();
-}
-
-void            Mainwindow::UpdateStatistics(int nbConsideredNode)
-{
-    QString     player;
-    QString     algorythm;
-
-    algorythm = this->algo == ALPHABETA ? "AlphaBeta" : "NegaMax";
-    //player = this->iaPlayer ? "IA" : "You";
-    this->statisticsPanel->UpdateStatistics(player, algorythm,
-                                            nbConsideredNode, 0,
-                                            Gomoku::GetInstance()->GetNbMoves());
-}
-
-void    Mainwindow::DestroyInstance()
-{
-    if (instance)
-    {
-        instance = NULL;
-        delete instance;
-    }
-}
-
-Mainwindow::~Mainwindow()
-{
-    delete this->statisticsPanel;
-    delete this->referee;
-    ButtonIconFactory::DestroyInstance();
-    Gomoku::DestroyInstance();
 }

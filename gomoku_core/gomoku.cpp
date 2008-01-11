@@ -1,14 +1,128 @@
 #include <cstdlib>
-#include "gomoku.h"
+#include "Gomoku.h"
 #include "Move.h"
+#include "IA_negamax.h"
+#include "IA_alphabeta.h"
+#include <windows.h>
+#include <QMessageBox>
 
-int     Gomoku::dx[4] = { 0,-1,-1,-1};
-int     Gomoku::dy[4] = {-1,-1, 0, 1};
+int     Gomoku::dx[4] = { 0, -1, -1, -1};
+int     Gomoku::dy[4] = {-1, -1, 0, 1};
 Gomoku  *Gomoku::instance = NULL;
 
+// Constructor
 
-Gomoku::Gomoku() : stones(0), nb_moves(0), state(IN_PROGRESS)
+Gomoku::Gomoku() : size(0), board(NULL), algo(ALPHABETA)
 {
+	this->players[0] = new Player(IS_HUMAN);
+	this->players[1] = new AlphaBeta();
+	this->ResetGame();
+}
+
+// Destructor
+
+Gomoku::~Gomoku()
+{
+	delete this->players[0];
+	delete this->players[1];
+}
+
+// Singleton methods
+
+Gomoku				*Gomoku::GetInstance()
+{
+    if (instance == NULL)
+        instance = new Gomoku();
+    return (instance);
+}
+
+void				Gomoku::DestroyInstance()
+{
+    if (instance)
+    {
+        delete instance;
+        instance = NULL;
+    }
+}
+
+// Game elements setters (all reset game also)
+
+void				Gomoku::SetSize(int size)
+{
+    this->size = size;
+    this->ResetGame();
+}
+
+void				Gomoku::SetPlayer(int playerNum, PlayerType type)
+{
+	if (playerNum >= 1 && playerNum <= 2)
+	{
+		delete this->players[playerNum - 1];
+		if (type == IS_HUMAN)
+			this->players[playerNum - 1] = new Player(IS_HUMAN);
+		else
+		{
+		    switch(this->algo)
+			{
+				case ALPHABETA:
+					this->players[playerNum - 1] = new AlphaBeta();
+					break;
+				case NEGAMAX:
+					this->players[playerNum - 1] = new NegaMax();
+					break;
+			}
+		}
+	}
+}
+
+void				Gomoku::SetBoard(Button ***board)
+{
+    this->board = board;
+	this->ResetGame();
+}
+
+void				Gomoku::SetAlgorithm(AlgorithmType algoType)
+{
+    this->algo = algoType;
+
+	for (int i = 0; i < 2; i++)
+	{
+		if (this->players[i]->GetType() == IS_IA)
+		{
+			delete this->players[i];
+		    switch(this->algo)
+			{
+				case ALPHABETA:
+					this->players[i] = new AlphaBeta();
+					break;
+
+				case NEGAMAX:
+					this->players[i] = new NegaMax();
+					break;
+			}
+		}
+	}
+	this->ResetGame();
+}
+
+// Public Game methods
+
+MoveState			Gomoku::DoNextMove()
+{
+	while (1)
+	{
+		int num = this->nextPlayerNum - 1;
+		this->nextPlayerNum = (this->nextPlayerNum == 1) ? 2 : 1;
+		if (this->players[num]->GetType() == IS_HUMAN)
+			return (WAITING_PLAYER_ACTION);
+		else
+		{
+			IA *ia = (IA*)this->players[num];
+			ia->findMove();
+			if (this->state != IN_PROGRESS)
+				return (DONE);
+		}
+	}
 }
 
 unsigned int Gomoku::getPlayerToMove() const
@@ -21,34 +135,14 @@ GameState Gomoku::getState() const
     return (state);
 }
 
-void	Gomoku::SetSize(int size)
+void    Gomoku::ResetGame()
 {
-    this->size = size;
-    this->Reset();
-}
-
-void    Gomoku::Reset()
-{
-    this->nb_moves = 0;
 	this->stones = 0;
+    this->nb_moves = 0;
 	this->state = IN_PROGRESS;
-}
-
-void	Gomoku::SetAlgorithm(AlgorithmType algo)
-{
-    this->AlgoType = algo;
-}
-
-void	Gomoku::SetBoard(Button ***board)
-{
-    this->board = board;
-}
-
-Gomoku    *Gomoku::GetInstance()
-{
-    if (instance == NULL)
-        instance = new Gomoku();
-    return (instance);
+	this->nextPlayerNum = 1;
+	this->players[0]->ResetPlayer();
+	this->players[0]->ResetPlayer();
 }
 
 std::vector<Move *>	    Gomoku::initAlgo(unsigned int x) const
@@ -178,13 +272,4 @@ uint	Gomoku::evaluate() const
         }
     }
     return (eval);
-}
-
-void    Gomoku::DestroyInstance()
-{
-    if (instance)
-    {
-        delete instance;
-        instance = NULL;
-    }
 }
