@@ -14,8 +14,8 @@ class AlphaBeta : public IA
         unsigned int			    treeNodes;
         static const unsigned int	DEEP_MAX = 4;
 
-    public:
-        int	AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level);
+	public:
+        int		AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level);
         void    findMove();
 };
 

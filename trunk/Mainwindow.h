@@ -8,10 +8,8 @@
 
 # include "IA.h"
 # include "Button.h"
-# include "gomoku.h"
+# include "Gomoku.h"
 # include "Referee.h"
-# include "IA_negamax.h"
-# include "IA_alphabeta.h"
 # include "AlgorithmType.h"
 # include "OptionsWindow.h"
 # include "StatisticsPanel.h"
@@ -32,48 +30,52 @@ class Mainwindow : public QMainWindow
 {
     Q_OBJECT
 
-    private:
-        int                 boardSize;
-        bool                iaPlayer;
-        IA                  *ia;
-        AlgorithmType       algo;
+	private:
+        static Mainwindow   *instance;
+
+	private:
         QMenu               *fileMenu;
         QMenu               *preferenceMenu;
         QAction             *newGameAction;
         QAction             *quitAction;
         QAction             *optionsAction;
+
+    private:
+        int                 boardSize;
+        AlgorithmType       algo;
         Button              ***buttonsArray;
         Referee             *referee;
         StatisticsPanel     *statisticsPanel;
-        static Mainwindow   *instance;
+		MoveState			moveState;
 
     private:
         Mainwindow();
         ~Mainwindow();
 
+	public:
+        static Mainwindow  *GetInstance();
+        static void        DestroyInstance();		
+
     public:
-        void               IaPlay();
         void               CreateBoard();
         void               SetBoardSize(int boardSize);
         void               SetAlgorithm(AlgorithmType algo);
         void               UpdateStatistics(int nbConsideredNode);
-        static Mainwindow  *GetInstance();
-        static void        DestroyInstance();
 
     private:
-        void    init();
-        void    doConnects();
-        void    setSize();
-        void    createMenus();
-        void    createIa();
-        void    createButtons();
-        void    cleanButtonsArray();
-        void    moveToCenter();
+        void				init();
+        void				doConnects();
+        void			    setSize();
+        void			    createMenus();
+        void			    createButtons();
+        void				cleanButtonsArray();
+        void				moveToCenter();
+		void				startMoves();
 
     public slots:
-        void    startNewGame();
-        void    showOptionsWindow();
-        void    buttonClicked();
+        void				startNewGame();
+        void				showOptionsWindow();
+        void			    buttonClicked();
 };
 
 #endif //!_MAINWINDOW_H_
