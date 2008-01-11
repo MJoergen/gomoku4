@@ -3,8 +3,6 @@
 #include "Move.h"
 #include "IA_negamax.h"
 #include "IA_alphabeta.h"
-#include <windows.h>
-#include <QMessageBox>
 
 int     Gomoku::dx[4] = { 0, -1, -1, -1};
 int     Gomoku::dy[4] = {-1, -1, 0, 1};
