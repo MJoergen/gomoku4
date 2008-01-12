@@ -36,6 +36,7 @@ class Mainwindow : public QMainWindow
 	private:
         QMenu               *fileMenu;
         QMenu               *preferenceMenu;
+        QMenu               *modeMenu;
         QAction             *newGameAction;
         QAction             *quitAction;
         QAction             *optionsAction;
@@ -54,7 +55,7 @@ class Mainwindow : public QMainWindow
 
 	public:
         static Mainwindow  *GetInstance();
-        static void        DestroyInstance();		
+        static void        DestroyInstance();
 
     public:
         void               CreateBoard();

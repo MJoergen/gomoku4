@@ -13,7 +13,6 @@ Gomoku  *Gomoku::instance = NULL;
 Gomoku::Gomoku() : size(0), board(NULL), algo(ALPHABETA)
 {
 	this->players[0] = new Player(IS_HUMAN);
-	//this->players[1] = new Player(IS_HUMAN);
 	this->players[1] = new AlphaBeta();
 	this->ResetGame();
 }
