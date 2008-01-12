@@ -7,7 +7,9 @@ typedef enum
 {
     WHITE,
     RED,
-    CYAN
+    CYAN,
+    VALID,
+    CANCEL
 }   TypeButton;
 
 class ButtonIconFactory
@@ -16,6 +18,8 @@ class ButtonIconFactory
         QIcon   white;
         QIcon   red;
         QIcon   cyan;
+        QIcon   valid;
+        QIcon   cancel;
 
     private:
         static  ButtonIconFactory   *instance;
