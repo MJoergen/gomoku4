@@ -16,6 +16,7 @@ class Player
 
 	public:
 		Player(PlayerType playerType);
+		virtual ~Player() {};
 
 	public:
 		void		NewMove();
