@@ -13,4 +13,4 @@ class IA : public Player
 		virtual ~IA() {};
 };
 
-#endif /* __IA_H__ */
+#endif //!__IA_H__

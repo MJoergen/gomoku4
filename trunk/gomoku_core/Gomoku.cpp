@@ -1,6 +1,6 @@
 #include <cstdlib>
-#include "Gomoku.h"
 #include "Move.h"
+#include "Gomoku.h"
 #include "IA_negamax.h"
 #include "IA_alphabeta.h"
 
@@ -13,6 +13,7 @@ Gomoku  *Gomoku::instance = NULL;
 Gomoku::Gomoku() : size(0), board(NULL), algo(ALPHABETA)
 {
 	this->players[0] = new Player(IS_HUMAN);
+	//this->players[1] = new Player(IS_HUMAN);
 	this->players[1] = new AlphaBeta();
 	this->ResetGame();
 }
@@ -140,7 +141,7 @@ void    Gomoku::ResetGame()
 	this->state = IN_PROGRESS;
 	this->nextPlayerNum = 1;
 	this->players[0]->ResetPlayer();
-	this->players[0]->ResetPlayer();
+	this->players[1]->ResetPlayer();
 }
 
 std::vector<Move *>	    Gomoku::initAlgo(unsigned int x) const
