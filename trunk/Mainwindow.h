@@ -10,6 +10,7 @@
 # include "Button.h"
 # include "Gomoku.h"
 # include "Referee.h"
+# include "ModesWindow.h"
 # include "AlgorithmType.h"
 # include "OptionsWindow.h"
 # include "StatisticsPanel.h"
@@ -36,13 +37,14 @@ class Mainwindow : public QMainWindow
 	private:
         QMenu               *fileMenu;
         QMenu               *preferenceMenu;
-        QMenu               *modeMenu;
         QAction             *newGameAction;
         QAction             *quitAction;
         QAction             *optionsAction;
+        QAction             *modesAction;
 
     private:
         int                 boardSize;
+        Mode                mode;
         AlgorithmType       algo;
         Button              ***buttonsArray;
         Referee             *referee;
@@ -76,6 +78,7 @@ class Mainwindow : public QMainWindow
     public slots:
         void				startNewGame();
         void				showOptionsWindow();
+        void				showModesWindow();
         void			    buttonClicked();
 };
 

@@ -86,6 +86,7 @@ void			Mainwindow::init()
     this->buttonsArray = NULL;
     this->statisticsPanel = NULL;
     this->algo = ALPHABETA;
+    this->mode = PLAYER_VS_IA;
     this->boardSize = DEFAULT_BOARDSIZE;
     this->referee = new Referee(this);
     this->statisticsPanel = new StatisticsPanel(this);
@@ -100,6 +101,7 @@ void			Mainwindow::doConnects()
     connect(this->newGameAction, SIGNAL(triggered()), this, SLOT(startNewGame()));
     connect(this->quitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(this->optionsAction, SIGNAL(triggered()), this, SLOT(showOptionsWindow()));
+    connect(this->modesAction, SIGNAL(triggered()), this, SLOT(showModesWindow()));
 }
 
 void			Mainwindow::setSize()
@@ -129,12 +131,16 @@ void			Mainwindow::createMenus()
     this->quitAction->setStatusTip(tr("Quit application"));
     this->fileMenu->addAction(this->quitAction);
 
-    this->preferenceMenu = this->menuBar()->addMenu("&Preference");
+    this->preferenceMenu = this->menuBar()->addMenu("&Preferences");
 
     this->optionsAction = new QAction(tr("&Options"), this);
     this->optionsAction->setShortcut(tr("Ctrl+O"));
     this->optionsAction->setStatusTip(tr("Set game options"));
+    this->modesAction = new QAction(tr("&Modes"), this);
+    this->modesAction->setShortcut(tr("Ctrl+M"));
+    this->modesAction->setStatusTip(tr("Set game mode"));
     this->preferenceMenu->addAction(this->optionsAction);
+    this->preferenceMenu->addAction(this->modesAction);
 }
 
 void			Mainwindow::createButtons()
@@ -199,6 +205,11 @@ void			Mainwindow::startNewGame()
 void			Mainwindow::showOptionsWindow()
 {
     new OptionsWindow(this->boardSize, this->algo);
+}
+
+void			Mainwindow::showModesWindow()
+{
+    new ModesWindow(this->mode);
 }
 
 void			Mainwindow::buttonClicked()
