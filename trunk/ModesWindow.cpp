@@ -1,4 +1,5 @@
 #include "ModesWindow.h"
+#include "ButtonIconFactory.h"
 
 ModesWindow::ModesWindow(Mode mode)
 {
@@ -9,6 +10,7 @@ ModesWindow::ModesWindow(Mode mode)
     this->groupBox = new QGroupBox("Choose a game mode", this);
     this->generalLayout = new QGridLayout(this);
     this->modesLayout = new QVBoxLayout(this->groupBox);
+
     this->rb_playerVsPlayer = new QRadioButton("Player VS Player", this->groupBox);
     if (mode == PLAYER_VS_PLAYER)
         this->rb_playerVsPlayer->setChecked(true);
@@ -18,8 +20,11 @@ ModesWindow::ModesWindow(Mode mode)
     this->rb_IaVsIa = new QRadioButton("IA VS IA", this->groupBox);
     if (mode == IA_VS_IA)
         this->rb_IaVsIa->setChecked(true);
+
     this->b_valid = new QPushButton("Valid", this);
     this->b_cancel = new QPushButton("Cancel", this);
+    this->b_valid->setIcon(ButtonIconFactory::GetInstance()->GetIcon(VALID));
+    this->b_cancel->setIcon(ButtonIconFactory::GetInstance()->GetIcon(CANCEL));
 
     this->modesLayout->addWidget(this->rb_playerVsPlayer);
     this->modesLayout->addWidget(this->rb_playerVsIa);
