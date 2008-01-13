@@ -70,6 +70,23 @@ void			Mainwindow::SetAlgorithm(AlgorithmType algo)
 void            Mainwindow::SetMode(Mode mode)
 {
     this->mode = mode;
+    switch (mode)
+    {
+        case PLAYER_VS_PLAYER :
+            Gomoku::GetInstance()->SetPlayer(1, IS_HUMAN);
+            Gomoku::GetInstance()->SetPlayer(2, IS_HUMAN);
+            break;
+
+        case PLAYER_VS_IA :
+            Gomoku::GetInstance()->SetPlayer(1, IS_HUMAN);
+            Gomoku::GetInstance()->SetPlayer(2, IS_IA);
+            break;
+
+        case IA_VS_IA :
+            Gomoku::GetInstance()->SetPlayer(1, IS_IA);
+            Gomoku::GetInstance()->SetPlayer(2, IS_IA);
+            break;
+    }
 }
 
 void			Mainwindow::UpdateStatistics(int nbConsideredNode)
@@ -91,14 +108,12 @@ void			Mainwindow::init()
     this->buttonsArray = NULL;
     this->statisticsPanel = NULL;
     this->algo = ALPHABETA;
-    this->mode = PLAYER_VS_IA;
     this->boardSize = DEFAULT_BOARDSIZE;
     this->referee = new Referee(this);
     this->statisticsPanel = new StatisticsPanel(this);
+	this->SetMode(PLAYER_VS_IA);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
     Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
-	Gomoku::GetInstance()->SetPlayer(1, IS_HUMAN);
-	Gomoku::GetInstance()->SetPlayer(2, IS_IA);
 }
 
 void			Mainwindow::doConnects()
