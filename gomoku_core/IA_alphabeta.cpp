@@ -26,11 +26,11 @@ int	AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
 
     for (; it != eit; it++)
     {
-        Gomoku::GetInstance()->commitMove(*it, false);
+        Gomoku::GetInstance()->CommitMove(*it, false);
         val = -AlgoAlphaBeta(&child, -beta, -alpha, level - 1);
         if (child)
             delete child;
-        Gomoku::GetInstance()->undoMove(*it);
+        Gomoku::GetInstance()->UndoMove(*it);
         if (val > alpha)
         {
             alpha = val;
@@ -56,7 +56,7 @@ void    AlphaBeta::findMove()
     AlgoAlphaBeta(&bestMove, -INFINITY, INFINITY, DEEP_MAX);
 	if (bestMove)
 	{
-		Gomoku::GetInstance()->commitMove(bestMove, true);
+		Gomoku::GetInstance()->CommitMove(bestMove, true);
         Mainwindow::GetInstance()->UpdateStatistics(this->treeNodes);
 	}
 }

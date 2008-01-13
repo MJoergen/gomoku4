@@ -12,6 +12,7 @@ class Player
 	private:
 		int			movesDone;
 		int			pairsCaptured;
+		int			pendingPairs;
 		PlayerType	type;
 
 	public:
@@ -22,6 +23,9 @@ class Player
 		void		NewMove();
 		int			GetMoves();
 		void		NewPairCaptured();
+		int			GetPairs();
+		void		ResetPendingPairs();
+		void		CommitPairs();
 		int			GetPairsCaptured();
 		void		SetType(PlayerType playerType);
 		PlayerType	GetType();
