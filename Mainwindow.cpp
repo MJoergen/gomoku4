@@ -16,7 +16,6 @@ Mainwindow::Mainwindow()
     this->CreateBoard();
     this->doConnects();
 	this->show();
-	this->startNewGame();
 }
 
 // Destructor
@@ -53,6 +52,7 @@ void			Mainwindow::CreateBoard()
 {
     this->setSize();
     this->moveToCenter();
+    this->startNewGame();
 }
 
 void			Mainwindow::SetBoardSize(int boardSize)
