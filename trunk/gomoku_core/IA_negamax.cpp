@@ -27,11 +27,11 @@ int	NegaMax::AlgoNegaMax(Move **bestMove, int level)
 
     for (; it != eit; it++)
     {
-        Gomoku::GetInstance()->commitMove(*it, false);
+        Gomoku::GetInstance()->CommitMove(*it, false);
         val = -AlgoNegaMax(&child, level - 1);
         if (child)
             delete child;
-        Gomoku::GetInstance()->undoMove(*it);
+        Gomoku::GetInstance()->UndoMove(*it);
         if (val > best)
         {
             best = val;
@@ -52,7 +52,7 @@ void	NegaMax::findMove()
     AlgoNegaMax(&bestMove, DEEP_MAX);
     if (bestMove)
     {
-        Gomoku::GetInstance()->commitMove(bestMove, true);
+        Gomoku::GetInstance()->CommitMove(bestMove, true);
         Mainwindow::GetInstance()->UpdateStatistics(this->treeNodes);
     }
 }

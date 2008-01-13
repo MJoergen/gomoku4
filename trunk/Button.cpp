@@ -32,10 +32,7 @@ void    Button::changeIcon()
 
 void    Button::ChangeState()
 {
-    if (this->state == NEUTRAL || this->state == PLAYER1)
-        this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(RED));
-    else
-        this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(CYAN));
+	this->changeIcon();
 }
 
 int Button::GetId()

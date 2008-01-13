@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(PlayerType playerType) : movesDone(0), pairsCaptured(0), type(playerType)
+Player::Player(PlayerType playerType) : movesDone(0), pairsCaptured(0), pendingPairs(0), type(playerType)
 {
 }
 
@@ -16,7 +16,23 @@ int			Player::GetMoves()
 
 void		Player::NewPairCaptured()
 {
-	this->pairsCaptured++;
+	this->pendingPairs++;
+}
+
+int			Player::GetPairs()
+{
+	return (this->pairsCaptured + this->pendingPairs);
+}
+
+void		Player::ResetPendingPairs()
+{
+	this->pendingPairs = 0;
+}
+
+void		Player::CommitPairs()
+{
+	this->pairsCaptured += this->pendingPairs;
+	this->pendingPairs = 0;
 }
 
 int			Player::GetPairsCaptured()

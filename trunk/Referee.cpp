@@ -9,7 +9,7 @@ Referee::Referee(Mainwindow *mainwindow)
 
 GameState  Referee::CheckMove(Button ***buttonsArray, Move *move)
 {
-    if (buttonsArray[move->getX()][move->getY()]->GetState() != NEUTRAL)
+    if (buttonsArray[move->GetX()][move->GetY()]->GetState() != NEUTRAL)
     {
         QMessageBox::critical(this->mainwindow, "Gomoku - Illegal action",
                               "This pion is not free. You are allowed to use it.");

@@ -259,7 +259,7 @@ void			Mainwindow::buttonClicked()
 			if (this->referee->CheckMove(this->buttonsArray, button->GetPos()) == ALLOWED)
 			{
 				this->UpdateStatistics(0);
-				Gomoku::GetInstance()->commitMove(button->GetPos(), true);
+				Gomoku::GetInstance()->CommitMove(button->GetPos(), true);
                 if (this->referee->CheckGame() != IN_PROGRESS)
                     this->startNewGame();
 				else

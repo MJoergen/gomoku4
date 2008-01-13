@@ -9,6 +9,7 @@
 # include "../AlgorithmType.h"
 # include "Player.h"
 # include "IA.h"
+# include "Point.h"
 
 typedef	enum
 {
@@ -60,22 +61,27 @@ class Gomoku
         void			    SetBoard(Button ***button);
         void			    SetAlgorithm(AlgorithmType algo);
 
+	public:
 		MoveState			DoNextMove();
+        void				CommitMove(Move *move, bool setState);
+        void				UndoMove(Move *move);
+        void                ResetGame();
 
+	private:
+		void				checkGameState(unsigned int x, unsigned int y, int p);
+		void				checkTakedStones(Move *move, int p);
 		bool                isCorrect(int x, int y) const;
+		void				setMoveState(Move *move);
+
+	public:
+		int					GetPlayerToMove() const;
+
         void	            dump(std::ostream& o) const;
         int                 GetNbMoves();
-        void                ResetGame();
-		void				CheckGameState(unsigned int x, unsigned int y, unsigned int p);
         unsigned int        evaluate() const;
-        unsigned int        getPlayerToMove() const;
         GameState        	getState() const;
         std::vector<Move *> getCorrectMoves() const;
         std::vector<Move *> initAlgo(unsigned int x = 0) const;
-
-    public:
-        void				commitMove(const Move *move, bool setState);
-        void				undoMove(const Move *move);
 };
 
 #endif //!__GOMOKU_H__
