@@ -85,6 +85,7 @@ void            Mainwindow::SetMode(Mode mode)
         case IA_VS_IA :
             Gomoku::GetInstance()->SetPlayer(1, IS_IA);
             Gomoku::GetInstance()->SetPlayer(2, IS_IA);
+            this->startMoves();
             break;
     }
 }
@@ -93,10 +94,25 @@ void			Mainwindow::UpdateStatistics(int nbConsideredNode)
 {
     QString     player;
     QString     algorythm;
+    QString     gameMode;
 
-    algorythm = this->algo == ALPHABETA ? "AlphaBeta" : "NegaMax";
-    //player = this->isPlayer2Turn ? "IA" : "You";
-    this->statisticsPanel->UpdateStatistics(player, algorythm,
+//    player      = this->isPlayer2Turn ? "IA" : "You";
+    algorythm   = this->algo == ALPHABETA ? "AlphaBeta" : "NegaMax";
+    switch (this->mode)
+    {
+        case PLAYER_VS_PLAYER :
+            gameMode = "Player VS Player";
+            break;
+
+        case PLAYER_VS_IA :
+            gameMode = "Player VS IA";
+            break;
+
+        case IA_VS_IA :
+            gameMode = "IA VS IA";
+            break;
+    }
+    this->statisticsPanel->UpdateStatistics(player, algorythm, gameMode,
                                             nbConsideredNode, 0,
                                             Gomoku::GetInstance()->GetNbMoves());
 }
