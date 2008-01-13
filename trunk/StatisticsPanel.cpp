@@ -5,11 +5,13 @@ StatisticsPanel::StatisticsPanel(Mainwindow *mainwindow)
     this->mainwindow = mainwindow;
     this->groupBox   = new QGroupBox("Statistics", mainwindow);
     this->vboxLayout    = new QVBoxLayout(this->groupBox);
+    this->vboxLayout->setSpacing(1);
     this->addInfos(&this->framePlayer, &this->hboxLayoutPlayer, "Player :", &this->player_t, &this->player);
-    this->addInfos(&this->frameAlgorythm, &this->hboxLayoutAlgorythm, "Algorithm :", &this->algorithm_t, &this->algorithm);
+    this->addInfos(&this->frameMode, &this->hboxLayoutMode, "Mode :", &this->mode_t, &this->mode);
     this->addInfos(&this->frameNodes, &this->hboxLayoutNodes, "Nodes :", &this->nodes_t, &this->nodes);
-    this->addInfos(&this->frameNbFreePions, &this->hboxLayoutNbFreePions, "Free pions :", &this->nbFreePions_t, &this->nbFreePions);
     this->addInfos(&this->frameNbMoves, &this->hboxLayoutNbMoves, "Moves :", &this->nbMoves_t, &this->nbMoves);
+    this->addInfos(&this->frameAlgorythm, &this->hboxLayoutAlgorythm, "Algorithm :", &this->algorithm_t, &this->algorithm);
+    this->addInfos(&this->frameNbFreePions, &this->hboxLayoutNbFreePions, "Free pions :", &this->nbFreePions_t, &this->nbFreePions);
     this->vboxLayout->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
 }
 
@@ -34,11 +36,12 @@ void    StatisticsPanel::UpdateSize(int nbButtonsSide)
     this->groupBox->move(nbButtonsSide * DEFAULT_BUTTONSIZE, MENU_HEIGHT);
 }
 
-void    StatisticsPanel::UpdateStatistics(QString player, QString algorithm,
+void    StatisticsPanel::UpdateStatistics(QString player, QString algorithm, QString mode,
                                           int nbNodes, int nbFreePions, int nbMoves)
 {
     this->player->setText(player);
     this->algorithm->setText(algorithm);
+    this->mode->setText(mode);
     this->nodes->setNum(nbNodes);
     this->nbFreePions->setNum(nbFreePions);
     this->nbMoves->setNum(nbMoves);
@@ -63,5 +66,10 @@ StatisticsPanel::~StatisticsPanel()
     delete this->nbFreePions;
     delete this->frameNbFreePions;
     delete this->hboxLayoutNbFreePions;
+    delete this->mode_t;
+    delete this->mode;
+    delete this->frameMode;
+    delete this->hboxLayoutMode;
+
     delete this->vboxLayout;
 }

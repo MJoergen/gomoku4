@@ -19,21 +19,25 @@ class StatisticsPanel
         QLabel      *nodes;
         QLabel      *nbFreePions;
         QLabel      *nbMoves;
+        QLabel      *mode;
         QLabel      *player_t;
         QLabel      *algorithm_t;
         QLabel      *nodes_t;
         QLabel      *nbFreePions_t;
         QLabel      *nbMoves_t;
+        QLabel      *mode_t;
         QFrame      *framePlayer;
         QFrame      *frameAlgorythm;
         QFrame      *frameNodes;
         QFrame      *frameNbFreePions;
         QFrame      *frameNbMoves;
+        QFrame      *frameMode;
         QHBoxLayout *hboxLayoutPlayer;
         QHBoxLayout *hboxLayoutAlgorythm;
         QHBoxLayout *hboxLayoutNodes;
         QHBoxLayout *hboxLayoutNbFreePions;
         QHBoxLayout *hboxLayoutNbMoves;
+        QHBoxLayout *hboxLayoutMode;
         QVBoxLayout *vboxLayout;
         Mainwindow  *mainwindow;
         QGroupBox   *groupBox;
@@ -48,7 +52,7 @@ class StatisticsPanel
 
     public:
         void    UpdateSize(int nbButtonsSide);
-        void    UpdateStatistics(QString player, QString algorithm,
+        void    UpdateStatistics(QString player, QString algorithm, QString mode,
                                  int nbNodes, int nbFreePions, int nbMoves);
 };
 
