@@ -67,6 +67,11 @@ void			Mainwindow::SetAlgorithm(AlgorithmType algo)
     Gomoku::GetInstance()->SetAlgorithm(this->algo);
 }
 
+void            Mainwindow::SetMode(Mode mode)
+{
+    this->mode = mode;
+}
+
 void			Mainwindow::UpdateStatistics(int nbConsideredNode)
 {
     QString     player;
