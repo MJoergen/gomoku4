@@ -63,6 +63,7 @@ class Mainwindow : public QMainWindow
         void               CreateBoard();
         void               SetBoardSize(int boardSize);
         void               SetAlgorithm(AlgorithmType algo);
+        void               SetMode(Mode mode);
         void               UpdateStatistics(int nbConsideredNode);
 
     private:

@@ -10,7 +10,6 @@
 # include <QPushButton>
 # include <QRadioButton>
 
-
 # include "ModeType.h"
 # include "Mainwindow.h"
 
@@ -34,6 +33,10 @@ class ModesWindow : public QWidget
 
     public:
         void    moveToCenter();
+
+    public slots:
+        void    valid();
+        void    cancel();
 };
 
 #endif //!_MODESWINDOW_H_

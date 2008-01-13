@@ -25,6 +25,8 @@ ModesWindow::ModesWindow(Mode mode)
     this->b_cancel = new QPushButton("Cancel", this);
     this->b_valid->setIcon(ButtonIconFactory::GetInstance()->GetIcon(VALID));
     this->b_cancel->setIcon(ButtonIconFactory::GetInstance()->GetIcon(CANCEL));
+    connect(this->b_valid, SIGNAL(clicked()), this, SLOT(valid()));
+    connect(this->b_cancel, SIGNAL(clicked()), this, SLOT(cancel()));
 
     this->modesLayout->addWidget(this->rb_playerVsPlayer);
     this->modesLayout->addWidget(this->rb_playerVsIa);
@@ -42,7 +44,30 @@ void    ModesWindow::moveToCenter()
                Mainwindow::GetInstance()->y() + Mainwindow::GetInstance()->height() / 2 - this->height() / 2);
 }
 
+void    ModesWindow::valid()
+{
+    if (this->rb_playerVsPlayer->isChecked())
+        Mainwindow::GetInstance()->SetMode(PLAYER_VS_PLAYER);
+    else if (this->rb_playerVsIa->isChecked())
+        Mainwindow::GetInstance()->SetMode(PLAYER_VS_IA);
+    else
+        Mainwindow::GetInstance()->SetMode(IA_VS_IA);
+    delete this;
+}
+
+void    ModesWindow::cancel()
+{
+    delete this;
+}
+
 ModesWindow::~ModesWindow()
 {
+    delete this->rb_playerVsPlayer;
+    delete this->rb_playerVsIa;
+    delete this->rb_IaVsIa;
+    delete this->modesLayout;
     delete this->groupBox;
+    delete this->b_valid;
+    delete this->b_cancel;
+    delete this->generalLayout;
 }
