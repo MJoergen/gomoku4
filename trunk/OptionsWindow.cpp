@@ -99,7 +99,7 @@ void            OptionsWindow::changingPlayer()
     }
 }
 
-void    OptionsWindow::savePlayerType(int playerNum, QComboBox* player, QComboBox* algo)
+void    OptionsWindow::savePlayerType(PlayerNumber playerNum, QComboBox* player, QComboBox* algo)
 {
     if (player->itemText(player->currentIndex()) == "IA")
     {
@@ -115,8 +115,8 @@ void    OptionsWindow::savePlayerType(int playerNum, QComboBox* player, QComboBo
 void        OptionsWindow::valid()
 {
     Mainwindow::GetInstance()->SetBoardSize(this->spinBox_boardSize->value());
-    this->savePlayerType(1, this->cb_player1, this->cb_player1Algo);
-    this->savePlayerType(2, this->cb_player2, this->cb_player2Algo);
+    this->savePlayerType(PLAYER1, this->cb_player1, this->cb_player1Algo);
+    this->savePlayerType(PLAYER2, this->cb_player2, this->cb_player2Algo);
     Mainwindow::GetInstance()->CreateBoard();
     delete this;
 }

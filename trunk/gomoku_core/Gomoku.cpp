@@ -59,9 +59,9 @@ void				Gomoku::SetSize(int size)
     this->ResetGame();
 }
 
-void				Gomoku::SetPlayer(int playerNum, PlayerType type)
+void				Gomoku::SetPlayer(PlayerNumber playerNum, PlayerType type)
 {
-	if (playerNum >= 1 && playerNum <= 2)
+	if (playerNum != NEUTRAL)
 	{
 		Player *old = this->players[playerNum - 1];
 		switch(type)
@@ -229,11 +229,19 @@ void				Gomoku::setMoveState(Move *move)
 
 // Game infos getters
 
-int					Gomoku::GetPlayerToMove() const
+PlayerNumber		Gomoku::GetPlayerToMove() const
 {
-    return ((this->nextPlayerNum == 1) ? 2 : 1);
+    return ((this->nextPlayerNum == PLAYER1) ? PLAYER2 : PLAYER1);
 }
 
+Player				*Gomoku::GetPlayer(PlayerNumber playerNum)
+{
+	if (playerNum != NEUTRAL)
+	{
+		return (this->players[playerNum - 1]);
+	}
+	return (NULL);
+}
 
 // A trier !!! :D
 
