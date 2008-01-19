@@ -7,7 +7,7 @@
 # include <QHBoxLayout>
 # include <QVBoxLayout>
 
-# include "StatisticsPanel1.h"
+# include "StatisticsPanel.h"
 # include "Mainwindow.h"
 
 class Mainwindow;
