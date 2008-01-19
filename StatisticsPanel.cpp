@@ -4,7 +4,7 @@ StatisticsPanel::StatisticsPanel(Mainwindow *mainwindow)
 {
     this->mainwindow = mainwindow;
     this->groupBox   = new QGroupBox("Statistics", mainwindow);
-    this->vboxLayout    = new QVBoxLayout(this->groupBox);
+    this->vboxLayout = new QVBoxLayout(this->groupBox);
     this->vboxLayout->setSpacing(1);
     this->addInfos(&this->framePlayer, &this->hboxLayoutPlayer, "Player :", &this->player_t, &this->player);
     this->addInfos(&this->frameMode, &this->hboxLayoutMode, "Mode :", &this->mode_t, &this->mode);
@@ -70,6 +70,5 @@ StatisticsPanel::~StatisticsPanel()
     delete this->mode;
     delete this->frameMode;
     delete this->hboxLayoutMode;
-
     delete this->vboxLayout;
 }
