@@ -37,7 +37,7 @@ class Gomoku
     private:
         int					size;
 		Player				*players[2];
-        Button				***board;
+        unsigned char		***board;
         AlgorithmType		algo;
 
         int					stones;
@@ -58,7 +58,7 @@ class Gomoku
     public:
         void			    SetSize(int size);
 		void				SetPlayer(int playerNum, PlayerType type);
-        void			    SetBoard(Button ***button);
+        void			    SetBoard(unsigned char ***button);
         void			    SetAlgorithm(AlgorithmType algo);
 
 	public:
