@@ -22,7 +22,7 @@ Mainwindow::Mainwindow()
 
 Mainwindow::~Mainwindow()
 {
-    delete this->statisticsPanel;
+    delete this->statistics;
     delete this->referee;
     ButtonIconFactory::DestroyInstance();
     Gomoku::DestroyInstance();
@@ -92,10 +92,10 @@ void			Mainwindow::UpdateStatistics(int nbConsideredNode)
 void			Mainwindow::init()
 {
     this->buttonsArray = NULL;
-    this->statisticsPanel = NULL;
+    this->statistics = NULL;
     this->boardSize = DEFAULT_BOARDSIZE;
     this->referee = new Referee(this);
-    this->statisticsPanel = new StatisticsPanel(this);
+    this->statistics = new Statistics(this);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
 }
 
@@ -114,8 +114,8 @@ void			Mainwindow::setSize()
     this->resize(width, height);
     this->setMinimumSize(width, height);
     this->setMaximumSize(width, height);
-    if (this->statisticsPanel)
-        this->statisticsPanel->UpdateSize(this->boardSize);
+    if (this->statistics)
+        this->statistics->UpdateSize(this->boardSize);
     Gomoku::GetInstance()->SetSize(this->boardSize);
 }
 

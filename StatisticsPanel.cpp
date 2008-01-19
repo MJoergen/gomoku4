@@ -1,74 +1,47 @@
 #include "StatisticsPanel.h"
 
-StatisticsPanel::StatisticsPanel(Mainwindow *mainwindow)
+Statistics::Statistics(Mainwindow *mainwindow)
 {
     this->mainwindow = mainwindow;
-    this->groupBox   = new QGroupBox("Statistics", mainwindow);
-    this->vboxLayout = new QVBoxLayout(this->groupBox);
-    this->vboxLayout->setSpacing(0);
-    this->addInfos(&this->framePlayer, &this->hboxLayoutPlayer, "Player :", &this->player_t, &this->player);
-    this->addInfos(&this->frameMode, &this->hboxLayoutMode, "Mode :", &this->mode_t, &this->mode);
-    this->addInfos(&this->frameNodes, &this->hboxLayoutNodes, "Nodes :", &this->nodes_t, &this->nodes);
-    this->addInfos(&this->frameNbMoves, &this->hboxLayoutNbMoves, "Moves :", &this->nbMoves_t, &this->nbMoves);
-    this->addInfos(&this->frameAlgorythm, &this->hboxLayoutAlgorythm, "Algorithm :", &this->algorithm_t, &this->algorithm);
-    this->addInfos(&this->frameNbFreePions, &this->hboxLayoutNbFreePions, "Free pions :", &this->nbFreePions_t, &this->nbFreePions);
+    this->vboxLayout = new QVBoxLayout(this->mainwindow);
+    this->groupBox = new QGroupBox("Statistics", mainwindow);
+
+    if (Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_HUMAN)
+        this->statisticsPanelPlayer1 = new StatisticsPanel(STATS_HUMAN, this->groupBox);
+    else
+        this->statisticsPanelPlayer1 = new StatisticsPanel(STATS_IA, this->groupBox);
+    if (Gomoku::GetInstance()->GetPlayer(PLAYER2)->GetType() == IS_HUMAN)
+        this->statisticsPanelPlayer2 = new StatisticsPanel(STATS_HUMAN, this->groupBox);
+    else
+        this->statisticsPanelPlayer2 = new StatisticsPanel(STATS_IA, this->groupBox);
+
+    this->vboxLayout->addWidget(this->statisticsPanelPlayer1->GetGroupBox());
+    this->vboxLayout->addWidget(this->statisticsPanelPlayer2->GetGroupBox());
     this->vboxLayout->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
 }
 
-void    StatisticsPanel::addInfos(QFrame **frame, QHBoxLayout **hboxLayout,
-                                  QString titleText, QLabel **title, QLabel **value)
-{
-    *frame       = new QFrame();
-    *hboxLayout  = new QHBoxLayout(*frame);
-    *title       = new QLabel(*frame);
-    *value       = new QLabel(*frame);
-
-    (*title)->setText(QString("<b>") + titleText + QString("</b>"));
-    (*hboxLayout)->addWidget(*title);
-    (*hboxLayout)->addWidget(*value);
-    this->vboxLayout->addWidget(*frame);
-}
-
-void    StatisticsPanel::UpdateSize(int nbButtonsSide)
+void    Statistics::UpdateSize(int nbButtonsSide)
 {
     this->groupBox->resize(STATS_PANEL_WIDTH,
                            this->mainwindow->height() - MENU_HEIGHT - 3);
     this->groupBox->move(nbButtonsSide * DEFAULT_BUTTONSIZE + 5, MENU_HEIGHT);
 }
+//
+//void    StatisticsPanel::UpdateStatistics(QString player, QString algorithm, QString mode,
+//                                          int nbNodes, int nbFreePions, int nbMoves)
+//{
+//    this->player->setText(player);
+//    this->algorithm->setText(algorithm);
+//    this->mode->setText(mode);
+//    this->nodes->setNum(nbNodes);
+//    this->nbFreePions->setNum(nbFreePions);
+//    this->nbMoves->setNum(nbMoves);
+//}
 
-void    StatisticsPanel::UpdateStatistics(QString player, QString algorithm, QString mode,
-                                          int nbNodes, int nbFreePions, int nbMoves)
+Statistics::~Statistics()
 {
-    this->player->setText(player);
-    this->algorithm->setText(algorithm);
-    this->mode->setText(mode);
-    this->nodes->setNum(nbNodes);
-    this->nbFreePions->setNum(nbFreePions);
-    this->nbMoves->setNum(nbMoves);
-}
-
-StatisticsPanel::~StatisticsPanel()
-{
-    delete this->groupBox;
-    delete this->algorithm_t;
-    delete this->algorithm;
-    delete this->frameAlgorythm;
-    delete this->hboxLayoutAlgorythm;
-    delete this->nodes_t;
-    delete this->nodes;
-    delete this->frameNodes;
-    delete this->hboxLayoutNodes;
-    delete this->player_t;
-    delete this->player;
-    delete this->framePlayer;
-    delete this->hboxLayoutPlayer;
-    delete this->nbFreePions_t;
-    delete this->nbFreePions;
-    delete this->frameNbFreePions;
-    delete this->hboxLayoutNbFreePions;
-    delete this->mode_t;
-    delete this->mode;
-    delete this->frameMode;
-    delete this->hboxLayoutMode;
+    delete this->statisticsPanelPlayer1;
+    delete this->statisticsPanelPlayer2;
     delete this->vboxLayout;
+    delete this->groupBox;
 }

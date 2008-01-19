@@ -1,5 +1,5 @@
-#ifndef _STATISTICSPANEL_H_
-# define _STATISTICSPANEL_H_
+#ifndef _STATISTICS_H_
+# define _STATISTICS_H_
 
 # include <QLabel>
 # include <QFrame>
@@ -7,53 +7,28 @@
 # include <QHBoxLayout>
 # include <QVBoxLayout>
 
+# include "StatisticsPanel1.h"
 # include "Mainwindow.h"
 
 class Mainwindow;
 
-class StatisticsPanel
+class Statistics
 {
     private:
-        QLabel      *player;
-        QLabel      *algorithm;
-        QLabel      *nodes;
-        QLabel      *nbFreePions;
-        QLabel      *nbMoves;
-        QLabel      *mode;
-        QLabel      *player_t;
-        QLabel      *algorithm_t;
-        QLabel      *nodes_t;
-        QLabel      *nbFreePions_t;
-        QLabel      *nbMoves_t;
-        QLabel      *mode_t;
-        QFrame      *framePlayer;
-        QFrame      *frameAlgorythm;
-        QFrame      *frameNodes;
-        QFrame      *frameNbFreePions;
-        QFrame      *frameNbMoves;
-        QFrame      *frameMode;
-        QHBoxLayout *hboxLayoutPlayer;
-        QHBoxLayout *hboxLayoutAlgorythm;
-        QHBoxLayout *hboxLayoutNodes;
-        QHBoxLayout *hboxLayoutNbFreePions;
-        QHBoxLayout *hboxLayoutNbMoves;
-        QHBoxLayout *hboxLayoutMode;
-        QVBoxLayout *vboxLayout;
-        Mainwindow  *mainwindow;
-        QGroupBox   *groupBox;
-
-    private:
-        void    addInfos(QFrame **frame, QHBoxLayout **hboxLayout,
-                         QString titleText, QLabel **title, QLabel **value);
+        QVBoxLayout     *vboxLayout;
+        Mainwindow      *mainwindow;
+        QGroupBox       *groupBox;
+        StatisticsPanel *statisticsPanelPlayer1;
+        StatisticsPanel *statisticsPanelPlayer2;
 
     public:
-        StatisticsPanel(Mainwindow *mainwindow);
-        ~StatisticsPanel();
+        Statistics(Mainwindow *mainwindow);
+        ~Statistics();
 
     public:
         void    UpdateSize(int nbButtonsSide);
-        void    UpdateStatistics(QString player, QString algorithm, QString mode,
-                                 int nbNodes, int nbFreePions, int nbMoves);
+        //void    UpdateStatistics(QString player, QString algorithm, QString mode,
+          //                       int nbNodes, int nbFreePions, int nbMoves);
 };
 
 #endif //!_STATISTICSPANEL_H_
