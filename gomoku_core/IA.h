@@ -6,11 +6,11 @@
 class IA : public Player
 {
 	public:
-		IA() : Player(IS_IA) {}
+		IA(PlayerType type) : Player(type) {}
+		virtual ~IA() {};
 
 	public:
 		virtual void	findMove() = 0;
-		virtual ~IA() {};
 };
 
 #endif //!__IA_H__

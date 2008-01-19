@@ -4,7 +4,8 @@
 typedef enum
 {
 	IS_HUMAN,
-	IS_IA
+	IS_IA_ALPHABETA,
+	IS_IA_NEGAMAX
 }	PlayerType;
 
 class Player
@@ -29,6 +30,7 @@ class Player
 		int			GetPairsCaptured();
 		void		SetType(PlayerType playerType);
 		PlayerType	GetType();
+		void		CopyPlayerStat(Player *player);
 		void		ResetPlayer();
 };
 

@@ -14,6 +14,9 @@ class NegaMax : public IA
         unsigned int              treeNodes;
         static const unsigned int DEEP_MAX = 2;
 
+	public:
+		NegaMax();
+
     public:
         int	  AlgoNegaMax(Move **bestMove, int level);
         void  findMove();

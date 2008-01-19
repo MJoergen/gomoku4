@@ -10,10 +10,10 @@ Gomoku  *Gomoku::instance = NULL;
 
 // Constructor
 
-Gomoku::Gomoku() : size(0), board(NULL), algo(ALPHABETA)
+Gomoku::Gomoku() : size(0), board(NULL)
 {
 	this->players[0] = new Player(IS_HUMAN);
-	this->players[1] = new AlphaBeta();
+	this->players[1] = new Player(IS_HUMAN);
 	this->ResetGame();
 }
 
@@ -63,46 +63,22 @@ void				Gomoku::SetPlayer(int playerNum, PlayerType type)
 {
 	if (playerNum >= 1 && playerNum <= 2)
 	{
-		delete this->players[playerNum - 1];
-		if (type == IS_HUMAN)
-			this->players[playerNum - 1] = new Player(IS_HUMAN);
-		else
+		Player *old = this->players[playerNum - 1];
+		switch(type)
 		{
-		    switch(this->algo)
-			{
-				case ALPHABETA:
-					this->players[playerNum - 1] = new AlphaBeta();
-					break;
-				case NEGAMAX:
-					this->players[playerNum - 1] = new NegaMax();
-					break;
-			}
+			case IS_HUMAN:
+				this->players[playerNum - 1] = new Player(IS_HUMAN);
+				break;
+			case IS_IA_ALPHABETA:
+				this->players[playerNum - 1] = new AlphaBeta();
+				break;
+			case IS_IA_NEGAMAX:
+				this->players[playerNum - 1] = new NegaMax();
+				break;
 		}
+		this->players[playerNum - 1]->CopyPlayerStat(old);
+		delete old;
 	}
-}
-
-void				Gomoku::SetAlgorithm(AlgorithmType algoType)
-{
-    this->algo = algoType;
-
-	for (int i = 0; i < 2; i++)
-	{
-		if (this->players[i]->GetType() == IS_IA)
-		{
-			delete this->players[i];
-		    switch(this->algo)
-			{
-				case ALPHABETA:
-					this->players[i] = new AlphaBeta();
-					break;
-
-				case NEGAMAX:
-					this->players[i] = new NegaMax();
-					break;
-			}
-		}
-	}
-	this->ResetGame();
 }
 
 // Public Game methods
@@ -247,16 +223,8 @@ bool				Gomoku::isCorrect(int x, int y) const
 
 void				Gomoku::setMoveState(Move *move)
 {
-	std::list<Point>::iterator it;
-	std::list<Point> l = move->GetPointsTaken();
-
 	this->players[this->GetPlayerToMove() - 1]->NewMove();
 	this->players[this->GetPlayerToMove() - 1]->CommitPairs();
-	//board[move->GetX()][move->GetY()]->ChangeState();
-	for (it = l.begin(); it != l.end(); it++)
-	{
-		//board[(*it).GetX()][(*it).GetY()]->ChangeState();
-	}
 }
 
 // Game infos getters

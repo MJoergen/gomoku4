@@ -39,14 +39,11 @@ class Gomoku
         int					size;
 		Player				*players[2];
         unsigned char		**board;
-        AlgorithmType		algo;
 
         int					stones;
         unsigned int		nb_moves;
         GameState			state;
 		int					nextPlayerNum;
-
-
 
     private:
         Gomoku();
@@ -59,7 +56,6 @@ class Gomoku
     public:
         void			    SetSize(int size);
 		void				SetPlayer(int playerNum, PlayerType type);
-        void			    SetAlgorithm(AlgorithmType algo);
 
 	public:
 		MoveState			DoNextMove();
