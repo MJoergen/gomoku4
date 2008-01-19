@@ -78,7 +78,6 @@ class Gomoku
 		int					GetPlayerToMove() const;
 
         void	            dump(std::ostream& o) const;
-        int                 GetNbMoves();
         unsigned int        evaluate() const;
         GameState        	getState() const;
         std::vector<Move *> getCorrectMoves() const;
