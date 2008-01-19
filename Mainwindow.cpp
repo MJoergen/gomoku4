@@ -183,9 +183,26 @@ void			Mainwindow::moveToCenter()
 
 void			Mainwindow::startMoves()
 {
-	this->moveState = Gomoku::GetInstance()->DoNextMove();
+	while ((this->moveState = Gomoku::GetInstance()->DoNextMove()) == DONE)
+	{
+		this->updateDisplay();
+	}
 	if (this->referee->CheckGame() != IN_PROGRESS)
 		this->startNewGame();
+}
+
+void			Mainwindow::updateDisplay()
+{
+	Move* move = Gomoku::GetInstance()->GetLastMove();
+	if (move != NULL)
+	{
+		this->buttonsArray[move->GetX()][move->GetY()]->SetState(Gomoku::GetInstance()->GetPlayerToMove());
+		std::list<Point>::iterator it;
+		std::list<Point> pointsTaken = move->GetPointsTaken();
+
+		for (it = pointsTaken.begin(); it != pointsTaken.end(); it++)
+			this->buttonsArray[(*it).GetX()][(*it).GetY()]->SetState(NEUTRAL);
+	}
 }
 
 // Public QT slots
@@ -216,6 +233,7 @@ void			Mainwindow::buttonClicked()
 			{
 				this->UpdateStatistics(0);
 				Gomoku::GetInstance()->CommitMove(button->GetPos(), true);
+				this->updateDisplay();
                 if (this->referee->CheckGame() != IN_PROGRESS)
                     this->startNewGame();
 				else

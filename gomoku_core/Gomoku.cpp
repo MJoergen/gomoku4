@@ -12,6 +12,7 @@ Gomoku  *Gomoku::instance = NULL;
 
 Gomoku::Gomoku() : size(0), board(NULL)
 {
+	this->lastMove = NULL;
 	this->players[0] = new Player(IS_HUMAN);
 	this->players[1] = new Player(IS_HUMAN);
 	this->ResetGame();
@@ -97,16 +98,11 @@ MoveState			Gomoku::DoNextMove()
 	}
 }
 
-Move				*Gomoku::GetLastMove()
-{
-	return (new Move(this->_x, this->_y));
-}
-
 void				Gomoku::CommitMove(Move *move, bool setState)
 {
     int p = GetPlayerToMove();
-    unsigned int x = this->_x = move->GetX();
-    unsigned int y = this->_y = move->GetY();
+    int x = move->GetX();
+    int y = move->GetY();
 
     this->nb_moves++;
     this->stones++;
@@ -225,6 +221,7 @@ void				Gomoku::setMoveState(Move *move)
 {
 	this->players[this->GetPlayerToMove() - 1]->NewMove();
 	this->players[this->GetPlayerToMove() - 1]->CommitPairs();
+	this->lastMove = move;
 }
 
 // Game infos getters
@@ -241,6 +238,11 @@ Player				*Gomoku::GetPlayer(PlayerNumber playerNum)
 		return (this->players[playerNum - 1]);
 	}
 	return (NULL);
+}
+
+Move				*Gomoku::GetLastMove()
+{
+	return (this->lastMove);
 }
 
 // A trier !!! :D

@@ -34,11 +34,6 @@ void			Button::changeIcon()
     }
 }
 
-void			Button::ChangeState()
-{
-	this->changeIcon();
-}
-
 int				Button::GetId()
 {
     return (this->id);
@@ -49,12 +44,13 @@ PlayerNumber	Button::GetState()
     return (this->state);
 }
 
-Move    *Button::GetPos()
+Move			*Button::GetPos()
 {
     return (this->pos);
 }
 
-void    Button::SetState(PlayerNumber state)
+void			Button::SetState(PlayerNumber state)
 {
     this->state = state;
+	this->changeIcon();
 }
