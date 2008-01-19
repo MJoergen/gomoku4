@@ -73,7 +73,7 @@ void				Gomoku::SetPlayer(int playerNum, PlayerType type)
 	}
 }
 
-void				Gomoku::SetBoard(Button ***board)
+void				Gomoku::SetBoard(unsigned char ***board)
 {
     this->board = board;
 	this->ResetGame();
@@ -131,7 +131,7 @@ void				Gomoku::CommitMove(Move *move, bool setState)
 
     this->nb_moves++;
     this->stones++;
-    board[x][y]->SetState((buttonState)p);
+    board[x][y] = (unsigned char *)p;
 	this->checkTakedStones(move, p);
 	if (setState)
 		this->setMoveState(move);
@@ -146,13 +146,13 @@ void				Gomoku::UndoMove(Move *move)
 	
 	this->nb_moves--;
     this->stones--;
-	board[move->GetX()][move->GetY()]->SetState(NEUTRAL);
+	board[move->GetX()][move->GetY()] = (unsigned char *)NEUTRAL;
 	this->players[this->GetPlayerToMove() - 1]->ResetPendingPairs();
 	if (!l.empty())
 	{
 		for (it = l.begin(); it != l.end(); ++it)
 		{
-			board[(*it).GetX()][(*it).GetY()]->SetState((buttonState)adv);
+			board[(*it).GetX()][(*it).GetY()] = (unsigned char *)adv;
 			this->stones++;
 		}
 	}
@@ -183,12 +183,12 @@ void				Gomoku::checkGameState(unsigned int x, unsigned int y, int p)
 		{
 		    int forward = 1;
 		    while (isCorrect(x + (forward * dx[d]), y + (forward * dy[d])) &&
-		            (board[x + (forward * dx[d])][y + (forward * dy[d])]->GetState() == p))
+		            (board[x + (forward * dx[d])][y + (forward * dy[d])] == (unsigned char *)p))
 		        forward++;
 	
 	        int backward = 1;
 	        while (isCorrect(x - (backward * dx[d]), y - (backward * dy[d])) &&
-	                (board[x - (backward * dx[d])][y - (backward * dy[d])]->GetState() == p))
+	                (board[x - (backward * dx[d])][y - (backward * dy[d])] == (unsigned char *)p))
 	            backward++;
 	
 	        if (forward + backward > LINE_SIZE)
@@ -206,14 +206,14 @@ void				Gomoku::checkTakedStones(Move *move, int p)
     for (int d = 0; d < 4; d++)
     {
 		if (isCorrect(x + (1 * dx[d]), y + (1 * dy[d]))
-			&& (board[x + (1 * dx[d])][y + (1 * dy[d])]->GetState() == adv)
+			&& (board[x + (1 * dx[d])][y + (1 * dy[d])] == (unsigned char *)adv)
 			&& isCorrect(x + (2 * dx[d]), y + (2 * dy[d]))
-			&& (board[x + (2 * dx[d])][y + (2 * dy[d])]->GetState() == adv)
+			&& (board[x + (2 * dx[d])][y + (2 * dy[d])] == (unsigned char *)adv)
 			&& isCorrect(x + (3 * dx[d]), y + (3 * dy[d]))
-			&& (board[x + (3 * dx[d])][y + (3 * dy[d])]->GetState() == p))
+			&& (board[x + (3 * dx[d])][y + (3 * dy[d])] == (unsigned char *)p))
 		{
-			board[x + (1 * dx[d])][y + (1 * dy[d])]->SetState(NEUTRAL);
-			board[x + (2 * dx[d])][y + (2 * dy[d])]->SetState(NEUTRAL);
+			board[x + (1 * dx[d])][y + (1 * dy[d])] = (unsigned char *)NEUTRAL;
+			board[x + (2 * dx[d])][y + (2 * dy[d])] = (unsigned char *)NEUTRAL;
 			move->NewPointTaken(x + (1 * dx[d]), y + (1 * dy[d]));
 			move->NewPointTaken(x + (2 * dx[d]), y + (2 * dy[d]));
 			this->stones -= 2;
@@ -221,14 +221,14 @@ void				Gomoku::checkTakedStones(Move *move, int p)
 		}
 
 		if (isCorrect(x - (1 * dx[d]), y - (1 * dy[d]))
-			&& (board[x - (1 * dx[d])][y - (1 * dy[d])]->GetState() == adv)
+			&& (board[x - (1 * dx[d])][y - (1 * dy[d])] == (unsigned char *)adv)
 			&& isCorrect(x - (2 * dx[d]), y - (2 * dy[d]))
-			&& (board[x - (2 * dx[d])][y - (2 * dy[d])]->GetState() == adv)
+			&& (board[x - (2 * dx[d])][y - (2 * dy[d])] == (unsigned char *)adv)
 			&& isCorrect(x - (3 * dx[d]), y - (3 * dy[d]))
-			&& (board[x - (3 * dx[d])][y - (3 * dy[d])]->GetState() == p))
+			&& (board[x - (3 * dx[d])][y - (3 * dy[d])] == (unsigned char *)p))
 		{
-			board[x - (1 * dx[d])][y - (1 * dy[d])]->SetState(NEUTRAL);
-			board[x - (2 * dx[d])][y - (2 * dy[d])]->SetState(NEUTRAL);
+			board[x - (1 * dx[d])][y - (1 * dy[d])] = (unsigned char *)NEUTRAL;
+			board[x - (2 * dx[d])][y - (2 * dy[d])] = (unsigned char *)NEUTRAL;
 			move->NewPointTaken(x - (1 * dx[d]), y - (1 * dy[d]));
 			move->NewPointTaken(x - (2 * dx[d]), y - (2 * dy[d]));
 			this->stones -= 2;
@@ -249,10 +249,10 @@ void				Gomoku::setMoveState(Move *move)
 
 	this->players[this->GetPlayerToMove() - 1]->NewMove();
 	this->players[this->GetPlayerToMove() - 1]->CommitPairs();
-	board[move->GetX()][move->GetY()]->ChangeState();
+	//board[move->GetX()][move->GetY()]->ChangeState();
 	for (it = l.begin(); it != l.end(); it++)
 	{
-		board[(*it).GetX()][(*it).GetY()]->ChangeState();
+		//board[(*it).GetX()][(*it).GetY()]->ChangeState();
 	}
 }
 
@@ -291,31 +291,31 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
         for (int j = 0; j < this->size; j++)
         {
 			bool hasStone = false;
-            if (board[i][j]->GetState() == NEUTRAL)
+            if (board[i][j] == (unsigned char *)NEUTRAL)
 			{
 				if (isCorrect(i + 1, j))
-					if (board[i + 1][j]->GetState() != NEUTRAL)
+					if (board[i + 1][j] != (unsigned char *)NEUTRAL)
 						hasStone = true;
 				if (isCorrect(i - 1, j))
-					if (board[i - 1][j]->GetState()  != NEUTRAL)
+					if (board[i - 1][j] != (unsigned char *)NEUTRAL)
 						hasStone = true;
 				if	(isCorrect(i, j + 1))
-					if (board[i][j + 1]->GetState()  != NEUTRAL)
+					if (board[i][j + 1] != (unsigned char *)NEUTRAL)
 						hasStone = true;
 				if	(isCorrect(i, j - 1))
-					if (board[i][j - 1]->GetState()  != NEUTRAL)
+					if (board[i][j - 1] != (unsigned char *)NEUTRAL)
 						hasStone = true;
 				if	(isCorrect(i + 1, j + 1))
-					if (board[i + 1][j + 1]->GetState()  != NEUTRAL)
+					if (board[i + 1][j + 1] != (unsigned char *)NEUTRAL)
 						hasStone = true;
 				if	(isCorrect(i + 1, j - 1))
-					if (board[i + 1][j - 1]->GetState()  != NEUTRAL)
+					if (board[i + 1][j - 1] != (unsigned char *)NEUTRAL)
 						hasStone = true;
 				if	(isCorrect(i - 1, j + 1))
-					if (board[i - 1][j + 1]->GetState()  != NEUTRAL)
+					if (board[i - 1][j + 1] != (unsigned char *)NEUTRAL)
 						hasStone = true;
 				if	(isCorrect(i - 1, j - 1))
-					if (board[i - 1][j - 1]->GetState()  != NEUTRAL)
+					if (board[i - 1][j - 1] != (unsigned char *)NEUTRAL)
 						hasStone = true;
 				if (hasStone) moves.push_back(new Move(i, j));
 			}
@@ -337,13 +337,13 @@ uint	Gomoku::evaluate() const
     {
         for (int y = 0; y < this->size; y++)
         {
-            if (board[x][y]->GetState() == (int)p)
+            if (board[x][y] == (unsigned char *)p)
             {
                 for (unsigned int d = 0; d < 4; d++)
                 {
                     unsigned int size = 1;
                     while (isCorrect(x + (size * dx[d]), y + (size * dy[d]))
-                            && (board[x + (size * dx[d])][y + (size * dy[d])]->GetState() == (int)p))
+                            && (board[x + (size * dx[d])][y + (size * dy[d])] == (unsigned char *)p))
                         size++;
                     eval += size - 1;
                 }

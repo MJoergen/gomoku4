@@ -46,7 +46,8 @@ class Mainwindow : public QMainWindow
         int                 boardSize;
         Mode                mode;
         AlgorithmType       algo;
-        Button              ***buttonsArray;
+        Button				***buttonsArray;
+		unsigned char		***board;
         Referee             *referee;
         StatisticsPanel     *statisticsPanel;
 		MoveState			moveState;
