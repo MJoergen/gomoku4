@@ -266,7 +266,7 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
 			bool hasStone = false;
             if (board[i][j] == NEUTRAL)
 			{
-				if (isCorrect(i + 1, j))
+				/*if (isCorrect(i + 1, j))
 					if (board[i + 1][j] != NEUTRAL)
 						hasStone = true;
 				if (isCorrect(i - 1, j))
@@ -290,7 +290,7 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
 				if	(isCorrect(i - 1, j - 1))
 					if (board[i - 1][j - 1] != NEUTRAL)
 						hasStone = true;
-				if (hasStone) moves.push_back(new Move(i, j));
+				if (hasStone) */moves.push_back(new Move(i, j));
 			}
         }
     return (moves);
