@@ -275,14 +275,6 @@ GameState Gomoku::getState() const
     return (state);
 }
 
-std::vector<Move *>	    Gomoku::initAlgo(unsigned int x) const
-{
-    std::vector<Move *>	move;
-
-    move.push_back(new Move(this->size / 2 - x, this->size / 2 - x));
-    return (move);
-}
-
 std::vector<Move *>	Gomoku::getCorrectMoves() const
 {
     std::vector<Move *>	moves;
