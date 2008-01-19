@@ -16,8 +16,8 @@
 # include "StatisticsPanel.h"
 # include "ButtonIconFactory.h"
 
-# define DEFAULT_BOARDSIZE  5
-# define DEFAULT_BUTTONSIZE 50
+# define DEFAULT_BOARDSIZE  19
+# define DEFAULT_BUTTONSIZE 40
 # define MENU_HEIGHT        25
 # define STATS_PANEL_WIDTH  190
 

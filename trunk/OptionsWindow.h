@@ -14,6 +14,7 @@
 # include "Mainwindow.h"
 
 # define MIN    5
+# define MAX    19
 # define WIDTH  195
 # define HEIGHT 180
 
