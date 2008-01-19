@@ -13,7 +13,7 @@ int		NegaMax::AlgoNegaMax(Move **bestMove, int level)
     treeNodes++;
     *bestMove = NULL;
 
-    if (Gomoku::GetInstance()->getState() == FULL_BOARD)
+    if (Gomoku::GetInstance()->getState() == BOARD_FULL)
         return (0);
     else if (Gomoku::GetInstance()->getState())
         return (-INFINITY);
