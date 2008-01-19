@@ -142,7 +142,7 @@ void			Mainwindow::doConnects()
 
 void			Mainwindow::setSize()
 {
-    int width  = this->boardSize * DEFAULT_BUTTONSIZE + STATS_PANEL_WIDTH + 5;
+    int width  = this->boardSize * DEFAULT_BUTTONSIZE + STATS_PANEL_WIDTH + 10;
     int height = this->boardSize * DEFAULT_BUTTONSIZE + MENU_HEIGHT;
 
     this->resize(width, height);

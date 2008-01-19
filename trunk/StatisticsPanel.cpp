@@ -5,7 +5,7 @@ StatisticsPanel::StatisticsPanel(Mainwindow *mainwindow)
     this->mainwindow = mainwindow;
     this->groupBox   = new QGroupBox("Statistics", mainwindow);
     this->vboxLayout = new QVBoxLayout(this->groupBox);
-    this->vboxLayout->setSpacing(1);
+    this->vboxLayout->setSpacing(0);
     this->addInfos(&this->framePlayer, &this->hboxLayoutPlayer, "Player :", &this->player_t, &this->player);
     this->addInfos(&this->frameMode, &this->hboxLayoutMode, "Mode :", &this->mode_t, &this->mode);
     this->addInfos(&this->frameNodes, &this->hboxLayoutNodes, "Nodes :", &this->nodes_t, &this->nodes);
@@ -32,8 +32,8 @@ void    StatisticsPanel::addInfos(QFrame **frame, QHBoxLayout **hboxLayout,
 void    StatisticsPanel::UpdateSize(int nbButtonsSide)
 {
     this->groupBox->resize(STATS_PANEL_WIDTH,
-                           this->mainwindow->height() - MENU_HEIGHT - 5);
-    this->groupBox->move(nbButtonsSide * DEFAULT_BUTTONSIZE, MENU_HEIGHT);
+                           this->mainwindow->height() - MENU_HEIGHT - 3);
+    this->groupBox->move(nbButtonsSide * DEFAULT_BUTTONSIZE + 5, MENU_HEIGHT);
 }
 
 void    StatisticsPanel::UpdateStatistics(QString player, QString algorithm, QString mode,
