@@ -1,4 +1,4 @@
-#include "StatisticsPanel1.h"
+#include "StatisticsPanel.h"
 
 StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *parent)
 {

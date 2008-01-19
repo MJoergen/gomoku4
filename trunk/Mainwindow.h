@@ -11,7 +11,7 @@
 # include "Gomoku.h"
 # include "Referee.h"
 # include "OptionsWindow.h"
-# include "StatisticsPanel.h"
+# include "Statistics.h"
 # include "ButtonIconFactory.h"
 
 # define DEFAULT_BOARDSIZE  19

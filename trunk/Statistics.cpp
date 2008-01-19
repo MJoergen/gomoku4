@@ -1,4 +1,4 @@
-#include "StatisticsPanel.h"
+#include "Statistics.h"
 
 Statistics::Statistics(Mainwindow *mainwindow)
 {
