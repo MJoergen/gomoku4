@@ -61,35 +61,6 @@ void			Mainwindow::SetBoardSize(int boardSize)
     this->boardSize = boardSize;
 }
 
-void			Mainwindow::SetAlgorithm(AlgorithmType algo)
-{
-    this->algo = algo;
-    Gomoku::GetInstance()->SetAlgorithm(this->algo);
-}
-
-void            Mainwindow::SetMode(Mode mode)
-{
-    this->mode = mode;
-    switch (mode)
-    {
-        case PLAYER_VS_PLAYER :
-            Gomoku::GetInstance()->SetPlayer(1, IS_HUMAN);
-            Gomoku::GetInstance()->SetPlayer(2, IS_HUMAN);
-            break;
-
-        case PLAYER_VS_IA :
-            Gomoku::GetInstance()->SetPlayer(1, IS_HUMAN);
-            Gomoku::GetInstance()->SetPlayer(2, IS_IA);
-            break;
-
-        case IA_VS_IA :
-            Gomoku::GetInstance()->SetPlayer(1, IS_IA);
-            Gomoku::GetInstance()->SetPlayer(2, IS_IA);
-            this->startMoves();
-            break;
-    }
-}
-
 void			Mainwindow::UpdateStatistics(int nbConsideredNode)
 {
     QString     player;
@@ -97,23 +68,23 @@ void			Mainwindow::UpdateStatistics(int nbConsideredNode)
     QString     gameMode;
 
 //    player      = this->isPlayer2Turn ? "IA" : "You";
-    algorythm   = this->algo == ALPHABETA ? "AlphaBeta" : "NegaMax";
-    switch (this->mode)
-    {
-        case PLAYER_VS_PLAYER :
-            gameMode = "Player VS Player";
-            break;
-
-        case PLAYER_VS_IA :
-            gameMode = "Player VS IA";
-            break;
-
-        case IA_VS_IA :
-            gameMode = "IA VS IA";
-            break;
-    }
-    this->statisticsPanel->UpdateStatistics(player, algorythm, gameMode,
-                                            nbConsideredNode, 0, 0);
+//    algorythm   = this->algo == ALPHABETA ? "AlphaBeta" : "NegaMax";
+//    switch (this->mode)
+//    {
+//        case PLAYER_VS_PLAYER :
+//            gameMode = "Player VS Player";
+//            break;
+//
+//        case PLAYER_VS_IA :
+//            gameMode = "Player VS IA";
+//            break;
+//
+//        case IA_VS_IA :
+//            gameMode = "IA VS IA";
+//            break;
+//    }
+//    this->statisticsPanel->UpdateStatistics(player, algorythm, gameMode,
+//                                            nbConsideredNode, 0, 0);
 }
 
 // Private methods
@@ -122,13 +93,10 @@ void			Mainwindow::init()
 {
     this->buttonsArray = NULL;
     this->statisticsPanel = NULL;
-    this->algo = ALPHABETA;
     this->boardSize = DEFAULT_BOARDSIZE;
     this->referee = new Referee(this);
     this->statisticsPanel = new StatisticsPanel(this);
-	this->SetMode(PLAYER_VS_IA);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
-    Gomoku::GetInstance()->SetAlgorithm(ALPHABETA);
 }
 
 void			Mainwindow::doConnects()
@@ -233,7 +201,7 @@ void			Mainwindow::startNewGame()
 
 void			Mainwindow::showOptionsWindow()
 {
-    new OptionsWindow(this->boardSize, this->algo);
+    new OptionsWindow(this->boardSize);
 }
 
 void			Mainwindow::buttonClicked()

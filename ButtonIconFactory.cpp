@@ -1,6 +1,3 @@
-#include "Images/pion1.xpm"
-#include "Images/pion2.xpm"
-#include "Images/freeCase.xpm"
 #include "Images/valid.xpm"
 #include "Images/cancel.xpm"
 #include "ButtonIconFactory.h"
@@ -9,9 +6,9 @@ ButtonIconFactory   *ButtonIconFactory::instance = NULL;
 
 ButtonIconFactory::ButtonIconFactory()
 {
-    this->freeCase.addPixmap(QPixmap(freeCase_xpm));
-    this->pion1.addPixmap(QPixmap(pion1_xpm));
-    this->pion2.addPixmap(QPixmap(pion2_xpm));
+    this->grid.addPixmap(QPixmap("Images/Grid.png"));
+    this->black.addPixmap(QPixmap("Images/Black.png"));
+    this->white.addPixmap(QPixmap("Images/White.png"));
     this->valid.addPixmap(QPixmap(valid_xpm));
     this->cancel.addPixmap(QPixmap(cancel_xpm));
 }
@@ -27,12 +24,12 @@ QIcon   &ButtonIconFactory::GetIcon(TypeButton typeButton)
 {
     switch (typeButton)
     {
-        case PION1      : return (this->pion1);
-        case PION2      : return (this->pion2);
-        case FREECASE   : return (this->freeCase);
+        case WHITE      : return (this->white);
+        case BLACK      : return (this->black);
+        case GRID       : return (this->grid);
         case VALID      : return (this->valid);
         case CANCEL     : return (this->cancel);
-        default         : return (this->freeCase);
+        default         : return (this->white);
     }
 }
 
