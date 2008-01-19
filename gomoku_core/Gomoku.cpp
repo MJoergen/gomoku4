@@ -108,27 +108,28 @@ void				Gomoku::SetAlgorithm(AlgorithmType algoType)
 
 MoveState			Gomoku::DoNextMove()
 {
-	while (1)
+	int num = this->nextPlayerNum - 1;
+	this->nextPlayerNum = (this->nextPlayerNum == 1) ? 2 : 1;
+	if (this->players[num]->GetType() == IS_HUMAN)
+		return (WAITING_PLAYER_ACTION);
+	else
 	{
-		int num = this->nextPlayerNum - 1;
-		this->nextPlayerNum = (this->nextPlayerNum == 1) ? 2 : 1;
-		if (this->players[num]->GetType() == IS_HUMAN)
-			return (WAITING_PLAYER_ACTION);
-		else
-		{
-			IA *ia = (IA*)this->players[num];
-			ia->findMove();
-			if (this->state != IN_PROGRESS)
-				return (DONE);
-		}
+		IA *ia = (IA*)this->players[num];
+		ia->findMove();
+		return (DONE);
 	}
+}
+
+Move				*Gomoku::GetLastMove()
+{
+	return(new Move(this->_x, this->_y));
 }
 
 void				Gomoku::CommitMove(Move *move, bool setState)
 {
     int p = GetPlayerToMove();
-    unsigned int x = move->GetX();
-    unsigned int y = move->GetY();
+    unsigned int x = this->_x = move->GetX();
+    unsigned int y = this->_y = move->GetY();
 
     this->nb_moves++;
     this->stones++;

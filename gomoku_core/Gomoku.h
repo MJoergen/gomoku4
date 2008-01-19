@@ -35,6 +35,7 @@ class Gomoku
         static Gomoku		*instance;
 
     private:
+		int					_x, _y;
         int					size;
 		Player				*players[2];
         unsigned char		**board;
@@ -62,6 +63,7 @@ class Gomoku
 
 	public:
 		MoveState			DoNextMove();
+		Move				*GetLastMove();
         void				CommitMove(Move *move, bool setState);
         void				UndoMove(Move *move);
         void                ResetGame();
