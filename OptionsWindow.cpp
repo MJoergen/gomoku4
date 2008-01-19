@@ -25,7 +25,7 @@ OptionsWindow::OptionsWindow(int boardSize, AlgorithmType algo)
 
     this->spinBox_boardSize = new QSpinBox(this);
     this->spinBox_boardSize->setMinimum(MIN);
-    this->spinBox_boardSize->setMaximum(this->getMaxBoardSize());
+    this->spinBox_boardSize->setMaximum(this->getMaxBoardSize() < MAX ? this->getMaxBoardSize() : MAX);
     this->spinBox_boardSize->setValue(boardSize);
     this->spinBox_boardSize->setGeometry(QRect(100, 96, 80, 27));
 
