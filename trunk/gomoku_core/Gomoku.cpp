@@ -178,7 +178,7 @@ void				Gomoku::checkGameState(unsigned int x, unsigned int y, int p)
 {
     if (stones == (this->size * this->size))
         state = BOARD_FULL;
-	else if (this->players[p - 1]->GetPairs() >= 5)
+	else if (this->players[p - 1]->GetPairs() >= LINE_SIZE)
 		state = (GameState)p;
 	else
 	{
