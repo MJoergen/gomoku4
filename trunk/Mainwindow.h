@@ -68,6 +68,7 @@ class Mainwindow : public QMainWindow
         void				cleanButtonsArray();
         void				moveToCenter();
 		void				startMoves();
+		void				updateDisplay();
 
     public slots:
         void				startNewGame();

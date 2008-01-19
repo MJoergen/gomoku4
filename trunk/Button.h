@@ -29,9 +29,6 @@ class Button : public QPushButton
         PlayerNumber	GetState();
         Move*			GetPos();
         void			SetState(PlayerNumber state);
-
-    public slots:
-        void			ChangeState();
 };
 
 #endif //!_BUTTON_H_
