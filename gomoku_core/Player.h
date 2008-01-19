@@ -8,6 +8,13 @@ typedef enum
 	IS_IA_NEGAMAX
 }	PlayerType;
 
+typedef enum
+{
+    NEUTRAL,
+    PLAYER1,
+    PLAYER2
+}   PlayerNumber;
+
 class Player
 {
 	private:

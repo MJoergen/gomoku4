@@ -1,6 +1,5 @@
 #include "Button.h"
 
-
 Button::Button(QWidget *parent, int size, int x, int y) : size(size)
 {
     this->pos = new Move(x, y);
@@ -11,7 +10,12 @@ Button::Button(QWidget *parent, int size, int x, int y) : size(size)
     this->show();
 }
 
-void    Button::changeIcon()
+Button::~Button()
+{
+    delete this->pos;
+}
+
+void			Button::changeIcon()
 {
     switch (this->state)
     {
@@ -30,17 +34,17 @@ void    Button::changeIcon()
     }
 }
 
-void    Button::ChangeState()
+void			Button::ChangeState()
 {
 	this->changeIcon();
 }
 
-int Button::GetId()
+int				Button::GetId()
 {
     return (this->id);
 }
 
-buttonState Button::GetState()
+PlayerNumber	Button::GetState()
 {
     return (this->state);
 }
@@ -50,12 +54,7 @@ Move    *Button::GetPos()
     return (this->pos);
 }
 
-void    Button::SetState(buttonState state)
+void    Button::SetState(PlayerNumber state)
 {
     this->state = state;
-}
-
-Button::~Button()
-{
-    delete this->pos;
 }

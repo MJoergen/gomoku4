@@ -12,6 +12,7 @@
 # include <QLabel>
 
 # include "Mainwindow.h"
+# include "Player.h"
 
 # define MIN                  5
 # define MAX                  19
@@ -51,7 +52,7 @@ class OptionsWindow : public QWidget
         void    doConnects();
         void    moveToCenter();
         int     getMaxBoardSize();
-        void    savePlayerType(int playerNum, QComboBox *player, QComboBox *algo);
+        void    savePlayerType(PlayerNumber playerNum, QComboBox *player, QComboBox *algo);
 
     private slots:
         void    changingPlayer();

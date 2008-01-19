@@ -10,7 +10,6 @@
 # include "Button.h"
 # include "Gomoku.h"
 # include "Referee.h"
-# include "AlgorithmType.h"
 # include "OptionsWindow.h"
 # include "StatisticsPanel.h"
 # include "ButtonIconFactory.h"

@@ -4,34 +4,34 @@
 # include <QPushButton>
 
 # include "Move.h"
-# include "ButtonState.h"
 # include "ButtonIconFactory.h"
+# include "Player.h"
 
 class Button : public QPushButton
 {
     Q_OBJECT
 
     private:
-        int         id;
-        int         size;
-        Move        *pos;
-        buttonState state;
+        int				id;
+        int				size;
+        Move			*pos;
+        PlayerNumber	state;
 
     private:
-        void    changeIcon();
+        void			changeIcon();
 
     public:
         Button(QWidget *parent, int size, int x, int y);
         ~Button();
 
     public:
-        int         GetId();
-        buttonState GetState();
-        Move*       GetPos();
-        void        SetState(buttonState state);
+        int				GetId();
+        PlayerNumber	GetState();
+        Move*			GetPos();
+        void			SetState(PlayerNumber state);
 
     public slots:
-        void    ChangeState();
+        void			ChangeState();
 };
 
 #endif //!_BUTTON_H_

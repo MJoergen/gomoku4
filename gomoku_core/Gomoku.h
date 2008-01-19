@@ -5,8 +5,6 @@
 # include <iostream>
 # include "Move.h"
 # include "defines.h"
-# include "../Button.h"
-# include "../AlgorithmType.h"
 # include "Player.h"
 # include "IA.h"
 # include "Point.h"
@@ -55,7 +53,7 @@ class Gomoku
 
     public:
         void			    SetSize(int size);
-		void				SetPlayer(int playerNum, PlayerType type);
+		void				SetPlayer(PlayerNumber playerNum, PlayerType type);
 
 	public:
 		MoveState			DoNextMove();
@@ -71,7 +69,8 @@ class Gomoku
 		void				setMoveState(Move *move);
 
 	public:
-		int					GetPlayerToMove() const;
+		PlayerNumber		GetPlayerToMove() const;
+		Player				*GetPlayer(PlayerNumber playerNum);
 
         void	            dump(std::ostream& o) const;
         unsigned int        evaluate() const;
