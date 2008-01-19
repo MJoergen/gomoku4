@@ -22,7 +22,7 @@
 class OptionsWindow;
 class Alphabeta;
 class NegaMax;
-class StatisticsPanel;
+class Statistics;
 class Referee;
 
 class Mainwindow : public QMainWindow
@@ -43,7 +43,7 @@ class Mainwindow : public QMainWindow
         int                 boardSize;
         Button				***buttonsArray;
         Referee             *referee;
-        StatisticsPanel     *statisticsPanel;
+        Statistics          *statistics;
 		MoveState			moveState;
 
     private:
