@@ -3,8 +3,8 @@
 Statistics::Statistics(Mainwindow *mainwindow)
 {
     this->mainwindow = mainwindow;
-    this->vboxLayout = new QVBoxLayout(this->mainwindow);
     this->groupBox = new QGroupBox("Statistics", mainwindow);
+    this->vboxLayout = new QVBoxLayout(this->groupBox);
 
     if (Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_HUMAN)
         this->statisticsPanelPlayer1 = new StatisticsPanel(STATS_HUMAN, this->groupBox);

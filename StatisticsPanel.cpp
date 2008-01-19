@@ -3,6 +3,7 @@
 StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *parent)
 {
     this->parent                = parent;
+    this->groupBox              = new QGroupBox(this->parent);
     this->vboxLayout            = new QVBoxLayout(this->groupBox);
     this->algorithm             = NULL;
     this->algorithm_t           = NULL;
@@ -16,7 +17,7 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
     switch (typePanel)
     {
         case STATS_HUMAN:
-            this->groupBox = new QGroupBox("Player", this->parent);
+            this->groupBox->setTitle("Player");
             this->addInfos(&this->frameNbMoves, &this->hboxLayoutNbMoves,
                            "Moves :", &this->nbMoves_t, &this->nbMoves);
             this->addInfos(&this->frameNbPairsTaken, &this->hboxLayoutNbPairsTaken,
@@ -24,7 +25,7 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
             break;
 
         case STATS_IA:
-            this->groupBox = new QGroupBox("IA", this->parent);
+            this->groupBox->setTitle("IA");
             this->addInfos(&this->frameNbMoves, &this->hboxLayoutNbMoves,
                            "Moves :", &this->nbMoves_t, &this->nbMoves);
             this->addInfos(&this->frameNbPairsTaken, &this->hboxLayoutNbPairsTaken,
