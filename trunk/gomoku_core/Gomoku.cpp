@@ -23,6 +23,7 @@ Gomoku::~Gomoku()
 {
 	delete this->players[0];
 	delete this->players[1];
+	delete this->board;
 }
 
 // Singleton methods
@@ -122,7 +123,7 @@ MoveState			Gomoku::DoNextMove()
 
 Move				*Gomoku::GetLastMove()
 {
-	return(new Move(this->_x, this->_y));
+	return (new Move(this->_x, this->_y));
 }
 
 void				Gomoku::CommitMove(Move *move, bool setState)
