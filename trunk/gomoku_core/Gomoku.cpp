@@ -48,6 +48,13 @@ void				Gomoku::DestroyInstance()
 void				Gomoku::SetSize(int size)
 {
     this->size = size;
+	this->board = new unsigned char*[this->size];
+	for (int i = 0; i < this->size; i++)
+	{
+		this->board[i] = new unsigned char[this->size];
+		for (int j = 0; j < this->size; j++)
+			board[i][j] = NEUTRAL;
+	}
     this->ResetGame();
 }
 
