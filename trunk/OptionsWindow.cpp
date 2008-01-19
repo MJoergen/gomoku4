@@ -2,7 +2,7 @@
 #include "Images/cancel.xpm"
 #include "OptionsWindow.h"
 
-OptionsWindow::OptionsWindow(int boardSize, AlgorithmType algo)
+OptionsWindow::OptionsWindow(int boardSize)
 {
     this->setWindowTitle("Options");
     this->moveToCenter();
@@ -86,19 +86,37 @@ void            OptionsWindow::changingPlayer()
 {
     QComboBox   *comboBox = dynamic_cast<QComboBox *>(sender());
 
-    if (comboBox && comboBox->itemText(comboBox->currentIndex()) == "IA")
+    if (comboBox)
     {
-        if (comboBox->objectName() == "cb_player1")
+        if (comboBox->objectName() == "cb_player1" && comboBox->itemText(comboBox->currentIndex()) == "IA")
             this->cb_player1Algo->setEnabled(true);
-        else
+        else if (comboBox->objectName() == "cb_player2" && comboBox->itemText(comboBox->currentIndex()) == "IA")
             this->cb_player2Algo->setEnabled(true);
+        else if (comboBox->objectName() == "cb_player1")
+            this->cb_player1Algo->setEnabled(false);
+        else
+            this->cb_player2Algo->setEnabled(false);
     }
 }
 
-void    OptionsWindow::valid()
+void    OptionsWindow::savePlayerType(int playerNum, QComboBox* player, QComboBox* algo)
+{
+    if (player->itemText(player->currentIndex()) == "IA")
+    {
+        if (algo->itemText(algo->currentIndex()) == "AlphaBeta")
+            Gomoku::GetInstance()->SetPlayer(playerNum, IS_IA_ALPHABETA);
+        else
+            Gomoku::GetInstance()->SetPlayer(playerNum, IS_IA_NEGAMAX);
+    }
+    else
+            Gomoku::GetInstance()->SetPlayer(playerNum, IS_HUMAN);
+}
+
+void        OptionsWindow::valid()
 {
     Mainwindow::GetInstance()->SetBoardSize(this->spinBox_boardSize->value());
-//    Mainwindow::GetInstance()->SetAlgorithm(this->rb_alphaBeta->isChecked() ? ALPHABETA : NEGAMAX);
+    this->savePlayerType(1, this->cb_player1, this->cb_player1Algo);
+    this->savePlayerType(2, this->cb_player2, this->cb_player2Algo);
     Mainwindow::GetInstance()->CreateBoard();
     delete this;
 }

@@ -17,15 +17,15 @@ void    Button::changeIcon()
     {
         case NEUTRAL:
             this->setIconSize(QSize(this->size, this->size));
-            this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(FREECASE));
+            this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(GRID));
             break;
         case PLAYER1:
             this->setIconSize(QSize(this->size, this->size));
-            this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(PION1));
+            this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(WHITE));
             break;
         case PLAYER2:
             this->setIconSize(QSize(this->size, this->size));
-            this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(PION2));
+            this->setIcon(ButtonIconFactory::GetInstance()->GetIcon(BLACK));
             break;
     }
 }

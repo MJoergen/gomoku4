@@ -20,13 +20,6 @@
 # define MENU_HEIGHT        25
 # define STATS_PANEL_WIDTH  190
 
-typedef enum
-{
-    PLAYER_VS_PLAYER,
-    PLAYER_VS_IA,
-    IA_VS_IA
-}   Mode;
-
 class OptionsWindow;
 class Alphabeta;
 class NegaMax;
@@ -49,8 +42,6 @@ class Mainwindow : public QMainWindow
 
     private:
         int                 boardSize;
-        Mode                mode;
-        AlgorithmType       algo;
         Button				***buttonsArray;
         Referee             *referee;
         StatisticsPanel     *statisticsPanel;
@@ -67,8 +58,6 @@ class Mainwindow : public QMainWindow
     public:
         void               CreateBoard();
         void               SetBoardSize(int boardSize);
-        void               SetAlgorithm(AlgorithmType algo);
-        void               SetMode(Mode mode);
         void               UpdateStatistics(int nbConsideredNode);
 
     private:

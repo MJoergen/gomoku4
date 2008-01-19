@@ -11,7 +11,6 @@
 # include <QGroupBox>
 # include <QLabel>
 
-# include "AlgorithmType.h"
 # include "Mainwindow.h"
 
 # define MIN                  5
@@ -45,13 +44,14 @@ class OptionsWindow : public QWidget
 
 
     public:
-       OptionsWindow(int boardSize, AlgorithmType algo);
+       OptionsWindow(int boardSize);
        ~OptionsWindow();
 
     private:
         void    doConnects();
         void    moveToCenter();
         int     getMaxBoardSize();
+        void    savePlayerType(int playerNum, QComboBox *player, QComboBox *algo);
 
     private slots:
         void    changingPlayer();
