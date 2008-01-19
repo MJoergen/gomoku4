@@ -318,11 +318,6 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
     return (moves);
 }
 
-int    Gomoku::GetNbMoves()
-{
-    return (this->nb_moves);
-}
-
 uint	Gomoku::evaluate() const
 {
     unsigned int p = GetPlayerToMove();

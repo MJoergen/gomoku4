@@ -113,8 +113,7 @@ void			Mainwindow::UpdateStatistics(int nbConsideredNode)
             break;
     }
     this->statisticsPanel->UpdateStatistics(player, algorythm, gameMode,
-                                            nbConsideredNode, 0,
-                                            Gomoku::GetInstance()->GetNbMoves());
+                                            nbConsideredNode, 0, 0);
 }
 
 // Private methods
