@@ -47,7 +47,6 @@ class Mainwindow : public QMainWindow
         Mode                mode;
         AlgorithmType       algo;
         Button				***buttonsArray;
-		unsigned char		***board;
         Referee             *referee;
         StatisticsPanel     *statisticsPanel;
 		MoveState			moveState;

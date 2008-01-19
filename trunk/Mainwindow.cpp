@@ -196,11 +196,6 @@ void			Mainwindow::createButtons()
             connect(this->buttonsArray[x][y], SIGNAL(clicked()), this, SLOT(buttonClicked()));
         }
     }
-	this->board = new unsigned char**[this->boardSize];
-	for (int x = 0; x < this->boardSize; x++)
-		for (int y = 0; y < this->boardSize; y++)
-			this->board[x][y] = (unsigned char *)NEUTRAL;
-    Gomoku::GetInstance()->SetBoard(this->board);
 }
 
 void			Mainwindow::cleanButtonsArray()
