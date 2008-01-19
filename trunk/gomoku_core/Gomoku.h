@@ -82,7 +82,6 @@ class Gomoku
         unsigned int        evaluate() const;
         GameState        	getState() const;
         std::vector<Move *> getCorrectMoves() const;
-        std::vector<Move *> initAlgo(unsigned int x = 0) const;
 };
 
 #endif //!__GOMOKU_H__
