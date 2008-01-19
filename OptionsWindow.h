@@ -6,6 +6,7 @@
 # include <QPushButton>
 # include <QMainWindow>
 # include <QRadioButton>
+# include <QComboBox>
 # include <QDesktopWidget>
 # include <QGroupBox>
 # include <QLabel>
@@ -13,10 +14,10 @@
 # include "AlgorithmType.h"
 # include "Mainwindow.h"
 
-# define MIN    5
-# define MAX    19
-# define WIDTH  195
-# define HEIGHT 180
+# define MIN                  5
+# define MAX                  19
+# define OPTIONSWINDOW_WIDTH  280
+# define OPTIONSWINDOW_HEIGHT 190
 
 class Mainwindow;
 
@@ -29,10 +30,19 @@ class OptionsWindow : public QWidget
         QSpinBox        *spinBox_boardSize;
         QPushButton     *button_valid;
         QPushButton     *button_cancel;
-        QRadioButton    *rb_alphaBeta;
-        QRadioButton    *rb_negaMax;
+        QComboBox       *cb_player1;
+        QComboBox       *cb_player1Algo;
+        QComboBox       *cb_player2;
+        QComboBox       *cb_player2Algo;
         QGroupBox       *groupBox;
-        QLabel          *label;
+        QGridLayout     *playerLayout;
+        QGridLayout     *generalLayout;
+        QPushButton     *b_valid;
+        QPushButton     *b_cancel;
+        QLabel          *l_player1;
+        QLabel          *l_player2;
+        QLabel          *l_boardSize;
+
 
     public:
        OptionsWindow(int boardSize, AlgorithmType algo);
@@ -44,6 +54,7 @@ class OptionsWindow : public QWidget
         int     getMaxBoardSize();
 
     private slots:
+        void    changingPlayer();
         void    valid();
         void    cancel();
 };

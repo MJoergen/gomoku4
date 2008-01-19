@@ -10,16 +10,22 @@
 # include "Button.h"
 # include "Gomoku.h"
 # include "Referee.h"
-# include "ModesWindow.h"
 # include "AlgorithmType.h"
 # include "OptionsWindow.h"
 # include "StatisticsPanel.h"
 # include "ButtonIconFactory.h"
 
 # define DEFAULT_BOARDSIZE  19
-# define DEFAULT_BUTTONSIZE 40
+# define DEFAULT_BUTTONSIZE 30
 # define MENU_HEIGHT        25
 # define STATS_PANEL_WIDTH  190
+
+typedef enum
+{
+    PLAYER_VS_PLAYER,
+    PLAYER_VS_IA,
+    IA_VS_IA
+}   Mode;
 
 class OptionsWindow;
 class Alphabeta;
@@ -40,7 +46,6 @@ class Mainwindow : public QMainWindow
         QAction             *newGameAction;
         QAction             *quitAction;
         QAction             *optionsAction;
-        QAction             *modesAction;
 
     private:
         int                 boardSize;
@@ -79,7 +84,6 @@ class Mainwindow : public QMainWindow
     public slots:
         void				startNewGame();
         void				showOptionsWindow();
-        void				showModesWindow();
         void			    buttonClicked();
 };
 
