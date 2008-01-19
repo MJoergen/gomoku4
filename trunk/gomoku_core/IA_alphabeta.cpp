@@ -4,7 +4,11 @@
 
 #include "IA_alphabeta.h"
 
-int	AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
+AlphaBeta::AlphaBeta() : IA(IS_IA_ALPHABETA)
+{
+}
+
+int		AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
 {
     treeNodes++;
     *bestMove = NULL;
@@ -48,7 +52,7 @@ int	AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
     return (alpha);
 }
 
-void    AlphaBeta::findMove()
+void	AlphaBeta::findMove()
 {
     Move	*bestMove;
 

@@ -4,7 +4,11 @@
 
 #include "IA_negamax.h"
 
-int	NegaMax::AlgoNegaMax(Move **bestMove, int level)
+NegaMax::NegaMax() : IA(IS_IA_NEGAMAX)
+{
+}
+
+int		NegaMax::AlgoNegaMax(Move **bestMove, int level)
 {
     treeNodes++;
     *bestMove = NULL;

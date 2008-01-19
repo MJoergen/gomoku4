@@ -15,6 +15,9 @@ class AlphaBeta : public IA
         static const unsigned int	DEEP_MAX = 4;
 
 	public:
+		AlphaBeta();
+
+	public:
         int		AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level);
         void    findMove();
 };

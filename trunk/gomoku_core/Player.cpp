@@ -50,6 +50,13 @@ PlayerType	Player::GetType()
 	return (this->type);
 }
 
+void		Player::CopyPlayerStat(Player *player)
+{
+	this->movesDone = player->GetMoves();
+	this->pairsCaptured = player->GetPairsCaptured();
+	this->pendingPairs = player->GetPairs() - this->pairsCaptured;
+}
+
 void		Player::ResetPlayer()
 {
 	this->movesDone = 0;
