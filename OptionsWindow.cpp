@@ -61,7 +61,34 @@ OptionsWindow::OptionsWindow(int boardSize)
     this->generalLayout->addWidget(this->button_cancel, 2, 1, 1, 1);
 
     this->doConnects();
+    this->loadPreviousConfig();
     this->show();
+}
+
+void    OptionsWindow::loadPreviousConfig()
+{
+    if (Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_IA_ALPHABETA)
+    {
+        this->cb_player1->setCurrentIndex(1);
+        this->cb_player1Algo->setEnabled(true);
+    }
+    else if (Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_IA_NEGAMAX)
+    {
+        this->cb_player1->setCurrentIndex(1);
+        this->cb_player1Algo->setCurrentIndex(1);
+        this->cb_player1Algo->setEnabled(true);
+    }
+    if (Gomoku::GetInstance()->GetPlayer(PLAYER2)->GetType() == IS_IA_ALPHABETA)
+    {
+        this->cb_player2->setCurrentIndex(1);
+        this->cb_player2Algo->setEnabled(true);
+    }
+    else if (Gomoku::GetInstance()->GetPlayer(PLAYER2)->GetType() == IS_IA_NEGAMAX)
+    {
+        this->cb_player2->setCurrentIndex(1);
+        this->cb_player2Algo->setCurrentIndex(1);
+        this->cb_player2Algo->setEnabled(true);
+    }
 }
 
 void    OptionsWindow::moveToCenter()
