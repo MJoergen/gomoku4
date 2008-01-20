@@ -222,6 +222,7 @@ void			Mainwindow::startNewGame()
     this->cleanButtonsArray();
     this->createButtons();
     Gomoku::GetInstance()->ResetGame();
+    this->statistics->Reset();
 	this->startMoves();
 }
 
