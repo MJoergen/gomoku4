@@ -4,6 +4,7 @@
 
 OptionsWindow::OptionsWindow(int boardSize)
 {
+    this->boardSize = boardSize;
     this->setWindowTitle("Options");
     this->moveToCenter();
     this->setMinimumSize(OPTIONSWINDOW_WIDTH, OPTIONSWINDOW_HEIGHT);
@@ -114,10 +115,13 @@ void    OptionsWindow::savePlayerType(PlayerNumber playerNum, QComboBox* player,
 
 void        OptionsWindow::valid()
 {
-    Mainwindow::GetInstance()->SetBoardSize(this->spinBox_boardSize->value());
     this->savePlayerType(PLAYER1, this->cb_player1, this->cb_player1Algo);
     this->savePlayerType(PLAYER2, this->cb_player2, this->cb_player2Algo);
-    Mainwindow::GetInstance()->CreateBoard();
+    if (this->boardSize != this->spinBox_boardSize->value())
+    {
+        Mainwindow::GetInstance()->SetBoardSize(this->spinBox_boardSize->value());
+        Mainwindow::GetInstance()->CreateBoard();
+    }
     Mainwindow::GetInstance()->GetStatistics()->Reset();
     delete this;
 }

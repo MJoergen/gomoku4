@@ -42,6 +42,7 @@ class OptionsWindow : public QWidget
         QLabel          *l_player1;
         QLabel          *l_player2;
         QLabel          *l_boardSize;
+        int             boardSize;
 
 
     public:
