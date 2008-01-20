@@ -14,12 +14,12 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
     this->frameNodes            = NULL;
     this->hboxLayoutNodes       = NULL;
 
-    this->vboxLayout->setSpacing(0);
+    this->vboxLayout->setSpacing(1);
 
     switch (typePanel)
     {
         case STATS_HUMAN:
-            this->groupBox->setTitle("Player");
+            this->groupBox->setTitle("Human");
             this->addInfos(&this->frameNbMoves, &this->hboxLayoutNbMoves,
                            "Nb moves :", &this->nbMoves_t, &this->nbMoves);
             this->addInfos(&this->frameNbPairsTaken, &this->hboxLayoutNbPairsTaken,
@@ -38,10 +38,6 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
                            "Algorithm :", &this->algorithm_t, &this->algorithm);
             this->addInfos(&this->frameNodes, &this->hboxLayoutNodes,
                            "Nodes :", &this->nodes_t, &this->nodes);
-            this->nbMoves->setNum(0);
-            this->nbPairsTaken->setNum(0);
-            this->algorithm->setText("AlphaBeta");
-            this->nodes->setNum(0);
             break;
     }
 }
@@ -60,8 +56,9 @@ void    StatisticsPanel::addInfos(QFrame **frame, QHBoxLayout **hboxLayout,
     *value       = new QLabel(*frame);
 
     (*title)->setText(QString("<b>") + titleText + QString("</b>"));
-    (*title)->setFont(QFont("Verdana [Sans Serif]", 7));
-    (*value)->setFont(QFont("Verdana [Sans Serif]", 7));
+    (*title)->setFont(QFont("Sans Serif", 7));
+    (*value)->setFont(QFont("Sans Serif", 7));
+    (*value)->setAlignment(Qt::AlignRight);
     (*hboxLayout)->addWidget(*title);
     (*hboxLayout)->addWidget(*value);
     this->vboxLayout->addWidget(*frame);
@@ -69,11 +66,15 @@ void    StatisticsPanel::addInfos(QFrame **frame, QHBoxLayout **hboxLayout,
 
 void    StatisticsPanel::UpdateStatistics(Player *player)
 {
-    this->nbMoves->setNum(player->GetMoves());
-    this->nbPairsTaken->setNum(player->GetPairs());
+    this->nbMoves->setText(QString("<span style=\" color:#21109b;\">") +
+                           QString("%1").arg(player->GetMoves()) + QString("</span>"));
+    this->nbPairsTaken->setText(QString("<span style=\" color:#21109b;\">") +
+                                QString("%1").arg(player->GetPairs()) + QString("</span>"));
     if (player->GetType() == IS_IA_ALPHABETA || player->GetType() == IS_IA_NEGAMAX)
     {
-        this->algorithm->setText(player->GetType() == IS_IA_ALPHABETA ? "AlphaBeta" : "NegaMax");
+        this->algorithm->setText(QString("<span style=\" color:#21109b;\">") +
+                                 QString(player->GetType() == IS_IA_ALPHABETA ? "AlphaBeta" : "NegaMax") +
+                                 QString("</span>"));
     }
 }
 

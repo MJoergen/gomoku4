@@ -5,7 +5,6 @@ Statistics::Statistics(Mainwindow *mainwindow)
     this->mainwindow    = mainwindow;
     this->groupBox      = new QGroupBox("Statistics", mainwindow);
     this->vboxLayout    = new QVBoxLayout(this->groupBox);
-    this->spacerItem    = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     this->createPanels();
 }
@@ -14,7 +13,6 @@ void    Statistics::cleanPanels()
 {
     this->vboxLayout->removeWidget(this->statisticsPanelPlayer1->GetPanel());
     this->vboxLayout->removeWidget(this->statisticsPanelPlayer2->GetPanel());
-    this->vboxLayout->removeItem(this->spacerItem);
     delete this->statisticsPanelPlayer1;
     delete this->statisticsPanelPlayer2;
 }
@@ -32,7 +30,8 @@ void    Statistics::createPanels()
 
     this->vboxLayout->addWidget(this->statisticsPanelPlayer1->GetPanel());
     this->vboxLayout->addWidget(this->statisticsPanelPlayer2->GetPanel());
-    this->vboxLayout->addItem(this->spacerItem);
+    this->vboxLayout->addStretch();
+    this->UpdateStatistics();
 }
 
 void    Statistics::Reset()
