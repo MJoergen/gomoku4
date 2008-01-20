@@ -18,7 +18,7 @@
 # define MENU_HEIGHT        25
 # define STATS_PANEL_WIDTH  190
 # define STATS_PANEL_SPACE  5
-# define BORDURE_SIZE       4
+# define BORDURE_SIZE       2
 
 class OptionsWindow;
 class Alphabeta;
