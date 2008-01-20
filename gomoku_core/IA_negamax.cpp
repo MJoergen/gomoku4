@@ -6,11 +6,12 @@
 
 NegaMax::NegaMax() : IA(IS_IA_NEGAMAX)
 {
+    this->treeNodes = 0;
 }
 
 int		NegaMax::AlgoNegaMax(Move **bestMove, int level)
 {
-    treeNodes++;
+    this->treeNodes++;
     *bestMove = NULL;
 
     if (Gomoku::GetInstance()->GetGameState() == BOARD_FULL)
@@ -55,8 +56,5 @@ void	NegaMax::findMove()
     this->treeNodes = 0;
     AlgoNegaMax(&bestMove, DEEP_MAX);
     if (bestMove)
-    {
         Gomoku::GetInstance()->CommitMove(bestMove, true);
-//        Mainwindow::GetInstance()->UpdateStatistics(this->treeNodes);
-    }
 }

@@ -11,15 +11,14 @@ class Mainwindow;
 class AlphaBeta : public IA
 {
     private:
-        unsigned int			    treeNodes;
         static const unsigned int	DEEP_MAX = 4;
 
 	public:
 		AlphaBeta();
 
 	public:
-        int		AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level);
-        void    findMove();
+        int	AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level);
+        void findMove();
 };
 
 #endif //!__IA_ALPHABETA_H__

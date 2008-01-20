@@ -11,7 +11,6 @@ class Mainwindow;
 class NegaMax : public IA
 {
     private:
-        unsigned int              treeNodes;
         static const unsigned int DEEP_MAX = 2;
 
 	public:
