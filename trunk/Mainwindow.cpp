@@ -23,7 +23,6 @@ Mainwindow::Mainwindow()
 Mainwindow::~Mainwindow()
 {
     delete this->statistics;
-    delete this->referee;
     ButtonIconFactory::DestroyInstance();
     Gomoku::DestroyInstance();
 }
@@ -73,7 +72,6 @@ void			Mainwindow::init()
     this->buttonsArray = NULL;
     this->statistics = NULL;
     this->boardSize = DEFAULT_BOARDSIZE;
-    this->referee = new Referee(this);
     this->statistics = new Statistics(this);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
 }
@@ -162,11 +160,9 @@ void			Mainwindow::moveToCenter()
 
 void			Mainwindow::startMoves()
 {
-	while ((this->moveState = Gomoku::GetInstance()->DoNextMove()) == DONE)
-	{
+	while ((this->moveActionState = Gomoku::GetInstance()->DoNextMove()) == DONE)
 		this->updateDisplay();
-	}
-	if (this->referee->CheckGame() != IN_PROGRESS)
+	if (this->checkGameState() != IN_PROGRESS)
 		this->startNewGame();
 }
 
@@ -182,6 +178,32 @@ void			Mainwindow::updateDisplay()
 		for (it = pointsTaken.begin(); it != pointsTaken.end(); it++)
 			this->buttonsArray[(*it).GetX()][(*it).GetY()]->SetState(NEUTRAL);
 	}
+}
+
+GameState		Mainwindow::checkGameState()
+{
+	GameState gameState = Gomoku::GetInstance()->GetGameState();
+    switch (gameState)
+    {
+        case VICTORY_PLAYER1 :
+            QMessageBox::information(this, "Gomoku - Game information",
+                                     "Player 1 wins !");
+			break;
+
+        case VICTORY_PLAYER2 :
+            QMessageBox::information(this, "Gomoku - Game information",
+                                     "Player 2 wins !");
+			break;
+
+        case BOARD_FULL :
+            QMessageBox::information(this, "Gomoku - Game information",
+                                     "The board is full.\nA new game is being to start.");
+			break;
+
+		default :
+			break;
+    }
+	return (gameState);
 }
 
 // Public QT slots
@@ -205,16 +227,28 @@ void			Mainwindow::buttonClicked()
 
     if (button)
     {
-		if (this->moveState == WAITING_PLAYER_ACTION)
+		if (this->moveActionState == WAITING_PLAYER_ACTION)
 		{
-			if (this->referee->CheckMove(this->buttonsArray, button->GetPos()) == ALLOWED)
+			MoveState moveState = Gomoku::GetInstance()->CommitMove(button->GetPos(), true);
+			switch (moveState)
 			{
-				Gomoku::GetInstance()->CommitMove(button->GetPos(), true);
-				this->updateDisplay();
-                if (this->referee->CheckGame() != IN_PROGRESS)
-                    this->startNewGame();
-				else
-					this->startMoves();
+				case GOOD_MOVE :
+					this->updateDisplay();
+					if (this->checkGameState() != IN_PROGRESS)
+						this->startNewGame();
+					else
+						this->startMoves();
+					break;
+
+				case NOT_FREE :
+					QMessageBox::critical(this, "Gomoku - Illegal action",
+						"This pion is not free. You are allowed to use it.");
+					break;
+
+				case DOUBLE_THREE:
+					QMessageBox::critical(this, "Gomoku - Illegal action",
+						"Double three !");
+					break;
 			}
 		}
     }

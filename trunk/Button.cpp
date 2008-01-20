@@ -2,9 +2,8 @@
 
 Button::Button(QWidget *parent, int size, int x, int y) : size(size)
 {
-    this->pos = new Move(x, y);
+    this->pos = new Move(x, y, NEUTRAL);
     this->setFlat(true);
-    this->state = NEUTRAL;
     this->setParent(parent);
     this->changeIcon();
     this->show();
@@ -17,7 +16,7 @@ Button::~Button()
 
 void			Button::changeIcon()
 {
-    switch (this->state)
+    switch (this->pos->GetPlayerNumber())
     {
         case NEUTRAL:
             this->setIconSize(QSize(this->size, this->size));
@@ -41,7 +40,7 @@ int				Button::GetId()
 
 PlayerNumber	Button::GetState()
 {
-    return (this->state);
+    return (this->pos->GetPlayerNumber());
 }
 
 Move			*Button::GetPos()
@@ -51,6 +50,6 @@ Move			*Button::GetPos()
 
 void			Button::SetState(PlayerNumber state)
 {
-    this->state = state;
+    this->pos->SetPlayerNumber(state);
 	this->changeIcon();
 }

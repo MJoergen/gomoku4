@@ -24,7 +24,7 @@ Gomoku::~Gomoku()
 {
 	delete this->players[0];
 	delete this->players[1];
-	delete this->board;
+	this->deleteBoard();
 }
 
 // Singleton methods
@@ -45,18 +45,12 @@ void				Gomoku::DestroyInstance()
     }
 }
 
-// Game elements setters (all reset game also)
+// Game elements setters
 
 void				Gomoku::SetSize(int size)
 {
+	this->deleteBoard();
     this->size = size;
-	this->board = new unsigned char*[this->size];
-	for (int i = 0; i < this->size; i++)
-	{
-		this->board[i] = new unsigned char[this->size];
-		for (int j = 0; j < this->size; j++)
-			board[i][j] = NEUTRAL;
-	}
     this->ResetGame();
 }
 
@@ -84,7 +78,7 @@ void				Gomoku::SetPlayer(PlayerNumber playerNum, PlayerType type)
 
 // Public Game methods
 
-MoveState			Gomoku::DoNextMove()
+MoveActionState		Gomoku::DoNextMove()
 {
 	int num = this->nextPlayerNum - 1;
 	this->nextPlayerNum = (this->nextPlayerNum == 1) ? 2 : 1;
@@ -98,19 +92,30 @@ MoveState			Gomoku::DoNextMove()
 	}
 }
 
-void				Gomoku::CommitMove(Move *move, bool setState)
+MoveState			Gomoku::CommitMove(Move *move, bool setState)
 {
-    int p = GetPlayerToMove();
+    PlayerNumber p = GetPlayerToMove();
     int x = move->GetX();
     int y = move->GetY();
 
-    this->nb_moves++;
-    this->stones++;
-    board[x][y] = p;
-	this->checkTakedStones(move, p);
-	if (setState)
-		this->setMoveState(move);
-	this->checkGameState(x, y, p);
+	MoveState moveState = this->referee.CheckMove(move, this->board, p);
+
+	if (moveState == GOOD_MOVE)
+	{
+		this->nb_moves++;
+		this->stones++;
+		board[x][y] = p;
+		move->SetPlayerNumber(p);
+		this->checkTakenStones(move);
+		if (setState)
+		{
+			this->players[p - 1]->NewMove();
+			this->players[p - 1]->CommitPairs();
+			this->lastMove = move;
+		}
+		this->gameState = this->referee.CheckGame(move, this->players[p - 1], this->stones, this->board);
+	}
+	return (moveState);
 }
 
 void				Gomoku::UndoMove(Move *move)
@@ -122,6 +127,7 @@ void				Gomoku::UndoMove(Move *move)
 	this->nb_moves--;
     this->stones--;
 	board[move->GetX()][move->GetY()] = NEUTRAL;
+	move->SetPlayerNumber(NEUTRAL);
 	this->players[this->GetPlayerToMove() - 1]->ResetPendingPairs();
 	if (!l.empty())
 	{
@@ -131,49 +137,33 @@ void				Gomoku::UndoMove(Move *move)
 			this->stones++;
 		}
 	}
-    state = IN_PROGRESS;
+    this->gameState = IN_PROGRESS;
 }
 
 void				Gomoku::ResetGame()
 {
 	this->stones = 0;
     this->nb_moves = 0;
-	this->state = IN_PROGRESS;
+	this->gameState = IN_PROGRESS;
 	this->nextPlayerNum = 1;
 	this->players[0]->ResetPlayer();
 	this->players[1]->ResetPlayer();
+	this->referee.SetSize(this->size);
+
+	this->board = new unsigned char*[this->size];
+	for (int i = 0; i < this->size; i++)
+	{
+		this->board[i] = new unsigned char[this->size];
+		for (int j = 0; j < this->size; j++)
+			board[i][j] = NEUTRAL;
+	}
 }
 
 // Private Game methods
 
-void				Gomoku::checkGameState(unsigned int x, unsigned int y, int p)
+void				Gomoku::checkTakenStones(Move *move)
 {
-    if (stones == (this->size * this->size))
-        state = BOARD_FULL;
-	else if (this->players[p - 1]->GetPairs() >= LINE_SIZE)
-		state = (GameState)p;
-	else
-	{
-		for (int d = 0; d < 4; d++)
-		{
-		    int forward = 1;
-		    while (isCorrect(x + (forward * dx[d]), y + (forward * dy[d])) &&
-		            (board[x + (forward * dx[d])][y + (forward * dy[d])] == p))
-		        forward++;
-	
-	        int backward = 1;
-	        while (isCorrect(x - (backward * dx[d]), y - (backward * dy[d])) &&
-	                (board[x - (backward * dx[d])][y - (backward * dy[d])] == p))
-	            backward++;
-	
-	        if (forward + backward > LINE_SIZE)
-	            state = (GameState)p;
-	    }
-	}
-}
-
-void				Gomoku::checkTakedStones(Move *move, int p)
-{
+	int p = move->GetPlayerNumber();
 	int adv = (p == 1) ? 2 : 1;
     unsigned int x = move->GetX();
     unsigned int y = move->GetY();
@@ -217,11 +207,15 @@ bool				Gomoku::isCorrect(int x, int y) const
     return ((x >= 0) && (y >= 0) && (x < (int)this->size) && (y < (int)this->size));
 }
 
-void				Gomoku::setMoveState(Move *move)
+void				Gomoku::deleteBoard()
 {
-	this->players[this->GetPlayerToMove() - 1]->NewMove();
-	this->players[this->GetPlayerToMove() - 1]->CommitPairs();
-	this->lastMove = move;
+	if (board)
+	{
+		for (int i = 0; i < this->size; i++)
+			delete this->board[i];
+		delete this->board;
+		this->board = NULL;
+	}
 }
 
 // Game infos getters
@@ -245,13 +239,12 @@ Move				*Gomoku::GetLastMove()
 	return (this->lastMove);
 }
 
-// A trier !!! :D
-
-
-GameState Gomoku::getState() const
+GameState			Gomoku::GetGameState() const
 {
-    return (state);
+    return (this->gameState);
 }
+
+// A trier !!! :D
 
 std::vector<Move *>	Gomoku::getCorrectMoves() const
 {
@@ -290,7 +283,7 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
 				if	(isCorrect(i - 1, j - 1))
 					if (board[i - 1][j - 1] != NEUTRAL)
 						hasStone = true;
-				if (hasStone) */moves.push_back(new Move(i, j));
+				if (hasStone) */moves.push_back(new Move(i, j, NEUTRAL));
 			}
         }
     return (moves);
