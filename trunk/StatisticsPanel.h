@@ -16,25 +16,26 @@ typedef enum
 class StatisticsPanel
 {
     private:
-        QLabel      *algorithm_t;
-        QLabel      *algorithm;
-        QLabel      *nodes_t;
-        QLabel      *nodes;
-        QLabel      *nbMoves_t;
-        QLabel      *nbMoves;
-        QLabel      *nbPairsTaken_t;
-        QLabel      *nbPairsTaken;
-        QFrame      *frameAlgorythm;
-        QFrame      *frameNodes;
-        QFrame      *frameNbMoves;
-        QFrame      *frameNbPairsTaken;
-        QHBoxLayout *hboxLayoutAlgorythm;
-        QHBoxLayout *hboxLayoutNodes;
-        QHBoxLayout *hboxLayoutNbMoves;
-        QHBoxLayout *hboxLayoutNbPairsTaken;
-        QVBoxLayout *vboxLayout;
-        QGroupBox   *groupBox;
-        QGroupBox   *parent;
+        QLabel              *algorithm_t;
+        QLabel              *algorithm;
+        QLabel              *nodes_t;
+        QLabel              *nodes;
+        QLabel              *nbMoves_t;
+        QLabel              *nbMoves;
+        QLabel              *nbPairsTaken_t;
+        QLabel              *nbPairsTaken;
+        QFrame              *frameAlgorythm;
+        QFrame              *frameNodes;
+        QFrame              *frameNbMoves;
+        QFrame              *frameNbPairsTaken;
+        QHBoxLayout         *hboxLayoutAlgorythm;
+        QHBoxLayout         *hboxLayoutNodes;
+        QHBoxLayout         *hboxLayoutNbMoves;
+        QHBoxLayout         *hboxLayoutNbPairsTaken;
+        QVBoxLayout         *vboxLayout;
+        QGroupBox           *groupBox;
+        QGroupBox           *parent;
+        StatisticsPanelType typePanel;
 
     private:
         void    addInfos(QFrame **frame, QHBoxLayout **hboxLayout,
@@ -45,7 +46,7 @@ class StatisticsPanel
         ~StatisticsPanel();
 
     public:
-        QGroupBox   *GetGroupBox();
+        QGroupBox   *GetPanel();
 };
 
 #endif //!STATISTICSPANEL1_H_

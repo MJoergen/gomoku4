@@ -18,8 +18,14 @@ class Statistics
         QVBoxLayout     *vboxLayout;
         Mainwindow      *mainwindow;
         QGroupBox       *groupBox;
+        QSpacerItem     *spacerItem;
         StatisticsPanel *statisticsPanelPlayer1;
         StatisticsPanel *statisticsPanelPlayer2;
+
+    private:
+        void    cleanPanels();
+        void    createPanels();
+        void    reset();
 
     public:
         Statistics(Mainwindow *mainwindow);
@@ -27,8 +33,7 @@ class Statistics
 
     public:
         void    UpdateSize(int nbButtonsSide);
-        //void    UpdateStatistics(QString player, QString algorithm, QString mode,
-          //                       int nbNodes, int nbFreePions, int nbMoves);
+        void    UpdateStatistics();
 };
 
 #endif //!_STATISTICSPANEL_H_

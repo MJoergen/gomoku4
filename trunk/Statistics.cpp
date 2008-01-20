@@ -2,10 +2,25 @@
 
 Statistics::Statistics(Mainwindow *mainwindow)
 {
-    this->mainwindow = mainwindow;
-    this->groupBox = new QGroupBox("Statistics", mainwindow);
-    this->vboxLayout = new QVBoxLayout(this->groupBox);
+    this->mainwindow    = mainwindow;
+    this->groupBox      = new QGroupBox("Statistics", mainwindow);
+    this->vboxLayout    = new QVBoxLayout(this->groupBox);
+    this->spacerItem    = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
+    this->createPanels();
+}
+
+void    Statistics::cleanPanels()
+{
+    this->vboxLayout->removeWidget(this->statisticsPanelPlayer1->GetPanel());
+    this->vboxLayout->removeWidget(this->statisticsPanelPlayer2->GetPanel());
+    this->vboxLayout->removeItem(this->spacerItem);
+    delete this->statisticsPanelPlayer1;
+    delete this->statisticsPanelPlayer2;
+}
+
+void    Statistics::createPanels()
+{
     if (Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_HUMAN)
         this->statisticsPanelPlayer1 = new StatisticsPanel(STATS_HUMAN, this->groupBox);
     else
@@ -15,9 +30,15 @@ Statistics::Statistics(Mainwindow *mainwindow)
     else
         this->statisticsPanelPlayer2 = new StatisticsPanel(STATS_IA, this->groupBox);
 
-    this->vboxLayout->addWidget(this->statisticsPanelPlayer1->GetGroupBox());
-    this->vboxLayout->addWidget(this->statisticsPanelPlayer2->GetGroupBox());
-    this->vboxLayout->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    this->vboxLayout->addWidget(this->statisticsPanelPlayer1->GetPanel());
+    this->vboxLayout->addWidget(this->statisticsPanelPlayer2->GetPanel());
+    this->vboxLayout->addItem(this->spacerItem);
+}
+
+void    Statistics::reset()
+{
+    this->cleanPanels();
+    this->createPanels();
 }
 
 void    Statistics::UpdateSize(int nbButtonsSide)
@@ -26,17 +47,11 @@ void    Statistics::UpdateSize(int nbButtonsSide)
                            this->mainwindow->height() - MENU_HEIGHT - 3);
     this->groupBox->move(nbButtonsSide * DEFAULT_BUTTONSIZE + 5, MENU_HEIGHT);
 }
-//
-//void    StatisticsPanel::UpdateStatistics(QString player, QString algorithm, QString mode,
-//                                          int nbNodes, int nbFreePions, int nbMoves)
-//{
-//    this->player->setText(player);
-//    this->algorithm->setText(algorithm);
-//    this->mode->setText(mode);
-//    this->nodes->setNum(nbNodes);
-//    this->nbFreePions->setNum(nbFreePions);
-//    this->nbMoves->setNum(nbMoves);
-//}
+
+void    Statistics::UpdateStatistics()
+{
+    this->reset();
+}
 
 Statistics::~Statistics()
 {

@@ -61,30 +61,9 @@ void			Mainwindow::SetBoardSize(int boardSize)
     this->boardSize = boardSize;
 }
 
-void			Mainwindow::UpdateStatistics(int nbConsideredNode)
+Statistics      *Mainwindow::GetStatistics()
 {
-    QString     player;
-    QString     algorythm;
-    QString     gameMode;
-
-//    player      = this->isPlayer2Turn ? "IA" : "You";
-//    algorythm   = this->algo == ALPHABETA ? "AlphaBeta" : "NegaMax";
-//    switch (this->mode)
-//    {
-//        case PLAYER_VS_PLAYER :
-//            gameMode = "Player VS Player";
-//            break;
-//
-//        case PLAYER_VS_IA :
-//            gameMode = "Player VS IA";
-//            break;
-//
-//        case IA_VS_IA :
-//            gameMode = "IA VS IA";
-//            break;
-//    }
-//    this->statisticsPanel->UpdateStatistics(player, algorythm, gameMode,
-//                                            nbConsideredNode, 0, 0);
+    return (this->statistics);
 }
 
 // Private methods
@@ -212,7 +191,6 @@ void			Mainwindow::startNewGame()
     this->cleanButtonsArray();
     this->createButtons();
     Gomoku::GetInstance()->ResetGame();
-    this->UpdateStatistics(0);
 	this->startMoves();
 }
 
@@ -231,7 +209,6 @@ void			Mainwindow::buttonClicked()
 		{
 			if (this->referee->CheckMove(this->buttonsArray, button->GetPos()) == ALLOWED)
 			{
-				this->UpdateStatistics(0);
 				Gomoku::GetInstance()->CommitMove(button->GetPos(), true);
 				this->updateDisplay();
                 if (this->referee->CheckGame() != IN_PROGRESS)
