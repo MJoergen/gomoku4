@@ -21,7 +21,7 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
         case STATS_HUMAN:
             this->groupBox->setTitle("Player");
             this->addInfos(&this->frameNbMoves, &this->hboxLayoutNbMoves,
-                           "Moves :", &this->nbMoves_t, &this->nbMoves);
+                           "Nb moves :", &this->nbMoves_t, &this->nbMoves);
             this->addInfos(&this->frameNbPairsTaken, &this->hboxLayoutNbPairsTaken,
                            "Nb pairs taken :", &this->nbPairsTaken_t, &this->nbPairsTaken);
             this->nbMoves->setNum(0);
@@ -31,7 +31,7 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
         case STATS_IA:
             this->groupBox->setTitle("IA");
             this->addInfos(&this->frameNbMoves, &this->hboxLayoutNbMoves,
-                           "Moves :", &this->nbMoves_t, &this->nbMoves);
+                           "Nb moves :", &this->nbMoves_t, &this->nbMoves);
             this->addInfos(&this->frameNbPairsTaken, &this->hboxLayoutNbPairsTaken,
                            "Nb pairs taken :", &this->nbPairsTaken_t, &this->nbPairsTaken);
             this->addInfos(&this->frameAlgorythm, &this->hboxLayoutAlgorythm,
@@ -60,6 +60,8 @@ void    StatisticsPanel::addInfos(QFrame **frame, QHBoxLayout **hboxLayout,
     *value       = new QLabel(*frame);
 
     (*title)->setText(QString("<b>") + titleText + QString("</b>"));
+    (*title)->setFont(QFont("Verdana [Sans Serif]", 7));
+    (*value)->setFont(QFont("Verdana [Sans Serif]", 7));
     (*hboxLayout)->addWidget(*title);
     (*hboxLayout)->addWidget(*value);
     this->vboxLayout->addWidget(*frame);
