@@ -177,6 +177,7 @@ void			Mainwindow::updateDisplay()
 
 		for (it = pointsTaken.begin(); it != pointsTaken.end(); it++)
 			this->buttonsArray[(*it).GetX()][(*it).GetY()]->SetState(NEUTRAL);
+        this->statistics->UpdateStatistics();
 	}
 }
 

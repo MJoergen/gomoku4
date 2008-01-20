@@ -118,7 +118,7 @@ void        OptionsWindow::valid()
     this->savePlayerType(PLAYER1, this->cb_player1, this->cb_player1Algo);
     this->savePlayerType(PLAYER2, this->cb_player2, this->cb_player2Algo);
     Mainwindow::GetInstance()->CreateBoard();
-    Mainwindow::GetInstance()->GetStatistics()->UpdateStatistics();
+    Mainwindow::GetInstance()->GetStatistics()->Reset();
     delete this;
 }
 

@@ -14,7 +14,7 @@
 # include "Mainwindow.h"
 # include "Player.h"
 
-# define MIN                  5
+# define MIN                  10
 # define MAX                  19
 # define OPTIONSWINDOW_WIDTH  280
 # define OPTIONSWINDOW_HEIGHT 190

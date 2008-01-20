@@ -25,13 +25,13 @@ class Statistics
     private:
         void    cleanPanels();
         void    createPanels();
-        void    reset();
 
     public:
         Statistics(Mainwindow *mainwindow);
         ~Statistics();
 
     public:
+        void    Reset();
         void    UpdateSize(int nbButtonsSide);
         void    UpdateStatistics();
 };

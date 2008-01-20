@@ -7,6 +7,8 @@
 # include <QVBoxLayout>
 # include <QGroupBox>
 
+# include "Player.h"
+
 typedef enum
 {
     STATS_HUMAN,
@@ -47,6 +49,7 @@ class StatisticsPanel
 
     public:
         QGroupBox   *GetPanel();
+        void        UpdateStatistics(Player *player);
 };
 
 #endif //!STATISTICSPANEL1_H_
