@@ -11,13 +11,16 @@ class Mainwindow;
 class NegaMax : public IA
 {
     private:
-        static const unsigned int DEEP_MAX = 2;
+        unsigned int				treeNodes;
+        static const unsigned int	DEEP_MAX = 2;
+		Move						*bestMove;
+		Gomoku						*gomoku;
 
 	public:
 		NegaMax();
 
     public:
-        int	  AlgoNegaMax(Move **bestMove, int level);
+        int	  AlgoNegaMax(int level);
         void  findMove();
 };
 

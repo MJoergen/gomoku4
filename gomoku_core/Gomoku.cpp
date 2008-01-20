@@ -254,47 +254,14 @@ unsigned int		Gomoku::GetNbMoves() const
 	return (this->nb_moves);
 }
 
-// A trier !!! :D
-
-std::vector<Move *>	Gomoku::getCorrectMoves() const
+unsigned char		**Gomoku::GetBoard()
 {
-    std::vector<Move *>	moves;
+	return (this->board);
+}
 
-	for (int i = 0; i < this->size; i++)
-        for (int j = 0; j < this->size; j++)
-        {
-			bool hasStone = false;
-            if (board[j][i] == NEUTRAL)
-			{
-				if (isCorrect(i + 1, j))
-					if (board[i + 1][j] != NEUTRAL)
-						hasStone = true;
-				if (isCorrect(i - 1, j))
-					if (board[i - 1][j] != NEUTRAL)
-						hasStone = true;
-				if	(isCorrect(i, j + 1))
-					if (board[i][j + 1] != NEUTRAL)
-						hasStone = true;
-				if	(isCorrect(i, j - 1))
-					if (board[i][j - 1] != NEUTRAL)
-						hasStone = true;
-				if	(isCorrect(i + 1, j + 1))
-					if (board[i + 1][j + 1] != NEUTRAL)
-						hasStone = true;
-				if	(isCorrect(i + 1, j - 1))
-					if (board[i + 1][j - 1] != NEUTRAL)
-						hasStone = true;
-				if	(isCorrect(i - 1, j + 1))
-					if (board[i - 1][j + 1] != NEUTRAL)
-						hasStone = true;
-				if	(isCorrect(i - 1, j - 1))
-					if (board[i - 1][j - 1] != NEUTRAL)
-						hasStone = true;
-				if (hasStone)
-					moves.push_back(new Move(j, i, NEUTRAL));
-			}
-        }
-    return (moves);
+int					Gomoku::GetSize() const
+{
+	return (this->size);
 }
 
 uint	Gomoku::evaluate() const
@@ -320,4 +287,20 @@ uint	Gomoku::evaluate() const
         }
     }
     return (eval);
+}
+
+bool	Gomoku::IsCircled(int x, int y) const
+{
+
+	for (int d = 0; d < 4; d++)
+	{
+		if (isCorrect(x + (1 * dx[d]), y + (1 * dy[d]))
+			&& (board[x + (1 * dx[d])][y + (1 * dy[d])] != NEUTRAL))
+			return (true);
+
+		if (isCorrect(x - (1 * dx[d]), y - (1 * dy[d]))
+			&& (board[x - (1 * dx[d])][y - (1 * dy[d])] != NEUTRAL))
+			return (true);
+	}
+	return (false);
 }
