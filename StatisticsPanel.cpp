@@ -14,7 +14,7 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
     this->frameNodes            = NULL;
     this->hboxLayoutNodes       = NULL;
 
-    this->vboxLayout->setSpacing(1);
+    //this->vboxLayout->setSpacing(1);
 
     switch (typePanel)
     {
@@ -24,8 +24,6 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
                            "Nb moves :", &this->nbMoves_t, &this->nbMoves);
             this->addInfos(&this->frameNbPairsTaken, &this->hboxLayoutNbPairsTaken,
                            "Nb pairs taken :", &this->nbPairsTaken_t, &this->nbPairsTaken);
-            this->nbMoves->setNum(0);
-            this->nbPairsTaken->setNum(0);
             break;
 
         case STATS_IA:
