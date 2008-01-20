@@ -53,6 +53,7 @@ class OptionsWindow : public QWidget
         void    doConnects();
         void    moveToCenter();
         int     getMaxBoardSize();
+        void    loadPreviousConfig();
         void    savePlayerType(PlayerNumber playerNum, QComboBox *player, QComboBox *algo);
 
     private slots:
