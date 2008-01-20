@@ -18,6 +18,7 @@ class Statistics
         QVBoxLayout     *vboxLayout;
         Mainwindow      *mainwindow;
         QGroupBox       *groupBox;
+        QSpacerItem     *spacerItem;
         StatisticsPanel *statisticsPanelPlayer1;
         StatisticsPanel *statisticsPanelPlayer2;
 
