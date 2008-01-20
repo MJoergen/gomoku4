@@ -93,8 +93,8 @@ void    OptionsWindow::loadPreviousConfig()
 
 void    OptionsWindow::moveToCenter()
 {
-    this->move(Mainwindow::GetInstance()->x() + Mainwindow::GetInstance()->width() / 2 - this->width() / 2,
-               Mainwindow::GetInstance()->y() + Mainwindow::GetInstance()->height() / 2 - this->height() / 2);
+    this->move(Mainwindow::GetInstance()->x() + Mainwindow::GetInstance()->width() / 2 - this->width() / 4,
+               Mainwindow::GetInstance()->y() + Mainwindow::GetInstance()->height() / 2 - this->height() / 4);
 }
 
 int    OptionsWindow::getMaxBoardSize()
