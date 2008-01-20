@@ -42,7 +42,7 @@ class Referee
 
 	private:
 		bool		isCorrect(int x, int y) const;
-		bool		stoneCanBeTaken(Move *move, unsigned char **board) const;
+		bool		stoneCanBeTaken(int x, int y, unsigned char **board) const;
 };
 
 #endif //!_REFEREE_H_

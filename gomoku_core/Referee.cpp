@@ -92,8 +92,6 @@ GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, uns
 	if (board && lastMove && lastPlayer)
 	{
 		int p = lastMove->GetPlayerNumber();
-		int x = lastMove->GetX();
-		int y = lastMove->GetY();
 
 		if (stones == (this->size * this->size))
 			return (BOARD_FULL);
@@ -101,21 +99,28 @@ GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, uns
 			return ((GameState)p);
 		else
 		{
-			for (int d = 0; d < 4; d++)
-			{
-				int forward = 1;
-				while (isCorrect(x + (forward * dx[d]), y + (forward * dy[d]))
-					&& (board[x + (forward * dx[d])][y + (forward * dy[d])] == p))
-					forward++;
+			for (int x = 0; x < this->size; x++)
+				for (int y = 0; y < this->size; y++)
+				{
+					if (!stoneCanBeTaken(x, y, board))
+					for (int d = 0; d < 4; d++)
+					{
+						int forward = 1;
+						while (isCorrect(x + (forward * dx[d]), y + (forward * dy[d]))
+							&& (board[x + (forward * dx[d])][y + (forward * dy[d])] == p)
+							&& (!stoneCanBeTaken(x + (forward * dx[d]), y + (forward * dy[d]), board)))
+							forward++;
 	
-				int backward = 1;
-				while (isCorrect(x - (backward * dx[d]), y - (backward * dy[d]))
-	                && (board[x - (backward * dx[d])][y - (backward * dy[d])] == p))
-	            backward++;
+						int backward = 1;
+						while (isCorrect(x - (backward * dx[d]), y - (backward * dy[d]))
+				            && (board[x - (backward * dx[d])][y - (backward * dy[d])] == p)
+							&& (!stoneCanBeTaken(x - (backward * dx[d]), y - (backward * dy[d]), board)))
+					        backward++;
 
-				if (forward + backward > LINE_SIZE)
-					return ((GameState)p);
-			}
+						if (forward + backward > LINE_SIZE + 1)
+							return ((GameState)p);
+					}
+				}
 	    }
 	}
 	return (IN_PROGRESS);
@@ -126,15 +131,35 @@ bool		Referee::isCorrect(int x, int y) const
     return ((x >= 0) && (y >= 0) && (x < this->size) && (y < this->size));
 }
 
-bool		Referee::stoneCanBeTaken(Move *move, unsigned char **board) const
+bool		Referee::stoneCanBeTaken(int x, int y, unsigned char **board) const
 {
-	if (board && move)
+	if (board)
 	{
-		int x = move->GetX();
-		int y = move->GetY();
-		PlayerNumber p = move->GetPlayerNumber();
+		PlayerNumber p = (PlayerNumber)board[x][y];
 		PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
 		
-
+		for (int d = 0; d < 4; d++)
+		{
+			if (isCorrect(x + (1 * dx[d]), y + (1 * dy[d]))
+				&& (board[x + (1 * dx[d])][y + (1 * dy[d])] == p)
+				&& isCorrect(x + (2 * dx[d]), y + (2 * dy[d]))
+				&& (board[x + (2 * dx[d])][y + (2 * dy[d])] == adv)
+				&& isCorrect(x - (1 * dx[d]), y - (1 * dy[d]))
+				&& (board[x - (1 * dx[d])][y - (1 * dy[d])] == NEUTRAL))
+			{
+				return (true);
+			}
+	
+			if (isCorrect(x - (1 * dx[d]), y - (1 * dy[d]))
+				&& (board[x - (1 * dx[d])][y - (1 * dy[d])] == p)
+				&& isCorrect(x - (2 * dx[d]), y - (2 * dy[d]))
+				&& (board[x - (2 * dx[d])][y - (2 * dy[d])] == adv)
+				&& isCorrect(x + (1 * dx[d]), y + (1 * dy[d]))
+				&& (board[x + (1 * dx[d])][y + (1 * dy[d])] == NEUTRAL))
+			{
+				return (true);
+			}
+		}
 	}
+	return (false);
 }
