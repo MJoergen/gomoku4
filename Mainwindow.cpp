@@ -86,14 +86,15 @@ void			Mainwindow::doConnects()
 
 void			Mainwindow::setSize()
 {
-    int width  = this->boardSize * DEFAULT_BUTTONSIZE + STATS_PANEL_WIDTH + 10 + BORDURE_SIZE;
+    int width  = this->boardSize * DEFAULT_BUTTONSIZE + STATS_PANEL_WIDTH +
+                 STATS_PANEL_SPACE * 2 + BORDURE_SIZE - 1;
     int height = this->boardSize * DEFAULT_BUTTONSIZE + MENU_HEIGHT + BORDURE_SIZE;
 
     this->resize(width, height);
     this->setMinimumSize(width, height);
     this->setMaximumSize(width, height);
     this->frame->setGeometry(0, 0,
-                            this->boardSize * DEFAULT_BUTTONSIZE + BORDURE_SIZE,
+                            this->boardSize * DEFAULT_BUTTONSIZE + BORDURE_SIZE + 1,
                             this->boardSize * DEFAULT_BUTTONSIZE + MENU_HEIGHT + BORDURE_SIZE);
     this->frame->setFrameShape(QFrame::WinPanel);
     this->frame->setFrameShadow(QFrame::Raised);
@@ -250,12 +251,12 @@ void			Mainwindow::buttonClicked()
 
 				case NOT_FREE :
 					QMessageBox::critical(this, "Gomoku - Illegal action",
-						"This pion is not free. You are allowed to use it.");
+                                          "This pion is not free. You are not allowed to use it.");
 					break;
 
 				case DOUBLE_THREE:
 					QMessageBox::critical(this, "Gomoku - Illegal action",
-						"Double three !");
+                                          "Double three !");
 					break;
 			}
 		}
