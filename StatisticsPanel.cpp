@@ -14,7 +14,16 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
     this->frameNodes            = NULL;
     this->hboxLayoutNodes       = NULL;
 
-    //this->vboxLayout->setSpacing(1);
+    this->createPanel(typePanel);
+
+}
+
+void    StatisticsPanel::createPanel(StatisticsPanelType typePanel)
+{
+    QFont font;
+    font.setBold(false);
+    font.setItalic(false);
+    font.setUnderline(false);
 
     switch (typePanel)
     {
@@ -38,6 +47,7 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
                            "Nodes :", &this->nodes_t, &this->nodes);
             break;
     }
+    this->groupBox->setFont(font);
 }
 
 QGroupBox    *StatisticsPanel::GetPanel()

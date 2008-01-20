@@ -40,6 +40,7 @@ class StatisticsPanel
         StatisticsPanelType typePanel;
 
     private:
+        void    createPanel(StatisticsPanelType typePanel);
         void    addInfos(QFrame **frame, QHBoxLayout **hboxLayout,
                          QString titleText, QLabel **title, QLabel **value);
 
