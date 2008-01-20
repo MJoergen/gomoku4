@@ -17,7 +17,7 @@ OptionsWindow::OptionsWindow(int boardSize)
     this->l_player1 = new QLabel("Player 1 :", this->groupBox);
     this->cb_player1 = new QComboBox(this->groupBox);
     this->cb_player1->setObjectName("cb_player1");
-    this->cb_player1->addItem("Player");
+    this->cb_player1->addItem("Human");
     this->cb_player1->addItem("IA");
     this->cb_player1Algo = new QComboBox(this->groupBox);
     this->cb_player1Algo->addItem("AlphaBeta");
@@ -27,7 +27,7 @@ OptionsWindow::OptionsWindow(int boardSize)
     this->l_player2 = new QLabel("Player 2 :", this->groupBox);
     this->cb_player2 = new QComboBox(this->groupBox);
     this->cb_player2->setObjectName("cb_player2");
-    this->cb_player2->addItem("Player");
+    this->cb_player2->addItem("Human");
     this->cb_player2->addItem("IA");
     this->cb_player2Algo = new QComboBox(this->groupBox);
     this->cb_player2Algo->addItem("AlphaBeta");
