@@ -14,6 +14,11 @@ int			Player::GetMoves()
 	return (this->movesDone);
 }
 
+int         Player::GetTreeNodes()
+{
+    return (this->treeNodes);
+}
+
 void		Player::NewPairCaptured()
 {
 	this->pendingPairs++;

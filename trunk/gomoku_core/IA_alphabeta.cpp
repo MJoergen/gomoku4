@@ -6,11 +6,12 @@
 
 AlphaBeta::AlphaBeta() : IA(IS_IA_ALPHABETA)
 {
+    this->treeNodes = 0;
 }
 
 int		AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
 {
-    treeNodes++;
+    this->treeNodes++;
     *bestMove = NULL;
 
     if (Gomoku::GetInstance()->GetGameState() == BOARD_FULL)
@@ -60,9 +61,6 @@ void	AlphaBeta::findMove()
     this->treeNodes = 0;
     AlgoAlphaBeta(&bestMove, -INFINITY, INFINITY, DEEP_MAX);
 	if (bestMove)
-	{
 		Gomoku::GetInstance()->CommitMove(bestMove, true);
-        //Mainwindow::GetInstance()->UpdateStatistics(this->treeNodes);
-	}
 }
 

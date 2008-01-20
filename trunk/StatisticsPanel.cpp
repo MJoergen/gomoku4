@@ -78,11 +78,13 @@ void    StatisticsPanel::UpdateStatistics(Player *player)
                            QString("%1").arg(player->GetMoves()) + QString("</span>"));
     this->nbPairsTaken->setText(QString("<span style=\" color:#21109b;\">") +
                                 QString("%1").arg(player->GetPairs()) + QString("</span>"));
-    if (player->GetType() == IS_IA_ALPHABETA || player->GetType() == IS_IA_NEGAMAX)
+    if (player->GetType() != IS_HUMAN)
     {
         this->algorithm->setText(QString("<span style=\" color:#21109b;\">") +
                                  QString(player->GetType() == IS_IA_ALPHABETA ? "AlphaBeta" : "NegaMax") +
                                  QString("</span>"));
+        this->nodes->setText(QString("<span style=\" color:#21109b;\">") +
+                             QString("%1").arg(player->GetTreeNodes()) + QString("</span>"));
     }
 }
 

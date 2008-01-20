@@ -128,7 +128,7 @@ void				Gomoku::UndoMove(Move *move)
     int x = move->GetX();
     int y = move->GetY();
 	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
-	
+
 	this->nb_moves--;
     this->stones--;
 	board[x][y] = NEUTRAL;

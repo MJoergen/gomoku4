@@ -23,6 +23,9 @@ class Player
 		int			pendingPairs;
 		PlayerType	type;
 
+    protected:
+        int         treeNodes;
+
 	public:
 		Player(PlayerType playerType);
 		virtual ~Player() {};
@@ -30,6 +33,7 @@ class Player
 	public:
 		void		NewMove();
 		int			GetMoves();
+		int         GetTreeNodes();
 		void		NewPairCaptured();
 		int			GetPairs();
 		void		ResetPendingPairs();
