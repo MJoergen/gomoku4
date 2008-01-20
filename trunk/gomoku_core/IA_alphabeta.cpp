@@ -30,6 +30,7 @@ int		AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
 
     for (; it != eit; it++)
     {
+		(*it)->SetPlayerNumber((PlayerNumber)((Gomoku::GetInstance()->GetNbMoves() % 2) + 1));
         Gomoku::GetInstance()->CommitMove(*it, false);
         val = -AlgoAlphaBeta(&child, -beta, -alpha, level - 1);
         if (child)

@@ -94,7 +94,9 @@ MoveActionState		Gomoku::DoNextMove()
 
 MoveState			Gomoku::CommitMove(Move *move, bool setState)
 {
-    PlayerNumber p = GetPlayerToMove();
+    PlayerNumber p = move->GetPlayerNumber();
+	if (p == NEUTRAL)
+		p = this->GetPlayerToMove();
     int x = move->GetX();
     int y = move->GetY();
 
@@ -122,13 +124,16 @@ void				Gomoku::UndoMove(Move *move)
 {
 	std::list<Point>::iterator it;
 	std::list<Point> l = move->GetPointsTaken();
-	int adv = (this->GetPlayerToMove() == 1) ? 2 : 1;
+    PlayerNumber p = move->GetPlayerNumber();
+    int x = move->GetX();
+    int y = move->GetY();
+	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
 	
 	this->nb_moves--;
     this->stones--;
-	board[move->GetX()][move->GetY()] = NEUTRAL;
+	board[x][y] = NEUTRAL;
 	move->SetPlayerNumber(NEUTRAL);
-	this->players[this->GetPlayerToMove() - 1]->ResetPendingPairs();
+	this->players[p - 1]->ResetPendingPairs();
 	if (!l.empty())
 	{
 		for (it = l.begin(); it != l.end(); ++it)
@@ -244,22 +249,24 @@ GameState			Gomoku::GetGameState() const
     return (this->gameState);
 }
 
+unsigned int		Gomoku::GetNbMoves() const
+{
+	return (this->nb_moves);
+}
+
 // A trier !!! :D
 
 std::vector<Move *>	Gomoku::getCorrectMoves() const
 {
     std::vector<Move *>	moves;
-	unsigned int 		p = GetPlayerToMove();
 
-	if (p == PLAYER1) p = PLAYER2;
-	else p = PLAYER1;
-    for (int i = 0; i < this->size; i++)
+	for (int i = 0; i < this->size; i++)
         for (int j = 0; j < this->size; j++)
         {
 			bool hasStone = false;
-            if (board[i][j] == NEUTRAL)
+            if (board[j][i] == NEUTRAL)
 			{
-				/*if (isCorrect(i + 1, j))
+				if (isCorrect(i + 1, j))
 					if (board[i + 1][j] != NEUTRAL)
 						hasStone = true;
 				if (isCorrect(i - 1, j))
@@ -283,7 +290,8 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
 				if	(isCorrect(i - 1, j - 1))
 					if (board[i - 1][j - 1] != NEUTRAL)
 						hasStone = true;
-				if (hasStone) */moves.push_back(new Move(i, j, NEUTRAL));
+				if (hasStone)
+					moves.push_back(new Move(j, i, NEUTRAL));
 			}
         }
     return (moves);
@@ -291,7 +299,7 @@ std::vector<Move *>	Gomoku::getCorrectMoves() const
 
 uint	Gomoku::evaluate() const
 {
-    unsigned int p = GetPlayerToMove();
+    unsigned int p = (this->nb_moves % 2) + 1;
     unsigned int eval = 0;
 
     for (int x = 0; x < this->size; x++)

@@ -64,6 +64,7 @@ class Gomoku
 		Player				*GetPlayer(PlayerNumber playerNum);
 		Move				*GetLastMove();
         GameState        	GetGameState() const;
+		unsigned int		GetNbMoves() const;
 
         void	            dump(std::ostream& o) const;
         unsigned int        evaluate() const;
