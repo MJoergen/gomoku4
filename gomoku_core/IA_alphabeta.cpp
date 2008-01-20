@@ -13,9 +13,9 @@ int		AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
     treeNodes++;
     *bestMove = NULL;
 
-    if (Gomoku::GetInstance()->getState() == BOARD_FULL)
+    if (Gomoku::GetInstance()->GetGameState() == BOARD_FULL)
         return (0);
-    else if (Gomoku::GetInstance()->getState())
+    else if (Gomoku::GetInstance()->GetGameState())
         return (-INFINITY);
     if (!level)
         return (-(Gomoku::GetInstance()->evaluate()));

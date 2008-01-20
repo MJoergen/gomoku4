@@ -6,10 +6,8 @@
 # include <QLabel>
 # include <QMainWindow>
 
-# include "IA.h"
 # include "Button.h"
 # include "Gomoku.h"
-# include "Referee.h"
 # include "OptionsWindow.h"
 # include "Statistics.h"
 # include "ButtonIconFactory.h"
@@ -42,9 +40,8 @@ class Mainwindow : public QMainWindow
     private:
         int                 boardSize;
         Button				***buttonsArray;
-        Referee             *referee;
         Statistics          *statistics;
-		MoveState			moveState;
+		MoveActionState		moveActionState;
 
     private:
         Mainwindow();
@@ -69,6 +66,7 @@ class Mainwindow : public QMainWindow
         void				moveToCenter();
 		void				startMoves();
 		void				updateDisplay();
+		GameState			checkGameState();
 
     public slots:
         void				startNewGame();

@@ -8,26 +8,18 @@
 # include "Player.h"
 # include "IA.h"
 # include "Point.h"
-
-typedef	enum
-{
-	IN_PROGRESS,
-    VICTORY_PLAYER1,
-    VICTORY_PLAYER2,
-    ALLOWED,
-    FORBIDDEN,
-    BOARD_FULL
-}	GameState;
+# include "Referee.h"
 
 typedef enum
 {
 	WAITING_PLAYER_ACTION,
-	DONE
-}	MoveState;
+	DONE,
+	GAME_FINISHED
+}	MoveActionState;
 
 class Gomoku
 {
-    private:
+	private:
         static				int dx[4];
         static				int dy[4];
         static Gomoku		*instance;
@@ -37,10 +29,11 @@ class Gomoku
 		int					size;
 		Player				*players[2];
         unsigned char		**board;
+		Referee				referee;
 
         int					stones;
         unsigned int		nb_moves;
-        GameState			state;
+        GameState			gameState;
 		int					nextPlayerNum;
 
     private:
@@ -56,25 +49,24 @@ class Gomoku
 		void				SetPlayer(PlayerNumber playerNum, PlayerType type);
 
 	public:
-		MoveState			DoNextMove();
-        void				CommitMove(Move *move, bool setState);
+		MoveActionState		DoNextMove();
+        MoveState			CommitMove(Move *move, bool setState);
         void				UndoMove(Move *move);
         void                ResetGame();
 
 	private:
-		void				checkGameState(unsigned int x, unsigned int y, int p);
-		void				checkTakedStones(Move *move, int p);
+		void				checkTakenStones(Move *move);
 		bool                isCorrect(int x, int y) const;
-		void				setMoveState(Move *move);
+		void				deleteBoard();
 
 	public:
 		PlayerNumber		GetPlayerToMove() const;
 		Player				*GetPlayer(PlayerNumber playerNum);
 		Move				*GetLastMove();
+        GameState        	GetGameState() const;
 
         void	            dump(std::ostream& o) const;
         unsigned int        evaluate() const;
-        GameState        	getState() const;
         std::vector<Move *> getCorrectMoves() const;
 };
 

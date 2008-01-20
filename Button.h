@@ -15,7 +15,6 @@ class Button : public QPushButton
         int				id;
         int				size;
         Move			*pos;
-        PlayerNumber	state;
 
     private:
         void			changeIcon();
