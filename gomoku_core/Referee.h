@@ -37,11 +37,12 @@ class Referee
 		void		SetSize(int s);
 
     public:
-        MoveState	CheckMove(Move *move, unsigned char **board, PlayerNumber p);
-        GameState	CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board);
+        MoveState	CheckMove(Move *move, unsigned char **board, PlayerNumber p) const;
+        GameState	CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board) const;
 
 	private:
 		bool		isCorrect(int x, int y) const;
+		bool		stoneCanBeTaken(Move *move, unsigned char **board) const;
 };
 
 #endif //!_REFEREE_H_
