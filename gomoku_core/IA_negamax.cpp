@@ -62,14 +62,11 @@ void	NegaMax::findMove()
     this->treeNodes = 0;
     AlgoNegaMax(DEEP_MAX);
     if (this->bestMove)
-<<<<<<< .mine
+	{
 		qDebug("On Commit : x(%d) y(%d)", this->bestMove->GetX(), this->bestMove->GetY());
         Gomoku::GetInstance()->CommitMove(this->bestMove, true);
 		qDebug("Et on dit bravo a la vie");
 		//delete this->bestMove;
 		this->bestMove = NULL;
     }
-=======
-        Gomoku::GetInstance()->CommitMove(bestMove, true);
->>>>>>> .r129
 }
