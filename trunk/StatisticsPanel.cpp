@@ -24,6 +24,8 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
                            "Moves :", &this->nbMoves_t, &this->nbMoves);
             this->addInfos(&this->frameNbPairsTaken, &this->hboxLayoutNbPairsTaken,
                            "Nb pairs taken :", &this->nbPairsTaken_t, &this->nbPairsTaken);
+            this->nbMoves->setNum(0);
+            this->nbPairsTaken->setNum(0);
             break;
 
         case STATS_IA:
@@ -36,6 +38,10 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
                            "Algorithm :", &this->algorithm_t, &this->algorithm);
             this->addInfos(&this->frameNodes, &this->hboxLayoutNodes,
                            "Nodes :", &this->nodes_t, &this->nodes);
+            this->nbMoves->setNum(0);
+            this->nbPairsTaken->setNum(0);
+            this->algorithm->setText("AlphaBeta");
+            this->nodes->setNum(0);
             break;
     }
 }
@@ -57,6 +63,16 @@ void    StatisticsPanel::addInfos(QFrame **frame, QHBoxLayout **hboxLayout,
     (*hboxLayout)->addWidget(*title);
     (*hboxLayout)->addWidget(*value);
     this->vboxLayout->addWidget(*frame);
+}
+
+void    StatisticsPanel::UpdateStatistics(Player *player)
+{
+    this->nbMoves->setNum(player->GetMoves());
+    this->nbPairsTaken->setNum(player->GetPairs());
+    if (player->GetType() == IS_IA_ALPHABETA || player->GetType() == IS_IA_NEGAMAX)
+    {
+        this->algorithm->setText(player->GetType() == IS_IA_ALPHABETA ? "AlphaBeta" : "NegaMax");
+    }
 }
 
 StatisticsPanel::~StatisticsPanel()

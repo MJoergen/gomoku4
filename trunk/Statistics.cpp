@@ -35,7 +35,7 @@ void    Statistics::createPanels()
     this->vboxLayout->addItem(this->spacerItem);
 }
 
-void    Statistics::reset()
+void    Statistics::Reset()
 {
     this->cleanPanels();
     this->createPanels();
@@ -50,7 +50,8 @@ void    Statistics::UpdateSize(int nbButtonsSide)
 
 void    Statistics::UpdateStatistics()
 {
-    this->reset();
+    this->statisticsPanelPlayer1->UpdateStatistics(Gomoku::GetInstance()->GetPlayer(PLAYER1));
+    this->statisticsPanelPlayer2->UpdateStatistics(Gomoku::GetInstance()->GetPlayer(PLAYER2));
 }
 
 Statistics::~Statistics()
