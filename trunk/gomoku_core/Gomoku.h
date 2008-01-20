@@ -65,10 +65,11 @@ class Gomoku
 		Move				*GetLastMove();
         GameState        	GetGameState() const;
 		unsigned int		GetNbMoves() const;
+        unsigned char		**GetBoard();
+		int					GetSize() const;
 
-        void	            dump(std::ostream& o) const;
         unsigned int        evaluate() const;
-        std::vector<Move *> getCorrectMoves() const;
+		bool				IsCircled(int x, int y) const;
 };
 
 #endif //!__GOMOKU_H__

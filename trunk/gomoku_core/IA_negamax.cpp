@@ -6,55 +6,70 @@
 
 NegaMax::NegaMax() : IA(IS_IA_NEGAMAX)
 {
+	this->bestMove = NULL;
+	this->gomoku = Gomoku::GetInstance();
     this->treeNodes = 0;
 }
 
-int		NegaMax::AlgoNegaMax(Move **bestMove, int level)
+int		NegaMax::AlgoNegaMax(int level)
 {
     this->treeNodes++;
-    *bestMove = NULL;
 
-    if (Gomoku::GetInstance()->GetGameState() == BOARD_FULL)
+    if (this->gomoku->GetGameState() == BOARD_FULL)
         return (0);
-    else if (Gomoku::GetInstance()->GetGameState())
+    else if (this->gomoku->GetGameState() == (GameState)((this->gomoku->GetNbMoves() % 2) + 1))
+        return (INFINITY);
+	else if (this->gomoku->GetGameState())
         return (-INFINITY);
     if (!level)
-        return (-(Gomoku::GetInstance()->evaluate()));
+        return (this->gomoku->evaluate());
 
-    std::vector<Move *> moves = Gomoku::GetInstance()->getCorrectMoves();
-    Move *child;
-    int best, val;
+	unsigned char **board = this->gomoku->GetBoard();
+	int size = this->gomoku->GetSize();
+	int best, val;
 
-    *bestMove = moves[0];
     best = -INFINITY;
-    std::vector<Move *>::iterator it = moves.begin();
-    std::vector<Move *>::iterator eit = moves.end();
 
-    for (; it != eit; it++)
+	for (int x = 0; x < size; x++)
+		for (int y = 0; y < size; y++)
     {
-        Gomoku::GetInstance()->CommitMove(*it, false);
-        val = -AlgoNegaMax(&child, level - 1);
-        if (child)
-            delete child;
-        Gomoku::GetInstance()->UndoMove(*it);
+		if (board[x][y] == NEUTRAL && this->gomoku->IsCircled(x, y))
+		{
+		Move *move = new Move(x, y, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
+        if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
+		{
+		val = -AlgoNegaMax(level - 1);
+        this->gomoku->UndoMove(move);
         if (val > best)
         {
             best = val;
-            *bestMove = *it;
+			if (this->bestMove)
+				delete this->bestMove;
+            this->bestMove = move;
         }
+		else
+			delete move;
+		}
+		else
+			delete move;
+		}
     }
-    for (it = moves.begin(); it != eit; it++)
-        if (*it != *bestMove)
-            delete *it;
     return (best);
 }
 
 void	NegaMax::findMove()
 {
-    Move *bestMove;
-
     this->treeNodes = 0;
-    AlgoNegaMax(&bestMove, DEEP_MAX);
-    if (bestMove)
+    AlgoNegaMax(DEEP_MAX);
+    if (this->bestMove)
+<<<<<<< .mine
+		qDebug("On Commit : x(%d) y(%d)", this->bestMove->GetX(), this->bestMove->GetY());
+        Gomoku::GetInstance()->CommitMove(this->bestMove, true);
+		qDebug("Et on dit bravo a la vie");
+		//delete this->bestMove;
+		this->bestMove = NULL;
+    }
+=======
         Gomoku::GetInstance()->CommitMove(bestMove, true);
+>>>>>>> .r129
 }

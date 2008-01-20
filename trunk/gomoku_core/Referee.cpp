@@ -102,7 +102,7 @@ GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, uns
 			for (int x = 0; x < this->size; x++)
 				for (int y = 0; y < this->size; y++)
 				{
-					if (!stoneCanBeTaken(x, y, board))
+					if (!stoneCanBeTaken(x, y, board) && board[x][y] == p)
 					for (int d = 0; d < 4; d++)
 					{
 						int forward = 1;
@@ -117,7 +117,7 @@ GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, uns
 							&& (!stoneCanBeTaken(x - (backward * dx[d]), y - (backward * dy[d]), board)))
 					        backward++;
 
-						if (forward + backward > LINE_SIZE + 1)
+						if (forward + backward > LINE_SIZE)
 							return ((GameState)p);
 					}
 				}
