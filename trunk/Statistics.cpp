@@ -53,7 +53,8 @@ void    Statistics::UpdateSize(int nbButtonsSide)
 {
     this->groupBox->resize(STATS_PANEL_WIDTH,
                            this->mainwindow->height() - MENU_HEIGHT - 3);
-    this->groupBox->move(nbButtonsSide * DEFAULT_BUTTONSIZE + 5, MENU_HEIGHT);
+    this->groupBox->move(nbButtonsSide * DEFAULT_BUTTONSIZE +
+                         STATS_PANEL_SPACE + BORDURE_SIZE, MENU_HEIGHT);
 }
 
 void    Statistics::UpdateStatistics()

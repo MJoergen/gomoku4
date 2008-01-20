@@ -4,6 +4,7 @@
 # include <QMenu>
 # include <QAction>
 # include <QLabel>
+# include <QFrame>
 # include <QMainWindow>
 
 # include "Button.h"
@@ -16,6 +17,8 @@
 # define DEFAULT_BUTTONSIZE 30
 # define MENU_HEIGHT        25
 # define STATS_PANEL_WIDTH  190
+# define STATS_PANEL_SPACE  5
+# define BORDURE_SIZE       4
 
 class OptionsWindow;
 class Alphabeta;
@@ -36,6 +39,7 @@ class Mainwindow : public QMainWindow
         QAction             *newGameAction;
         QAction             *quitAction;
         QAction             *optionsAction;
+        QFrame              *frame;
 
     private:
         int                 boardSize;

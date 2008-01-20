@@ -73,6 +73,7 @@ void			Mainwindow::init()
     this->statistics = NULL;
     this->boardSize = DEFAULT_BOARDSIZE;
     this->statistics = new Statistics(this);
+    this->frame = new QFrame(this);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
 }
 
@@ -85,12 +86,18 @@ void			Mainwindow::doConnects()
 
 void			Mainwindow::setSize()
 {
-    int width  = this->boardSize * DEFAULT_BUTTONSIZE + STATS_PANEL_WIDTH + 10;
-    int height = this->boardSize * DEFAULT_BUTTONSIZE + MENU_HEIGHT;
+    int width  = this->boardSize * DEFAULT_BUTTONSIZE + STATS_PANEL_WIDTH + 14;
+    int height = this->boardSize * DEFAULT_BUTTONSIZE + MENU_HEIGHT + 4;
 
     this->resize(width, height);
     this->setMinimumSize(width, height);
     this->setMaximumSize(width, height);
+    this->frame->setGeometry(0, 0,
+                            this->boardSize * DEFAULT_BUTTONSIZE + BORDURE_SIZE,
+                            this->boardSize * DEFAULT_BUTTONSIZE + MENU_HEIGHT + BORDURE_SIZE);
+    this->frame->setFrameShape(QFrame::WinPanel);
+    this->frame->setFrameShadow(QFrame::Raised);
+    this->frame->setLineWidth(1);
     if (this->statistics)
         this->statistics->UpdateSize(this->boardSize);
     Gomoku::GetInstance()->SetSize(this->boardSize);
@@ -128,9 +135,9 @@ void			Mainwindow::createButtons()
     {
         for (int y = 0; y < this->boardSize; y++)
         {
-            this->buttonsArray[x][y] = new Button(this, DEFAULT_BUTTONSIZE, x, y);
+            this->buttonsArray[x][y] = new Button(this->frame, DEFAULT_BUTTONSIZE, x, y);
             this->buttonsArray[x][y]->resize(DEFAULT_BUTTONSIZE, DEFAULT_BUTTONSIZE);
-            this->buttonsArray[x][y]->move(x * DEFAULT_BUTTONSIZE, y * DEFAULT_BUTTONSIZE + MENU_HEIGHT);
+            this->buttonsArray[x][y]->move(x * DEFAULT_BUTTONSIZE + 2, y * DEFAULT_BUTTONSIZE + MENU_HEIGHT + 2);
             this->buttonsArray[x][y]->show();
             connect(this->buttonsArray[x][y], SIGNAL(clicked()), this, SLOT(buttonClicked()));
         }
