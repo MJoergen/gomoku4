@@ -14,6 +14,8 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
     this->frameNodes            = NULL;
     this->hboxLayoutNodes       = NULL;
 
+    this->vboxLayout->setSpacing(0);
+
     switch (typePanel)
     {
         case STATS_HUMAN:
@@ -33,12 +35,12 @@ StatisticsPanel::StatisticsPanel(StatisticsPanelType typePanel, QGroupBox *paren
             this->addInfos(&this->frameAlgorythm, &this->hboxLayoutAlgorythm,
                            "Algorithm :", &this->algorithm_t, &this->algorithm);
             this->addInfos(&this->frameNodes, &this->hboxLayoutNodes,
-                           "Algorithm :", &this->nodes_t, &this->nodes);
+                           "Nodes :", &this->nodes_t, &this->nodes);
             break;
     }
 }
 
-QGroupBox    *StatisticsPanel::GetGroupBox()
+QGroupBox    *StatisticsPanel::GetPanel()
 {
     return (this->groupBox);
 }
@@ -60,27 +62,27 @@ void    StatisticsPanel::addInfos(QFrame **frame, QHBoxLayout **hboxLayout,
 StatisticsPanel::~StatisticsPanel()
 {
     delete this->groupBox;
-    delete this->vboxLayout;
-    delete this->nbMoves_t;
-    delete this->nbMoves;
-    delete this->frameNbMoves;
-    delete this->hboxLayoutNbMoves;
-    delete this->nbPairsTaken_t;
-    delete this->nbPairsTaken;
-    delete this->hboxLayoutNbPairsTaken;
-    delete this->frameNbPairsTaken;
-    if (this->algorithm)
-    {
-        delete this->algorithm;
-        delete this->algorithm_t;
-        delete this->frameAlgorythm;
-        delete this->hboxLayoutAlgorythm;
-    }
-    if (this->nodes)
-    {
-        delete this->nbMoves;
-        delete this->nbMoves_t;
-        delete this->frameNbMoves;
-        delete this->hboxLayoutNodes;
-    }
+//    delete this->vboxLayout;
+//    delete this->nbMoves_t;
+//    delete this->nbMoves;
+//    delete this->frameNbMoves;
+//    delete this->hboxLayoutNbMoves;
+//    delete this->nbPairsTaken_t;
+//    delete this->nbPairsTaken;
+//    delete this->hboxLayoutNbPairsTaken;
+//    delete this->frameNbPairsTaken;
+//    if (this->algorithm)
+//    {
+//        delete this->algorithm;
+//        delete this->algorithm_t;
+//        delete this->frameAlgorythm;
+//        delete this->hboxLayoutAlgorythm;
+//    }
+//    if (this->nodes)
+//    {
+//        delete this->nbMoves;
+//        delete this->nbMoves_t;
+//        delete this->frameNbMoves;
+//        delete this->hboxLayoutNodes;
+//    }
 }

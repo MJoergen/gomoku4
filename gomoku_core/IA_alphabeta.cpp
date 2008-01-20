@@ -61,7 +61,7 @@ void	AlphaBeta::findMove()
 	if (bestMove)
 	{
 		Gomoku::GetInstance()->CommitMove(bestMove, true);
-        Mainwindow::GetInstance()->UpdateStatistics(this->treeNodes);
+        //Mainwindow::GetInstance()->UpdateStatistics(this->treeNodes);
 	}
 }
 

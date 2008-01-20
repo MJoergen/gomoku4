@@ -57,7 +57,7 @@ class Mainwindow : public QMainWindow
     public:
         void               CreateBoard();
         void               SetBoardSize(int boardSize);
-        void               UpdateStatistics(int nbConsideredNode);
+        Statistics         *GetStatistics();
 
     private:
         void				init();
