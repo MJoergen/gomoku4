@@ -58,6 +58,7 @@ class Mainwindow : public QMainWindow
     public:
         void               CreateBoard();
         void               SetBoardSize(int boardSize);
+        void			   StartMoves();
         Statistics         *GetStatistics();
 
     private:
@@ -68,7 +69,6 @@ class Mainwindow : public QMainWindow
         void			    createButtons();
         void				cleanButtonsArray();
         void				moveToCenter();
-		void				startMoves();
 		void				updateDisplay();
 		GameState			checkGameState();
 

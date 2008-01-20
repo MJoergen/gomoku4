@@ -166,7 +166,7 @@ void			Mainwindow::moveToCenter()
                desktop.screenGeometry().height() / 2 - this->height() / 2);
 }
 
-void			Mainwindow::startMoves()
+void			Mainwindow::StartMoves()
 {
 	while ((this->moveActionState = Gomoku::GetInstance()->DoNextMove()) == DONE)
 		this->updateDisplay();
@@ -223,7 +223,7 @@ void			Mainwindow::startNewGame()
     this->createButtons();
     Gomoku::GetInstance()->ResetGame();
     this->statistics->Reset();
-	this->startMoves();
+	this->StartMoves();
 }
 
 void			Mainwindow::showOptionsWindow()
@@ -247,7 +247,7 @@ void			Mainwindow::buttonClicked()
 					if (this->checkGameState() != IN_PROGRESS)
 						this->startNewGame();
 					else
-						this->startMoves();
+						this->StartMoves();
 					break;
 
 				case NOT_FREE :
