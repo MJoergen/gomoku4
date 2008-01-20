@@ -86,8 +86,8 @@ void			Mainwindow::doConnects()
 
 void			Mainwindow::setSize()
 {
-    int width  = this->boardSize * DEFAULT_BUTTONSIZE + STATS_PANEL_WIDTH + 14;
-    int height = this->boardSize * DEFAULT_BUTTONSIZE + MENU_HEIGHT + 4;
+    int width  = this->boardSize * DEFAULT_BUTTONSIZE + STATS_PANEL_WIDTH + 10 + BORDURE_SIZE;
+    int height = this->boardSize * DEFAULT_BUTTONSIZE + MENU_HEIGHT + BORDURE_SIZE;
 
     this->resize(width, height);
     this->setMinimumSize(width, height);
@@ -137,7 +137,7 @@ void			Mainwindow::createButtons()
         {
             this->buttonsArray[x][y] = new Button(this->frame, DEFAULT_BUTTONSIZE, x, y);
             this->buttonsArray[x][y]->resize(DEFAULT_BUTTONSIZE, DEFAULT_BUTTONSIZE);
-            this->buttonsArray[x][y]->move(x * DEFAULT_BUTTONSIZE + 2, y * DEFAULT_BUTTONSIZE + MENU_HEIGHT + 2);
+            this->buttonsArray[x][y]->move(x * DEFAULT_BUTTONSIZE + 1, y * DEFAULT_BUTTONSIZE + MENU_HEIGHT + 1);
             this->buttonsArray[x][y]->show();
             connect(this->buttonsArray[x][y], SIGNAL(clicked()), this, SLOT(buttonClicked()));
         }
