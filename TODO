@@ -1,0 +1,4 @@
+Travailler le potentiel du char pour stocker des infos
+Regler sur le probleme de la fin de partie alternative
+definir des zones de quadrillages (dernier coup joue et zone d'actions)
+D'abord chercker 3 libres, si 3 prises ou plus et si gagne en un coup et apres seulement partir sur MIN MAX
