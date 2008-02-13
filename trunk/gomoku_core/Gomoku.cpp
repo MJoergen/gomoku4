@@ -94,9 +94,10 @@ MoveActionState		Gomoku::DoNextMove()
 
 MoveState			Gomoku::CommitMove(Move *move, bool setState)
 {
-    PlayerNumber p = move->GetPlayerNumber();
-	if (p == NEUTRAL)
-		p = this->GetPlayerToMove();
+    //PlayerNumber p = move->GetPlayerNumber();
+	//if (p == NEUTRAL)
+//		p = this->GetPlayerToMove();
+	PlayerNumber p = (PlayerNumber)((this->nb_moves % 2) + 1);
     int x = move->GetX();
     int y = move->GetY();
 
@@ -115,7 +116,11 @@ MoveState			Gomoku::CommitMove(Move *move, bool setState)
 			this->players[p - 1]->CommitPairs();
 			this->lastMove = move;
 		}
-		this->gameState = this->referee.CheckGame(move, this->players[p - 1], this->stones, this->board);
+		GameState tmp;
+		
+		if ((tmp = this->referee.CheckGame(move, this->players[p - 1], this->stones, this->board)) != IN_PROGRESS)
+			this->gameState = tmp;
+//		this->gameState = this->referee.CheckGame(move, this->players[p - 1], this->stones, this->board);
 	}
 	return (moveState);
 }
@@ -124,7 +129,8 @@ void				Gomoku::UndoMove(Move *move)
 {
 	std::list<Point>::iterator it;
 	std::list<Point> l = move->GetPointsTaken();
-    PlayerNumber p = move->GetPlayerNumber();
+    //PlayerNumber p = move->GetPlayerNumber();
+	PlayerNumber p = (PlayerNumber)((this->nb_moves % 2) + 1);
     int x = move->GetX();
     int y = move->GetY();
 	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
@@ -264,34 +270,28 @@ int					Gomoku::GetSize() const
 	return (this->size);
 }
 
-uint	Gomoku::evaluate() const
+unsigned int	Gomoku::evaluate() const
 {
     unsigned int p = (this->nb_moves % 2) + 1;
     unsigned int eval = 0;
 
     for (int x = 0; x < this->size; x++)
-    {
-        for (int y = 0; y < this->size; y++)
-        {
-            if (board[x][y] == p)
-            {
-                for (unsigned int d = 0; d < 4; d++)
-                {
-                    unsigned int size = 1;
-                    while (isCorrect(x + (size * dx[d]), y + (size * dy[d]))
-                            && (board[x + (size * dx[d])][y + (size * dy[d])] == p))
-                        size++;
+		for (int y = 0; y < this->size; y++)
+			if (board[x][y] == p)
+				for (unsigned int d = 0; d < 4; d++)
+				{
+					unsigned int size = 1;
+					while (isCorrect(x + (size * dx[d]), y + (size * dy[d]))
+						   && (board[x + (size * dx[d])][y + (size * dy[d])] == p))
+						size++;
                     eval += size - 1;
                 }
-            }
-        }
-    }
+				
     return (eval);
 }
 
 bool	Gomoku::IsCircled(int x, int y) const
 {
-
 	for (int d = 0; d < 4; d++)
 	{
 		if (isCorrect(x + (1 * dx[d]), y + (1 * dy[d]))

@@ -17,43 +17,36 @@ int		NegaMax::AlgoNegaMax(int level)
 
     if (this->gomoku->GetGameState() == BOARD_FULL)
         return (0);
-    else if (this->gomoku->GetGameState() == (GameState)((this->gomoku->GetNbMoves() % 2) + 1))
-        return (INFINITY);
-	else if (this->gomoku->GetGameState())
+	else if (this->gomoku->GetGameState() != IN_PROGRESS)
         return (-INFINITY);
     if (!level)
-        return (this->gomoku->evaluate());
+        return (-(this->gomoku->evaluate()));
 
 	unsigned char **board = this->gomoku->GetBoard();
-	int size = this->gomoku->GetSize();
+	unsigned int size = this->gomoku->GetSize();
 	int best, val;
-
-    best = -INFINITY;
-
-	for (int x = 0; x < size; x++)
-		for (int y = 0; y < size; y++)
-    {
-		if (board[x][y] == NEUTRAL && this->gomoku->IsCircled(x, y))
-		{
-		Move *move = new Move(x, y, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
-        if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
-		{
-		val = -AlgoNegaMax(level - 1);
-        this->gomoku->UndoMove(move);
-        if (val > best)
-        {
-            best = val;
-			if (this->bestMove)
-				delete this->bestMove;
-            this->bestMove = move;
-        }
-		else
-			delete move;
-		}
-		else
-			delete move;
-		}
-    }
+	
+	best = -INFINITY;
+	for (unsigned int x = 0; x < size; x++)
+		for (unsigned int y = 0; y < size; y++)
+			if (board[x][y] == NEUTRAL && this->gomoku->IsCircled(x, y))
+			{
+				Move *move = new Move(x, y, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
+				
+				if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
+				{
+					val = -AlgoNegaMax(level - 1);
+					this->gomoku->UndoMove(move);
+					if (val > best)
+					{
+						best = val;
+						if (this->bestMove)
+							delete this->bestMove;
+						this->bestMove = move;
+					}
+				}
+			}
+			
     return (best);
 }
 
@@ -66,7 +59,6 @@ void	NegaMax::findMove()
 		qDebug("On Commit : x(%d) y(%d)", this->bestMove->GetX(), this->bestMove->GetY());
         Gomoku::GetInstance()->CommitMove(this->bestMove, true);
 		qDebug("Et on dit bravo a la vie");
-		//delete this->bestMove;
 		this->bestMove = NULL;
     }
 }
