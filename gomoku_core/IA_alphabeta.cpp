@@ -6,63 +6,63 @@
 
 AlphaBeta::AlphaBeta() : IA(IS_IA_ALPHABETA)
 {
+	this->bestMove = NULL;
+	this->gomoku = Gomoku::GetInstance();
     this->treeNodes = 0;
 }
 
-int		AlphaBeta::AlgoAlphaBeta(Move **bestMove, int alpha, int beta, int level)
+int		AlphaBeta::AlgoAlphaBeta(int alpha, int beta, int level)
 {
     this->treeNodes++;
-    *bestMove = NULL;
 
-  //  if (Gomoku::GetInstance()->GetGameState() == BOARD_FULL)
-  //      return (0);
-  //  else if (Gomoku::GetInstance()->GetGameState())
-  //      return (-INFINITY);
-  //  if (!level)
-  //      return (-(Gomoku::GetInstance()->evaluate()));
+	if (Gomoku::GetInstance()->GetGameState() == BOARD_FULL)
+		return (0);
+	else if (Gomoku::GetInstance()->GetGameState() != IN_PROGRESS)
+		return (-INFINITY);
+    if (!level)
+        return (-(this->gomoku->evaluate()));
 
-  //  std::vector<Move*>	moves = Gomoku::GetInstance()->getCorrectMoves();
-  //  Move *child;
-  //  int val;
+	unsigned char **board = this->gomoku->GetBoard();
+	int size = this->gomoku->GetSize();
+	int val;
 
-  //  *bestMove = moves[0];
-  //  std::vector<Move*>::iterator it = moves.begin();
-  //  std::vector<Move*>::iterator eit = moves.end();
-
-  //  for (; it != eit; it++)
-  //  {
-		//(*it)->SetPlayerNumber((PlayerNumber)((Gomoku::GetInstance()->GetNbMoves() % 2) + 1));
-		//std::cout << "Player : " << (*it)->GetPlayerNumber() << " Level : " << level << std::endl;
-		//
-		//Gomoku::GetInstance()->CommitMove(*it, false);
-  //      val = -AlgoAlphaBeta(&child, -beta, -alpha, level - 1);
-  //      if (child)
-  //          delete child;
-  //      Gomoku::GetInstance()->UndoMove(*it);
-  //      if (val > alpha)
-  //      {
-  //          alpha = val;
-  //          *bestMove = *it;
-  //      }
-  //      if (alpha >= beta)
-  //      {
-  //          alpha = beta;
-  //          break;
-  //      }
-  //  }
-  //  for (it = moves.begin(); it != eit; it++)
-  //      if (*it != *bestMove)
-  //          delete *it;
-  //  return (alpha);
+	for (unsigned int x = 0; x < (unsigned int)size; x++)
+		for (unsigned int y = 0; y < (unsigned int)size; y++)
+			if (board[x][y] == NEUTRAL && this->gomoku->IsCircled(x, y))
+			{
+				Move *move = new Move(x, y, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
+				
+				if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
+				{
+					val = -AlgoAlphaBeta(-beta, -alpha, level - 1);
+					this->gomoku->UndoMove(move);
+					if (val > alpha)
+					{
+						alpha = val;
+						if (this->bestMove)
+							delete this->bestMove;
+						this->bestMove = move;
+					}
+					if (alpha >= beta)
+					{
+						alpha = beta;
+						break;
+					}
+				}
+			}
+			
+	return (alpha);	
 }
 
 void	AlphaBeta::findMove()
 {
-    Move	*bestMove;
-
-    this->treeNodes = 0;
-    AlgoAlphaBeta(&bestMove, -INFINITY, INFINITY, DEEP_MAX);
-	if (bestMove)
-		Gomoku::GetInstance()->CommitMove(bestMove, true);
+	this->treeNodes = 0;
+	AlgoAlphaBeta(-INFINITY, INFINITY, DEEP_MAX);
+	if (this->bestMove)
+	{
+		qDebug("On Commit : x(%d) y(%d)", this->bestMove->GetX(), this->bestMove->GetY());
+        Gomoku::GetInstance()->CommitMove(this->bestMove, true);
+		qDebug("Et on dit bravo a la vie");
+		this->bestMove = NULL;
+	}
 }
-
