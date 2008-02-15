@@ -91,27 +91,4 @@ void    StatisticsPanel::UpdateStatistics(Player *player)
 StatisticsPanel::~StatisticsPanel()
 {
     delete this->groupBox;
-//    delete this->vboxLayout;
-//    delete this->nbMoves_t;
-//    delete this->nbMoves;
-//    delete this->frameNbMoves;
-//    delete this->hboxLayoutNbMoves;
-//    delete this->nbPairsTaken_t;
-//    delete this->nbPairsTaken;
-//    delete this->hboxLayoutNbPairsTaken;
-//    delete this->frameNbPairsTaken;
-//    if (this->algorithm)
-//    {
-//        delete this->algorithm;
-//        delete this->algorithm_t;
-//        delete this->frameAlgorythm;
-//        delete this->hboxLayoutAlgorythm;
-//    }
-//    if (this->nodes)
-//    {
-//        delete this->nbMoves;
-//        delete this->nbMoves_t;
-//        delete this->frameNbMoves;
-//        delete this->hboxLayoutNodes;
-//    }
 }
