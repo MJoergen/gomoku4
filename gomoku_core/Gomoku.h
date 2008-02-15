@@ -34,6 +34,7 @@ class Gomoku
         int					stones;
         unsigned int		nb_moves;
         GameState			gameState;
+		GameState			tmpGameState;
 		int					nextPlayerNum;
 
     private:
@@ -64,6 +65,7 @@ class Gomoku
 		Player				*GetPlayer(PlayerNumber playerNum);
 		Move				*GetLastMove();
         GameState        	GetGameState() const;
+		GameState			GetTmpGameState() const;
 		unsigned int		GetNbMoves() const;
         unsigned char		**GetBoard();
 		int					GetSize() const;
