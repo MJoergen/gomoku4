@@ -94,10 +94,10 @@ MoveActionState		Gomoku::DoNextMove()
 
 MoveState			Gomoku::CommitMove(Move *move, bool setState)
 {
-    //PlayerNumber p = move->GetPlayerNumber();
-	//if (p == NEUTRAL)
-//		p = this->GetPlayerToMove();
-	PlayerNumber p = (PlayerNumber)((this->nb_moves % 2) + 1);
+    PlayerNumber p = move->GetPlayerNumber();
+	if (p == NEUTRAL)
+		p = this->GetPlayerToMove();
+	//PlayerNumber p = (PlayerNumber)((this->nb_moves % 2) + 1);
     int x = move->GetX();
     int y = move->GetY();
 
@@ -129,8 +129,8 @@ void				Gomoku::UndoMove(Move *move)
 {
 	std::list<Point>::iterator it;
 	std::list<Point> l = move->GetPointsTaken();
-    //PlayerNumber p = move->GetPlayerNumber();
-	PlayerNumber p = (PlayerNumber)((this->nb_moves % 2) + 1);
+    PlayerNumber p = move->GetPlayerNumber();
+	//PlayerNumber p = (PlayerNumber)((this->nb_moves % 2) + 1);
     int x = move->GetX();
     int y = move->GetY();
 	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
