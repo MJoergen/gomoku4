@@ -15,9 +15,9 @@ int		NegaMax::AlgoNegaMax(int level)
 {
     this->treeNodes++;
 
-    if (this->gomoku->GetGameState() == BOARD_FULL)
+    if (this->gomoku->GetTmpGameState() == BOARD_FULL)
         return (0);
-	else if (this->gomoku->GetGameState() != IN_PROGRESS)
+	else if (this->gomoku->GetTmpGameState() != IN_PROGRESS)
         return (-INFINITY);
     if (!level)
         return (-(this->gomoku->evaluate()));

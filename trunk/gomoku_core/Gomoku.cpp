@@ -81,7 +81,7 @@ void				Gomoku::SetPlayer(PlayerNumber playerNum, PlayerType type)
 MoveActionState		Gomoku::DoNextMove()
 {
 	int num = this->nextPlayerNum - 1;
-	this->nextPlayerNum = (this->nextPlayerNum == 1) ? 2 : 1;
+	//this->nextPlayerNum = (this->nextPlayerNum == 1) ? 2 : 1;
 	if (this->players[num]->GetType() == IS_HUMAN)
 		return (WAITING_PLAYER_ACTION);
 	else
@@ -119,8 +119,13 @@ MoveState			Gomoku::CommitMove(Move *move, bool setState)
 		GameState tmp;
 		
 		if ((tmp = this->referee.CheckGame(move, this->players[p - 1], this->stones, this->board)) != IN_PROGRESS)
-			this->gameState = tmp;
-//		this->gameState = this->referee.CheckGame(move, this->players[p - 1], this->stones, this->board);
+		{
+			this->tmpGameState = tmp;
+			if (setState)
+				this->gameState = tmp;
+		}
+//		this->gameState = this->referee.ChecTkGame(move, this->players[p - 1], this->stones, this->board);
+		this->nextPlayerNum = (this->nextPlayerNum == 1) ? 2 : 1;
 	}
 	return (moveState);
 }
@@ -148,7 +153,13 @@ void				Gomoku::UndoMove(Move *move)
 			this->stones++;
 		}
 	}
-    this->gameState = IN_PROGRESS;
+	GameState currentGameState;
+	
+    //if ((currentGameState = this->referee.CheckGame(move, this->players[p - 1], this->stones, this->board)) != IN_PROGRESS)
+		//{
+			this->tmpGameState = IN_PROGRESS;
+		//}
+	this->nextPlayerNum = (this->nextPlayerNum == 1) ? 2 : 1;
 }
 
 void				Gomoku::ResetGame()
@@ -156,6 +167,7 @@ void				Gomoku::ResetGame()
 	this->stones = 0;
     this->nb_moves = 0;
 	this->gameState = IN_PROGRESS;
+	this->tmpGameState = IN_PROGRESS;
 	this->nextPlayerNum = 1;
 	this->players[0]->ResetPlayer();
 	this->players[1]->ResetPlayer();
@@ -253,6 +265,11 @@ Move				*Gomoku::GetLastMove()
 GameState			Gomoku::GetGameState() const
 {
     return (this->gameState);
+}
+
+GameState			Gomoku::GetTmpGameState() const
+{
+    return (this->tmpGameState);
 }
 
 unsigned int		Gomoku::GetNbMoves() const
