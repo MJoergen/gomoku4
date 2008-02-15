@@ -22,8 +22,8 @@ error()
 echo '-------------------------------------'
 echo 'Building Gomoku...'
 echo '-------------------------------------'
-qmake-qt4 -project || error
-qmake-qt4 || error
+qmake -project || error
+qmake -spec macx-g++ || error
 make clean
 make || error 
 echo '-------------------------------------'
