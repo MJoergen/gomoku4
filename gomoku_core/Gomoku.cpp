@@ -153,12 +153,7 @@ void				Gomoku::UndoMove(Move *move)
 			this->stones++;
 		}
 	}
-	GameState currentGameState;
-	
-    //if ((currentGameState = this->referee.CheckGame(move, this->players[p - 1], this->stones, this->board)) != IN_PROGRESS)
-		//{
-			this->tmpGameState = IN_PROGRESS;
-		//}
+	this->tmpGameState = IN_PROGRESS;
 	this->nextPlayerNum = (this->nextPlayerNum == 1) ? 2 : 1;
 }
 

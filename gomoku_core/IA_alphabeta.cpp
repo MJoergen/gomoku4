@@ -35,11 +35,9 @@ int		AlphaBeta::AlgoAlphaBeta(int alpha, int beta, int level)
 				if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
 				{
 					val = -AlgoAlphaBeta(-beta, -alpha, level - 1);
-					std::cout << "val=" << val << " alpha=" << alpha << std::endl;
 					this->gomoku->UndoMove(move);
 					if (val > alpha)
 					{
-						
 						alpha = val;
 						if (this->bestMove)
 							delete this->bestMove;
@@ -59,10 +57,7 @@ int		AlphaBeta::AlgoAlphaBeta(int alpha, int beta, int level)
 void	AlphaBeta::findMove()
 {
 	this->treeNodes = 0;
-	std::cout << "bp1" << std::endl;
-	int t = AlgoAlphaBeta(-INFINITY, INFINITY, DEEP_MAX);
-	std::cout << "bp2 t=" << t << std::endl;
-	std::cout << "--" << Gomoku::GetInstance()->GetTmpGameState() << std::endl;
+	AlgoAlphaBeta(-INFINITY, INFINITY, DEEP_MAX);
 	if (this->bestMove)
 	{
 		qDebug("On Commit : x(%d) y(%d)", this->bestMove->GetX(), this->bestMove->GetY());
@@ -70,6 +65,4 @@ void	AlphaBeta::findMove()
 		qDebug("Et on dit bravo a la vie");
 		this->bestMove = NULL;
 	}
-	else
-		exit(-1);
 }
