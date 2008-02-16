@@ -19,6 +19,11 @@ int         Player::GetTreeNodes()
     return (this->treeNodes);
 }
 
+int         Player::GetTime()
+{
+    return (this->time);
+}
+
 void		Player::NewPairCaptured()
 {
 	this->pendingPairs++;

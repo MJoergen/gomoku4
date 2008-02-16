@@ -9,6 +9,7 @@ NegaMax::NegaMax() : IA(IS_IA_NEGAMAX)
 	this->bestMove = NULL;
 	this->gomoku = Gomoku::GetInstance();
     this->treeNodes = 0;
+    this->time = 0;
 }
 
 int		NegaMax::AlgoNegaMax(int level)
@@ -52,8 +53,12 @@ int		NegaMax::AlgoNegaMax(int level)
 
 void	NegaMax::findMove()
 {
+    QTime chronometer;
+
     this->treeNodes = 0;
+    chronometer.start();
     AlgoNegaMax(DEEP_MAX);
+    this->time = chronometer.elapsed();
     if (this->bestMove)
 	{
         Gomoku::GetInstance()->CommitMove(this->bestMove, true);

@@ -1,6 +1,8 @@
 #ifndef __PLAYER_H__
 # define __PLAYER_H__
 
+# include <QTime>
+
 typedef enum
 {
 	IS_HUMAN,
@@ -25,6 +27,7 @@ class Player
 
     protected:
         int         treeNodes;
+        int         time;
 
 	public:
 		Player(PlayerType playerType);
@@ -34,7 +37,8 @@ class Player
 		void		NewMove();
 		int			GetMoves();
 		int         GetTreeNodes();
-		void		NewPairCaptured();
+        int         GetTime();
+        void		NewPairCaptured();
 		int			GetPairs();
 		void		ResetPendingPairs();
 		void		CommitPairs();

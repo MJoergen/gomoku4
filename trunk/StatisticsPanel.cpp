@@ -45,6 +45,8 @@ void    StatisticsPanel::createPanel(StatisticsPanelType typePanel)
                            "Algorithm :", &this->algorithm_t, &this->algorithm);
             this->addInfos(&this->frameNodes, &this->hboxLayoutNodes,
                            "Nodes :", &this->nodes_t, &this->nodes);
+            this->addInfos(&this->frameTime, &this->hboxLayoutTime,
+                           "Milliseconds :", &this->time_title, &this->time);
             break;
     }
     this->groupBox->setFont(font);
@@ -85,6 +87,8 @@ void    StatisticsPanel::UpdateStatistics(Player *player)
                                  QString("</span>"));
         this->nodes->setText(QString("<span style=\" color:#21109b;\">") +
                              QString("%1").arg(player->GetTreeNodes()) + QString("</span>"));
+        this->time->setText(QString("<span style=\" color:#21109b;\">") +
+                            QString("%1").arg(player->GetTime()) + QString("</span>"));
     }
 }
 
