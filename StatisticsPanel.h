@@ -26,14 +26,18 @@ class StatisticsPanel
         QLabel              *nbMoves;
         QLabel              *nbPairsTaken_t;
         QLabel              *nbPairsTaken;
+        QLabel              *time_title;
+        QLabel              *time;
         QFrame              *frameAlgorythm;
         QFrame              *frameNodes;
         QFrame              *frameNbMoves;
         QFrame              *frameNbPairsTaken;
+        QFrame              *frameTime;
         QHBoxLayout         *hboxLayoutAlgorythm;
         QHBoxLayout         *hboxLayoutNodes;
         QHBoxLayout         *hboxLayoutNbMoves;
         QHBoxLayout         *hboxLayoutNbPairsTaken;
+        QHBoxLayout         *hboxLayoutTime;
         QVBoxLayout         *vboxLayout;
         QGroupBox           *groupBox;
         QGroupBox           *parent;
