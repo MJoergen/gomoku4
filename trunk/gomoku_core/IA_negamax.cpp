@@ -56,9 +56,7 @@ void	NegaMax::findMove()
     AlgoNegaMax(DEEP_MAX);
     if (this->bestMove)
 	{
-		qDebug("On Commit : x(%d) y(%d)", this->bestMove->GetX(), this->bestMove->GetY());
         Gomoku::GetInstance()->CommitMove(this->bestMove, true);
-		qDebug("Et on dit bravo a la vie");
 		this->bestMove = NULL;
     }
 }
