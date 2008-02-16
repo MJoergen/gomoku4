@@ -49,8 +49,7 @@ int		AlphaBeta::AlgoAlphaBeta(int alpha, int beta, int level)
 						break;
 					}
 				}
-			}
-			
+			}	
 	return (alpha);	
 }
 
@@ -60,9 +59,7 @@ void	AlphaBeta::findMove()
 	AlgoAlphaBeta(-INFINITY, INFINITY, DEEP_MAX);
 	if (this->bestMove)
 	{
-		qDebug("On Commit : x(%d) y(%d)", this->bestMove->GetX(), this->bestMove->GetY());
         Gomoku::GetInstance()->CommitMove(this->bestMove, true);
-		qDebug("Et on dit bravo a la vie");
 		this->bestMove = NULL;
 	}
 }
