@@ -51,16 +51,26 @@ int		NegaMax::AlgoNegaMax(vector<pair<int, int> > covering, int level)
 
 void	NegaMax::findMove()
 {
-    QTime chronometer;
-	vector<pair<int, int> > covering = Gomoku::GetInstance()->BuildCovering();
-
-    this->treeNodes = 0;
-    chronometer.start();
-    AlgoNegaMax(covering, DEEP_MAX);
-    this->time = chronometer.elapsed();
-    if (this->bestMove)
+	PlayerNumber p = (PlayerNumber)((Gomoku::GetInstance()->GetNbMoves() % 2) + 1);
+	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
+	
+	if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3)
 	{
-        Gomoku::GetInstance()->CommitMove(this->bestMove, true);
-		this->bestMove = NULL;
-    }
+	
+	}
+	else
+	{
+		QTime chronometer;
+		vector<pair<int, int> > covering = Gomoku::GetInstance()->BuildCovering();
+
+		this->treeNodes = 0;
+		chronometer.start();
+		AlgoNegaMax(covering, DEEP_MAX);
+		this->time = chronometer.elapsed();
+		if (this->bestMove)
+		{
+			Gomoku::GetInstance()->CommitMove(this->bestMove, true);
+			this->bestMove = NULL;
+		}
+	}
 }
