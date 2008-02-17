@@ -302,6 +302,27 @@ unsigned int	Gomoku::evaluate() const
     return (eval);
 }
 
+vector<pair<int, int> >	Gomoku::BuildCovering()
+{
+	vector<pair<int, int> > covering;
+	
+    for (int x = 0; x < this->size; x++)
+		for (int y = 0; y < this->size; y++)
+			if (board[x][y] != NEUTRAL)
+				for (int size = 1; size < 2; size++)
+					for (int d = 0; d < 4; d++)
+					{
+						if (isCorrect(x + (size * dx[d]), y + (size * dy[d]))
+							&& (board[x + (size * dx[d])][y + (size * dy[d])] == NEUTRAL))
+							covering.push_back(pair<int, int>(x + (size * dx[d]), y + (size * dy[d])));
+
+						if (isCorrect(x - (size * dx[d]), y - (size * dy[d]))
+							&& (board[x - (size * dx[d])][y - (size * dy[d])] == NEUTRAL))
+							covering.push_back(pair<int, int>(x - (size * dx[d]), y - (size * dy[d])));
+					}
+	return (covering);
+}
+
 bool	Gomoku::IsCircled(int x, int y) const
 {
 	for (int d = 0; d < 4; d++)

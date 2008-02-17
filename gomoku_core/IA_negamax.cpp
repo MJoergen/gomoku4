@@ -12,7 +12,7 @@ NegaMax::NegaMax() : IA(IS_IA_NEGAMAX)
     this->time = 0;
 }
 
-int		NegaMax::AlgoNegaMax(int level)
+int		NegaMax::AlgoNegaMax(vector<pair<int, int> > covering, int level)
 {
     this->treeNodes++;
 
@@ -23,41 +23,40 @@ int		NegaMax::AlgoNegaMax(int level)
     if (!level)
         return (-(this->gomoku->evaluate()));
 
-	unsigned char **board = this->gomoku->GetBoard();
-	unsigned int size = this->gomoku->GetSize();
 	int best, val;
 	
+	vector<pair<int, int> >::iterator it = covering.begin();
+	vector<pair<int, int> >::iterator eit = covering.end();	
 	best = -INFINITY;
-	for (unsigned int x = 0; x < size; x++)
-		for (unsigned int y = 0; y < size; y++)
-			if (board[x][y] == NEUTRAL && this->gomoku->IsCircled(x, y))
-			{
-				Move *move = new Move(x, y, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
+
+	for (; it != eit; it++)
+	{
+		Move *move = new Move(it->first, it->second, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
 				
-				if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
-				{
-					val = -AlgoNegaMax(level - 1);
-					this->gomoku->UndoMove(move);
-					if (val > best)
-					{
-						best = val;
-						if (this->bestMove)
-							delete this->bestMove;
-						this->bestMove = move;
-					}
-				}
+		if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
+		{
+			val = -AlgoNegaMax(covering, level - 1);
+			this->gomoku->UndoMove(move);
+			if (val > best)
+			{
+				best = val;
+				if (this->bestMove)
+					delete this->bestMove;
+				this->bestMove = move;
 			}
-			
+		}
+	}		
     return (best);
 }
 
 void	NegaMax::findMove()
 {
     QTime chronometer;
+	vector<pair<int, int> > covering = Gomoku::GetInstance()->BuildCovering();
 
     this->treeNodes = 0;
     chronometer.start();
-    AlgoNegaMax(DEEP_MAX);
+    AlgoNegaMax(covering, DEEP_MAX);
     this->time = chronometer.elapsed();
     if (this->bestMove)
 	{

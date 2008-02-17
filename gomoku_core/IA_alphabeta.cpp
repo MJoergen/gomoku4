@@ -12,7 +12,7 @@ AlphaBeta::AlphaBeta() : IA(IS_IA_ALPHABETA)
     this->time = 0;
 }
 
-int		AlphaBeta::AlgoAlphaBeta(int alpha, int beta, int level)
+int		AlphaBeta::AlgoAlphaBeta(vector<pair<int, int> > covering, int alpha, int beta, int level)
 {
     this->treeNodes++;
 
@@ -23,44 +23,50 @@ int		AlphaBeta::AlgoAlphaBeta(int alpha, int beta, int level)
     if (!level)
         return (-(this->gomoku->evaluate()));
 
-	unsigned char **board = this->gomoku->GetBoard();
-	int size = this->gomoku->GetSize();
 	int val;
+	vector<pair<int, int> >::iterator it = covering.begin();
+	vector<pair<int, int> >::iterator eit = covering.end();
 
-	for (unsigned int x = 0; x < (unsigned int)size; x++)
-		for (unsigned int y = 0; y < (unsigned int)size; y++)
-			if (board[x][y] == NEUTRAL && this->gomoku->IsCircled(x, y))
-			{
-				Move *move = new Move(x, y, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
+	for (; it != eit; it++)
+	{
+		Move *move = new Move(it->first, it->second, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
 				
-				if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
-				{
-					val = -AlgoAlphaBeta(-beta, -alpha, level - 1);
-					this->gomoku->UndoMove(move);
-					if (val > alpha)
-					{
-						alpha = val;
-						if (this->bestMove)
-							delete this->bestMove;
-						this->bestMove = move;
-					}
-					if (alpha >= beta)
-					{
-						alpha = beta;
-						break;
-					}
-				}
-			}	
+		if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
+		{
+			val = -AlgoAlphaBeta(covering, -beta, -alpha, level - 1);
+			this->gomoku->UndoMove(move);
+			if (val > alpha)
+			{
+				alpha = val;
+				if (this->bestMove)
+					delete this->bestMove;
+				this->bestMove = move;
+			}
+			if (alpha >= beta)
+			{
+				alpha = beta;
+				break;
+			}
+		}
+	}
 	return (alpha);	
 }
 
 void	AlphaBeta::findMove()
 {
     QTime chronometer;
-
+	vector<pair<int, int> > covering = Gomoku::GetInstance()->BuildCovering();
+	
+	// debug
+	vector<pair<int, int> >::iterator it = covering.begin();
+	vector<pair<int, int> >::iterator eit = covering.end();
+	cout << "--------" << endl;
+	for (it = covering.begin(); it != eit; it++)
+		cout << it->first << " " << it->second << endl;
+		
 	this->treeNodes = 0;
 	chronometer.start();
-    AlgoAlphaBeta(-INFINITY, INFINITY, DEEP_MAX);
+    AlgoAlphaBeta(covering, -INFINITY, INFINITY, DEEP_MAX);
     this->time = chronometer.elapsed();
 	if (this->bestMove)
 	{
