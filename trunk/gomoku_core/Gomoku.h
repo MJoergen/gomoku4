@@ -10,6 +10,8 @@
 # include "Point.h"
 # include "Referee.h"
 
+using namespace std;
+
 typedef enum
 {
 	WAITING_PLAYER_ACTION,
@@ -71,6 +73,7 @@ class Gomoku
 		int					GetSize() const;
 
         unsigned int        evaluate() const;
+		vector<pair<int, int> > BuildCovering();
 		bool				IsCircled(int x, int y) const;
 };
 
