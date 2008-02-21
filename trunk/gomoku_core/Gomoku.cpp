@@ -15,6 +15,8 @@ Gomoku::Gomoku() : size(0), board(NULL)
 	this->lastMove = NULL;
 	this->players[0] = new Player(IS_HUMAN);
 	this->players[1] = new Player(IS_HUMAN);
+	this->doubleThree = true;
+	this->alternativeEndGame = true;
 	this->ResetGame();
 }
 
@@ -76,6 +78,12 @@ void				Gomoku::SetPlayer(PlayerNumber playerNum, PlayerType type)
 	}
 }
 
+void                Gomoku::SetRules(bool doubleThree, bool alternativeEndGame)
+{
+    this->doubleThree = doubleThree;
+    this->alternativeEndGame = alternativeEndGame;
+}
+
 // Public Game methods
 
 MoveActionState		Gomoku::DoNextMove()
@@ -117,7 +125,7 @@ MoveState			Gomoku::CommitMove(Move *move, bool setState)
 			this->lastMove = move;
 		}
 		GameState tmp;
-		
+
 		if ((tmp = this->referee.CheckGame(move, this->players[p - 1], this->stones, this->board)) != IN_PROGRESS)
 		{
 			this->tmpGameState = tmp;
@@ -282,6 +290,16 @@ int					Gomoku::GetSize() const
 	return (this->size);
 }
 
+bool                Gomoku::GetRuleDoubleThree() const
+{
+    return (this->doubleThree);
+}
+
+bool                Gomoku::GetRuleAlternativeEndGame() const
+{
+    return (this->alternativeEndGame);
+}
+
 unsigned int	Gomoku::evaluate() const
 {
     unsigned int p = (this->nb_moves % 2) + 1;
@@ -298,14 +316,14 @@ unsigned int	Gomoku::evaluate() const
 						size++;
                     eval += size - 1;
                 }
-				
+
     return (eval);
 }
 
 vector<pair<int, int> >	Gomoku::BuildCovering()
 {
 	vector<pair<int, int> > covering;
-	
+
     for (int x = 0; x < this->size; x++)
 		for (int y = 0; y < this->size; y++)
 			if (board[x][y] != NEUTRAL)

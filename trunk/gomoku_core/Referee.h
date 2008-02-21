@@ -38,7 +38,7 @@ class Referee
 
     public:
         MoveState	CheckMove(Move *move, unsigned char **board, PlayerNumber p) const;
-        GameState	CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board) const;
+        GameState	CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board);
 
 	private:
 		bool		isCorrect(int x, int y) const;

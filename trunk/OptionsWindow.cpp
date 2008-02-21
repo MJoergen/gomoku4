@@ -45,7 +45,9 @@ OptionsWindow::OptionsWindow(int boardSize)
     this->groupBoxRules = new QGroupBox("Rules", this);
     this->rulesLayout = new QVBoxLayout(this->groupBoxRules);
     this->cb_checkDoubleThree = new QCheckBox("Double three", this->groupBoxRules);
+    this->cb_checkDoubleThree->setCheckState(Qt::Checked);
     this->cb_checkAlternativeEndGame = new QCheckBox("Alternative end game", this->groupBoxRules);
+    this->cb_checkAlternativeEndGame->setCheckState(Qt::Checked);
     this->rulesLayout->addWidget(this->cb_checkDoubleThree);
     this->rulesLayout->addWidget(this->cb_checkAlternativeEndGame);
     this->generalLayout->addWidget(this->groupBoxRules, 1, 0, 1, 2);
@@ -97,6 +99,8 @@ void    OptionsWindow::loadPreviousConfig()
         this->cb_player2Algo->setCurrentIndex(1);
         this->cb_player2Algo->setEnabled(true);
     }
+    this->cb_checkDoubleThree->setCheckState(Gomoku::GetInstance()->GetRuleDoubleThree() ? Qt::Checked : Qt::Unchecked);
+    this->cb_checkAlternativeEndGame->setCheckState(Gomoku::GetInstance()->GetRuleAlternativeEndGame() ? Qt::Checked : Qt::Unchecked);
 }
 
 void    OptionsWindow::moveToCenter()
@@ -157,6 +161,8 @@ void        OptionsWindow::valid()
         Mainwindow::GetInstance()->SetBoardSize(this->spinBox_boardSize->value());
         Mainwindow::GetInstance()->CreateBoard();
     }
+    Gomoku::GetInstance()->SetRules(this->cb_checkDoubleThree->checkState() == Qt::Checked,
+                                    this->cb_checkAlternativeEndGame->checkState() == Qt::Checked);
     Mainwindow::GetInstance()->GetStatistics()->Reset();
     if ((Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_IA_ALPHABETA ||
          Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_IA_NEGAMAX) &&
@@ -183,6 +189,10 @@ OptionsWindow::~OptionsWindow()
     delete this->cb_player2Algo;
     delete this->playerLayout;
     delete this->groupBox;
+    delete this->cb_checkDoubleThree;
+    delete this->cb_checkAlternativeEndGame;
+    delete this->rulesLayout;
+    delete this->groupBoxRules;
     delete this->l_boardSize;
     delete this->spinBox_boardSize;
     delete this->button_valid;
