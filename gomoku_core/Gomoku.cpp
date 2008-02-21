@@ -374,6 +374,30 @@ pair<int, int>	Gomoku::CounterPairTaking(PlayerNumber p, PlayerNumber adv)
 	return (pair<int, int>(-1, -1));
 }
 
+pair<int, int>	Gomoku::OneMoveWin(PlayerNumber p)
+{
+	for (int x = 0; x < this->size; x++)
+		for (int y = 0; y < this->size; y++)
+			if (board[x][y] == NEUTRAL)
+				for (int d = 0; d < 4; d++)
+				{
+					int forward = 1;
+					while (isCorrect(x + (forward * dx[d]), y + (forward * dy[d]))
+						   && (board[x + (forward * dx[d])][y + (forward * dy[d])] == p))
+						   forward++;
+						   
+					int backward = 1;
+					while (isCorrect(x - (backward * dx[d]), y - (backward * dy[d]))
+						   && (board[x - (backward * dx[d])][y - (backward * dy[d])] == p))
+						   backward++;
+						   
+					if (forward + backward > LINE_SIZE)
+						return (pair<int, int>(x, y));
+				}
+
+	return (pair<int, int>(-1, -1));
+}
+
 bool	Gomoku::IsCircled(int x, int y) const
 {
 	for (int d = 0; d < 4; d++)

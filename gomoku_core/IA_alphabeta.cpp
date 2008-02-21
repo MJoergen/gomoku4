@@ -54,15 +54,20 @@ int		AlphaBeta::AlgoAlphaBeta(vector<pair<int, int> > covering, int alpha, int b
 
 void	AlphaBeta::findMove()
 {
+	int x = -1, y = -1;
 	PlayerNumber p = (PlayerNumber)((Gomoku::GetInstance()->GetNbMoves() % 2) + 1);
 	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
 
-	pair<int, int> counter = Gomoku::GetInstance()->CounterPairTaking(p, adv);
 	if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3 &&
-		(counter.first != -1 && counter.second != -1))
+		((x = Gomoku::GetInstance()->CounterPairTaking(p, adv).first) != -1 &&
+		(y = Gomoku::GetInstance()->CounterPairTaking(p, adv).second) != -1))
 	{
-		cout << "suce moi en x=" << counter.first << " et en y=" << counter.second << endl;
-		Gomoku::GetInstance()->CommitMove(new Move(counter.first, counter.second, p), true);
+		Gomoku::GetInstance()->CommitMove(new Move(x, y, p), true);
+	}	
+	else if ((x = Gomoku::GetInstance()->OneMoveWin(p).first) != -1 &&
+			 (y = Gomoku::GetInstance()->OneMoveWin(p).second) != -1)
+	{
+		Gomoku::GetInstance()->CommitMove(new Move(x, y, p), true);
 	}
 	else
 	{
