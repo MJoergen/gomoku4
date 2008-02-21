@@ -80,6 +80,7 @@ class Gomoku
         unsigned int        evaluate() const;
 		vector<pair<int, int> > BuildCovering();
 		pair<int, int>		CounterPairTaking(PlayerNumber p, PlayerNumber adv);
+		pair<int, int>		OneMoveWin(PlayerNumber p);
 		bool				IsCircled(int x, int y) const;
 };
 
