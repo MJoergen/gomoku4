@@ -71,4 +71,6 @@ void		Player::ResetPlayer()
 {
 	this->movesDone = 0;
 	this->pairsCaptured = 0;
+	this->time = 0;
+	this->treeNodes = 0;
 }
