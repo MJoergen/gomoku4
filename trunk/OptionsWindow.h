@@ -7,6 +7,7 @@
 # include <QMainWindow>
 # include <QRadioButton>
 # include <QComboBox>
+# include <QCheckBox>
 # include <QDesktopWidget>
 # include <QGroupBox>
 # include <QLabel>
@@ -17,7 +18,7 @@
 # define MIN                  10
 # define MAX                  19
 # define OPTIONSWINDOW_WIDTH  280
-# define OPTIONSWINDOW_HEIGHT 190
+# define OPTIONSWINDOW_HEIGHT 280
 
 class Mainwindow;
 
@@ -34,6 +35,10 @@ class OptionsWindow : public QWidget
         QComboBox       *cb_player1Algo;
         QComboBox       *cb_player2;
         QComboBox       *cb_player2Algo;
+        QGroupBox       *groupBoxRules;
+        QVBoxLayout     *rulesLayout;
+        QCheckBox       *cb_checkDoubleThree;
+        QCheckBox       *cb_checkAlternativeEndGame;
         QGroupBox       *groupBox;
         QGridLayout     *playerLayout;
         QGridLayout     *generalLayout;

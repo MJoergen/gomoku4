@@ -33,7 +33,6 @@ OptionsWindow::OptionsWindow(int boardSize)
     this->cb_player2Algo->addItem("AlphaBeta");
     this->cb_player2Algo->addItem("NegaMax");
     this->cb_player2Algo->setEnabled(false);
-
     this->playerLayout->addWidget(this->l_player1, 0, 0, 1, 1);
     this->playerLayout->addWidget(this->cb_player1, 0, 1, 1, 1);
     this->playerLayout->addWidget(this->cb_player1Algo, 0, 2, 1, 1);
@@ -43,22 +42,31 @@ OptionsWindow::OptionsWindow(int boardSize)
 
     this->generalLayout->addWidget(this->groupBox, 0, 0, 1, 2);
 
+    this->groupBoxRules = new QGroupBox("Rules", this);
+    this->rulesLayout = new QVBoxLayout(this->groupBoxRules);
+    this->cb_checkDoubleThree = new QCheckBox("Double three", this->groupBoxRules);
+    this->cb_checkAlternativeEndGame = new QCheckBox("Alternative end game", this->groupBoxRules);
+    this->rulesLayout->addWidget(this->cb_checkDoubleThree);
+    this->rulesLayout->addWidget(this->cb_checkAlternativeEndGame);
+    this->generalLayout->addWidget(this->groupBoxRules, 1, 0, 1, 2);
+
+
     this->l_boardSize = new QLabel("Board size", this);
-    this->generalLayout->addWidget(this->l_boardSize, 1, 0, 1, 1);
+    this->generalLayout->addWidget(this->l_boardSize, 2, 0, 1, 1);
 
     this->spinBox_boardSize = new QSpinBox(this);
     this->spinBox_boardSize->setMinimum(MIN);
     this->spinBox_boardSize->setMaximum(this->getMaxBoardSize() < MAX ? this->getMaxBoardSize() : MAX);
     this->spinBox_boardSize->setValue(boardSize);
-    this->generalLayout->addWidget(this->spinBox_boardSize, 1, 1, 1, 1);
+    this->generalLayout->addWidget(this->spinBox_boardSize, 2, 1, 1, 1);
 
     this->button_valid = new QPushButton("Valid", this);
     this->button_valid->setIcon(QIcon(QPixmap(valid_xpm)));
-    this->generalLayout->addWidget(this->button_valid, 2, 0, 1, 1);
+    this->generalLayout->addWidget(this->button_valid, 3, 0, 1, 1);
 
     this->button_cancel = new QPushButton("Cancel", this);
     this->button_cancel->setIcon(QIcon(QPixmap(cancel_xpm)));
-    this->generalLayout->addWidget(this->button_cancel, 2, 1, 1, 1);
+    this->generalLayout->addWidget(this->button_cancel, 3, 1, 1, 1);
 
     this->doConnects();
     this->loadPreviousConfig();
