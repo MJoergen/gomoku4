@@ -203,6 +203,11 @@ void				Gomoku::checkTakenStones(Move *move)
 			&& isCorrect(x + (3 * dx[d]), y + (3 * dy[d]))
 			&& (board[x + (3 * dx[d])][y + (3 * dy[d])] == p))
 		{
+			std::cout << "+Stone for player " << (int)board[x][y] << " played at x:" << x << " y:" << y << std::endl;
+			std::cout << " -Stone for player " << (int)board[x + (1 * dx[d])][y + (1 * dy[d])] << " captured at x:" << x + (1 * dx[d]) << " y:" << y + (1 * dy[d]) << std::endl;
+			std::cout << " -Stone for player " << (int)board[x + (2 * dx[d])][y + (2 * dy[d])] << " captured at x:" << x + (2 * dx[d]) << " y:" << y + (2 * dy[d]) << std::endl;
+			std::cout << "+Stone for player " << (int)board[x + (3 * dx[d])][y + (3 * dy[d])] << " borned at x:" << x + (3 * dx[d]) << " y:" << y + (3 * dy[d]) << std::endl;
+
 			board[x + (1 * dx[d])][y + (1 * dy[d])] = NEUTRAL;
 			board[x + (2 * dx[d])][y + (2 * dy[d])] = NEUTRAL;
 			move->NewPointTaken(x + (1 * dx[d]), y + (1 * dy[d]));
@@ -218,6 +223,11 @@ void				Gomoku::checkTakenStones(Move *move)
 			&& isCorrect(x - (3 * dx[d]), y - (3 * dy[d]))
 			&& (board[x - (3 * dx[d])][y - (3 * dy[d])] == p))
 		{
+			std::cout << "+Stone for player " << (int)board[x][y] << " played at x:" << x << " y:" << y << std::endl;
+			std::cout << " -Stone for player " << (int)board[x - (1 * dx[d])][y - (1 * dy[d])] << " captured at x:" << x - (1 * dx[d]) << " y:" << y - (1 * dy[d]) << std::endl;
+			std::cout << " -Stone for player " << (int)board[x - (2 * dx[d])][y - (2 * dy[d])] << " captured at x:" << x - (2 * dx[d]) << " y:" << y - (2 * dy[d]) << std::endl;
+			std::cout << "+Stone for player " << (int)board[x - (3 * dx[d])][y - (3 * dy[d])] << " borned at x:" << x - (3 * dx[d]) << " y:" << y - (3 * dy[d]) << std::endl;
+
 			board[x - (1 * dx[d])][y - (1 * dy[d])] = NEUTRAL;
 			board[x - (2 * dx[d])][y - (2 * dy[d])] = NEUTRAL;
 			move->NewPointTaken(x - (1 * dx[d]), y - (1 * dy[d]));
