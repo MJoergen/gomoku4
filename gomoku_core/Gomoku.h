@@ -29,6 +29,8 @@ class Gomoku
     private:
 		Move				*lastMove;
 		int					size;
+		bool                doubleThree;
+		bool                alternativeEndGame;
 		Player				*players[2];
         unsigned char		**board;
 		Referee				referee;
@@ -50,6 +52,7 @@ class Gomoku
     public:
         void			    SetSize(int size);
 		void				SetPlayer(PlayerNumber playerNum, PlayerType type);
+		void                SetRules(bool doubleThree, bool alternativeEndGame);
 
 	public:
 		MoveActionState		DoNextMove();
@@ -68,6 +71,8 @@ class Gomoku
 		Move				*GetLastMove();
         GameState        	GetGameState() const;
 		GameState			GetTmpGameState() const;
+		bool                GetRuleDoubleThree() const;
+		bool                GetRuleAlternativeEndGame() const;
 		unsigned int		GetNbMoves() const;
         unsigned char		**GetBoard();
 		int					GetSize() const;

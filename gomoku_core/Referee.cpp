@@ -1,4 +1,8 @@
 #include "Referee.h"
+#include <sys/time.h>
+       #include <time.h>
+
+
 #include <iostream>
 
 const int	Referee::dx[4] = { 0, -1, -1, -1};
@@ -26,7 +30,7 @@ MoveState	Referee::CheckMove(Move *move, unsigned char **board, PlayerNumber p) 
 		{
 			int nbFreeThree = 0;
 			for (int d = 0; d < 4; d++)
-			{				
+			{
 				for (int maxf = 0; maxf < 4; maxf++)
 				{
 					int nbPlayerStones = 0;
@@ -87,7 +91,7 @@ MoveState	Referee::CheckMove(Move *move, unsigned char **board, PlayerNumber p) 
 	return (GOOD_MOVE);
 }
 
-GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board) const
+GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board)
 {
 	if (board && lastMove && lastPlayer)
 	{
@@ -110,7 +114,7 @@ GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, uns
 							&& (board[x + (forward * dx[d])][y + (forward * dy[d])] == p)
 							&& (!stoneCanBeTaken(x + (forward * dx[d]), y + (forward * dy[d]), board)))
 							forward++;
-	
+
 						int backward = 1;
 						while (isCorrect(x - (backward * dx[d]), y - (backward * dy[d]))
 				            && (board[x - (backward * dx[d])][y - (backward * dy[d])] == p)
@@ -118,7 +122,9 @@ GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, uns
 					        backward++;
 
 						if (forward + backward > LINE_SIZE)
+						{
 							return ((GameState)p);
+						}
 					}
 				}
 	    }
@@ -137,7 +143,7 @@ bool		Referee::stoneCanBeTaken(int x, int y, unsigned char **board) const
 	{
 		PlayerNumber p = (PlayerNumber)board[x][y];
 		PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
-		
+
 		for (int d = 0; d < 4; d++)
 		{
 			if (isCorrect(x + (1 * dx[d]), y + (1 * dy[d]))
@@ -159,7 +165,7 @@ bool		Referee::stoneCanBeTaken(int x, int y, unsigned char **board) const
 			{
 				return (true);
 			}
-	
+
 			if (isCorrect(x - (1 * dx[d]), y - (1 * dy[d]))
 				&& (board[x - (1 * dx[d])][y - (1 * dy[d])] == p)
 				&& isCorrect(x - (2 * dx[d]), y - (2 * dy[d]))
