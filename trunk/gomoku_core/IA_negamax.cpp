@@ -31,6 +31,7 @@ int		NegaMax::AlgoNegaMax(vector<pair<int, int> > covering, int level)
 
 	for (; it != eit; it++)
 	{
+	
 		Move *move = new Move(it->first, it->second, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
 				
 		if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
@@ -54,9 +55,12 @@ void	NegaMax::findMove()
 	PlayerNumber p = (PlayerNumber)((Gomoku::GetInstance()->GetNbMoves() % 2) + 1);
 	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
 	
-	if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3)
+	pair<int, int> counter = Gomoku::GetInstance()->CounterPairTaking(p, adv);
+	if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3 &&
+		(counter.first != -1 && counter.second != -1))
 	{
-	
+		cout << "suce moi en x=" << counter.first << " et en y=" << counter.second << endl;
+		Gomoku::GetInstance()->CommitMove(new Move(counter.first, counter.second, p), true);
 	}
 	else
 	{

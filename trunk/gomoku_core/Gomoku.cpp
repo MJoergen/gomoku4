@@ -323,6 +323,39 @@ vector<pair<int, int> >	Gomoku::BuildCovering()
 	return (covering);
 }
 
+pair<int, int>	Gomoku::CounterPairTaking(PlayerNumber p, PlayerNumber adv)
+{
+	for (int x = 0; x < this->size; x++)
+		for (int y = 0; y < this->size; y++)
+			if (board[x][y] == NEUTRAL)
+				for (int d = 0; d < 4; d++)
+				{
+					int size = 1;
+					
+					if ((isCorrect(x + (size * dx[d]), y + (size * dy[d]))
+						&& (board[x + (size * dx[d])][y + (size * dy[d])] == p)) &&
+						
+						(isCorrect(x + ((size + 1) * dx[d]), y + ((size + 1) * dy[d]))
+						&& (board[x + ((size + 1) * dx[d])][y + ((size + 1) * dy[d])] == p)) &&
+							
+						(isCorrect(x + ((size + 2) * dx[d]), y + ((size + 2) * dy[d]))
+						&& (board[x + ((size + 2) * dx[d])][y + ((size + 2) * dy[d])] == adv)))
+							return (pair<int, int>(x, y));
+							
+					if ((isCorrect(x - (size * dx[d]), y - (size * dy[d]))
+						&& (board[x - (size * dx[d])][y - (size * dy[d])] == p)) &&
+							
+						(isCorrect(x - ((size + 1) * dx[d]), y - ((size + 1) * dy[d]))
+						&& (board[x - ((size + 1) * dx[d])][y - ((size + 1) * dy[d])] == p)) &&
+							
+						(isCorrect(x - ((size + 2) * dx[d]), y - ((size + 2) * dy[d]))
+						&& (board[x - ((size + 2) * dx[d])][y - ((size + 2) * dy[d])] == adv)))
+							return (pair<int, int>(x, y));
+				}
+
+	return (pair<int, int>(-1, -1));
+}
+
 bool	Gomoku::IsCircled(int x, int y) const
 {
 	for (int d = 0; d < 4; d++)
