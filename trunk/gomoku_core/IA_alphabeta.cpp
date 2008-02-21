@@ -30,7 +30,7 @@ int		AlphaBeta::AlgoAlphaBeta(vector<pair<int, int> > covering, int alpha, int b
 	for (; it != eit; it++)
 	{
 		Move *move = new Move(it->first, it->second, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
-				
+
 		if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
 		{
 			val = -AlgoAlphaBeta(covering, -beta, -alpha, level - 1);
@@ -49,14 +49,14 @@ int		AlphaBeta::AlgoAlphaBeta(vector<pair<int, int> > covering, int alpha, int b
 			}
 		}
 	}
-	return (alpha);	
+	return (alpha);
 }
 
 void	AlphaBeta::findMove()
-{	
+{
 	PlayerNumber p = (PlayerNumber)((Gomoku::GetInstance()->GetNbMoves() % 2) + 1);
 	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
-	
+
 	pair<int, int> counter = Gomoku::GetInstance()->CounterPairTaking(p, adv);
 	if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3 &&
 		(counter.first != -1 && counter.second != -1))
@@ -68,7 +68,7 @@ void	AlphaBeta::findMove()
 	{
 		QTime chronometer;
 		vector<pair<int, int> > covering = Gomoku::GetInstance()->BuildCovering();
-		
+
 		this->treeNodes = 0;
 		chronometer.start();
 		AlgoAlphaBeta(covering, -INFINITY, INFINITY, DEEP_MAX);
