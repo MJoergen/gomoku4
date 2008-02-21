@@ -1,4 +1,5 @@
 #include "Referee.h"
+#include <iostream>
 
 const int	Referee::dx[4] = { 0, -1, -1, -1};
 const int	Referee::dy[4] = {-1, -1, 0, 1};
@@ -18,7 +19,6 @@ MoveState	Referee::CheckMove(Move *move, unsigned char **board, PlayerNumber p) 
 	{
 		int x = move->GetX();
 		int y = move->GetY();
-		PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
 
 		if (board[x][y] != NEUTRAL)
 			return (NOT_FREE);
@@ -26,7 +26,7 @@ MoveState	Referee::CheckMove(Move *move, unsigned char **board, PlayerNumber p) 
 		{
 			int nbFreeThree = 0;
 			for (int d = 0; d < 4; d++)
-			{
+			{				
 				for (int maxf = 0; maxf < 4; maxf++)
 				{
 					int nbPlayerStones = 0;
@@ -70,9 +70,9 @@ MoveState	Referee::CheckMove(Move *move, unsigned char **board, PlayerNumber p) 
 					if (!hasAdvStones && nbPlayerStones == 2 && nbNeutralStones == 1)
 					{
 						if ((isCorrect(x + ((maxf + 1) * dx[d]), y + ((maxf + 1) * dy[d])))
-							&& (board[x + ((maxf + 1) * dx[d])][y + ((maxf + 1) * dy[d])] != adv)
+							&& (board[x + ((maxf + 1) * dx[d])][y + ((maxf + 1) * dy[d])] == NEUTRAL)
 							&& (isCorrect(x - ((4 - maxf) * dx[d]), y - ((4 - maxf) * dy[d])))
-							&& (board[x - ((4 - maxf) * dx[d])][y - ((4 - maxf) * dy[d])] != adv))
+							&& (board[x - ((4 - maxf) * dx[d])][y - ((4 - maxf) * dy[d])] == NEUTRAL))
 						{
 							nbFreeThree++;
 							break;
@@ -149,6 +149,16 @@ bool		Referee::stoneCanBeTaken(int x, int y, unsigned char **board) const
 			{
 				return (true);
 			}
+
+			if (isCorrect(x + (1 * dx[d]), y + (1 * dy[d]))
+				&& (board[x + (1 * dx[d])][y + (1 * dy[d])] == p)
+				&& isCorrect(x + (2 * dx[d]), y + (2 * dy[d]))
+				&& (board[x + (2 * dx[d])][y + (2 * dy[d])] == NEUTRAL)
+				&& isCorrect(x - (1 * dx[d]), y - (1 * dy[d]))
+				&& (board[x - (1 * dx[d])][y - (1 * dy[d])] == adv))
+			{
+				return (true);
+			}
 	
 			if (isCorrect(x - (1 * dx[d]), y - (1 * dy[d]))
 				&& (board[x - (1 * dx[d])][y - (1 * dy[d])] == p)
@@ -156,6 +166,16 @@ bool		Referee::stoneCanBeTaken(int x, int y, unsigned char **board) const
 				&& (board[x - (2 * dx[d])][y - (2 * dy[d])] == adv)
 				&& isCorrect(x + (1 * dx[d]), y + (1 * dy[d]))
 				&& (board[x + (1 * dx[d])][y + (1 * dy[d])] == NEUTRAL))
+			{
+				return (true);
+			}
+
+			if (isCorrect(x - (1 * dx[d]), y - (1 * dy[d]))
+				&& (board[x - (1 * dx[d])][y - (1 * dy[d])] == p)
+				&& isCorrect(x - (2 * dx[d]), y - (2 * dy[d]))
+				&& (board[x - (2 * dx[d])][y - (2 * dy[d])] == NEUTRAL)
+				&& isCorrect(x + (1 * dx[d]), y + (1 * dy[d]))
+				&& (board[x + (1 * dx[d])][y + (1 * dy[d])] == adv))
 			{
 				return (true);
 			}
