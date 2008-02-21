@@ -2,6 +2,7 @@
 #include <QStatusBar>
 #include <QMessageBox>
 #include <QDesktopWidget>
+#include <QTimer>
 
 #include "Mainwindow.h"
 
@@ -169,7 +170,9 @@ void			Mainwindow::moveToCenter()
 void			Mainwindow::StartMoves()
 {
 	while ((this->moveActionState = Gomoku::GetInstance()->DoNextMove()) == DONE)
-		this->updateDisplay();
+	{
+		QTimer::singleShot(500, this, SLOT(updateDisplay()));
+	}
 	if (this->checkGameState() != IN_PROGRESS)
 		this->startNewGame();
 }
@@ -184,7 +187,10 @@ void			Mainwindow::updateDisplay()
 		std::list<Point> pointsTaken = move->GetPointsTaken();
 
 		for (it = pointsTaken.begin(); it != pointsTaken.end(); it++)
+		{
 			this->buttonsArray[(*it).GetX()][(*it).GetY()]->SetState(NEUTRAL);
+			std::cout << "Point pris X:" << (*it).GetX() << " Y:" << (*it).GetY() << std::endl;
+		}
         this->statistics->UpdateStatistics();
 	}
 }

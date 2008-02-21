@@ -33,3 +33,8 @@ void				Move::NewPointTaken(int _x, int _y)
 {
 	this->pointsTaken.push_back(Point(_x, _y));
 }
+
+void				Move::ResetPointsTaken()
+{
+	this->pointsTaken.clear();
+}

@@ -24,6 +24,7 @@ class Move
 	public:
 		void					SetPlayerNumber(PlayerNumber num);
 		void					NewPointTaken(int _x, int _y);
+		void					ResetPointsTaken();
 };
 
 #endif //!_MOVE_H_

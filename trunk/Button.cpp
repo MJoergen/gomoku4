@@ -45,6 +45,7 @@ PlayerNumber	Button::GetState()
 
 Move			*Button::GetPos()
 {
+	this->pos->ResetPointsTaken();
     return (this->pos);
 }
 
