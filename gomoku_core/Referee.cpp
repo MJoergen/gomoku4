@@ -95,47 +95,43 @@ MoveState	Referee::CheckMove(Move *move, unsigned char **board, PlayerNumber p) 
     return (GOOD_MOVE);
 }
 
-GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board)
+GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board, bool alternativeEndGame)
 {
     if (board && lastMove && lastPlayer)
     {
         int p = lastMove->GetPlayerNumber();
+		int x = lastMove->GetX();
+		int y = lastMove->GetY();
 
         if (stones == (this->size * this->size))
             return (BOARD_FULL);
         if (lastPlayer->GetPairs() >= NB_PAIRS)
             return ((GameState)p);
-        else
-        {
-            for (int x = 0; x < this->size; x++)
-                for (int y = 0; y < this->size; y++)
-                {
-                    if (board[x][y] == p && !stoneCanBeTaken(x, y, board))
-                        for (int d = 0; d < 4; d++)
-                        {
-                            int forward = 1;
-                            while (isCorrect(x + (forward * dx[d]), y + (forward * dy[d]))
-                                    && (board[x + (forward * dx[d])][y + (forward * dy[d])] == p)
-                                    && (!stoneCanBeTaken(x + (forward * dx[d]), y + (forward * dy[d]), board)))
-							{                            
-								forward++;
-							}
+		if (!this->linesToCheck.empty())
+		{
+			vector<pair<int, int> >::iterator it = this->linesToCheck.begin();
+			vector<pair<int, int> >::iterator eit = this->linesToCheck.end();
 
-                            int backward = 1;
-                            while (isCorrect(x - (backward * dx[d]), y - (backward * dy[d]))
-                                    && (board[x - (backward * dx[d])][y - (backward * dy[d])] == p)
-                                    && (!stoneCanBeTaken(x - (backward * dx[d]), y - (backward * dy[d]), board)))
-							{
-								backward++;
-							}
+			for (; it != eit; it++)
+			{
+				if (board[it->first][it->second] == NEUTRAL || !isValidLine(it->first, it->second, board, false))
+				{
+					it = this->linesToCheck.erase(it);
+					eit = this->linesToCheck.end();
+					it--;
+				}
+				else if (isValidLine(it->first, it->second, board, alternativeEndGame))
+				{
+					this->linesToCheck.clear();
+					return ((GameState)p);
+				}
+			}
+		}
 
-                            if (forward + backward > LINE_SIZE)
-                            {
-                                return ((GameState)p);
-                            }
-                        }
-                }
-        }
+		if (isValidLine(x, y, board, alternativeEndGame))
+			return ((GameState)p);					
+		else if (alternativeEndGame && isValidLine(x, y, board, false))
+			this->linesToCheck.push_back(pair<int, int>(lastMove->GetX(), lastMove->GetY())); 
     }
     return (IN_PROGRESS);
 }
@@ -201,4 +197,29 @@ bool		Referee::stoneCanBeTaken(int x, int y, unsigned char **board) const
         }
     }
     return (false);
+}
+
+bool						Referee::isValidLine(int x, int y, unsigned char **board, bool alternativeEndGame)
+{
+	int p = board[x][y];
+
+	if (!alternativeEndGame || !stoneCanBeTaken(x, y, board))
+		for (int d = 0; d < 4; d++)
+		{
+			int forward = 1;
+            while (isCorrect(x + (forward * dx[d]), y + (forward * dy[d]))
+				&& (board[x + (forward * dx[d])][y + (forward * dy[d])] == p)
+                && (!alternativeEndGame || !stoneCanBeTaken(x + (forward * dx[d]), y + (forward * dy[d]), board)))
+				forward++;
+
+			int backward = 1;
+			while (isCorrect(x - (backward * dx[d]), y - (backward * dy[d]))                             
+				&& (board[x - (backward * dx[d])][y - (backward * dy[d])] == p)                    
+				&& (!alternativeEndGame || !stoneCanBeTaken(x - (backward * dx[d]), y - (backward * dy[d]), board)))
+				backward++;
+
+			if (forward + backward > LINE_SIZE)
+				return (true);
+		}
+	return (false);
 }
