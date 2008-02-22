@@ -24,8 +24,15 @@ Mainwindow::Mainwindow()
 Mainwindow::~Mainwindow()
 {
     delete this->statistics;
+    this->cleanButtonsArray();
     ButtonIconFactory::DestroyInstance();
     Gomoku::DestroyInstance();
+    delete this->fileMenu;
+    delete this->frame;
+    delete this->optionsAction;
+    delete this->preferenceMenu;
+    delete this->quitAction;
+    delete this->newGameAction;
 }
 
 // Singleton methods
@@ -41,8 +48,8 @@ void			Mainwindow::DestroyInstance()
 {
     if (instance)
     {
-        instance = NULL;
         delete instance;
+        instance = NULL;
     }
 }
 
@@ -170,7 +177,6 @@ void			Mainwindow::moveToCenter()
 
 void			Mainwindow::StartMoves()
 {
-	std::cout << "Youpi" << std::endl;
 	if ((this->moveActionState = Gomoku::GetInstance()->DoNextMove()) == DONE)
 	{
 		updateDisplay();
@@ -187,7 +193,7 @@ void			Mainwindow::updateDisplay()
 
 	if (move != NULL)
 	{
-		this->buttonsArray[move->GetX()][move->GetY()]->SetState(Gomoku::GetInstance()->GetPlayerToMove());
+		this->buttonsArray[move->GetX()][move->GetY()]->SetState(move->GetPlayerNumber());
 		std::list<Point>::iterator it;
 		std::list<Point> pointsTaken = move->GetPointsTaken();
 
