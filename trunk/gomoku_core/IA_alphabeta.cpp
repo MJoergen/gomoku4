@@ -80,7 +80,7 @@ void	AlphaBeta::findMove()
 		vector<pair<int, int> > *covering = new vector<pair<int, int> >;
 
 		this->treeNodes = 0;
-		Gomoku::GetInstance()->BuildCovering(covering);
+		Gomoku::GetInstance()->BuildCovering(covering, adv);
 		chronometer.start();
 		AlgoAlphaBeta(covering, -INFINITY, INFINITY, DEEP_MAX);
 		this->time = chronometer.elapsed();
