@@ -309,8 +309,11 @@ unsigned int	Gomoku::evaluate() const
     unsigned int eval = 0;
 
     for (int x = 0; x < this->size; x++)
+    {
 		for (int y = 0; y < this->size; y++)
+		{
 			if (board[x][y] == p)
+			{
 				for (unsigned int d = 0; d < 4; d++)
 				{
 					unsigned int size = 1;
@@ -319,16 +322,22 @@ unsigned int	Gomoku::evaluate() const
 						size++;
                     eval += size - 1;
                 }
-
+			}
+		}
+    }
     return (eval);
 }
 
 void	Gomoku::BuildCovering(vector<pair<int, int> > *covering)
 {
     for (int x = 0; x < this->size; x++)
+    {
 		for (int y = 0; y < this->size; y++)
+		{
 			if (board[x][y] != NEUTRAL)
+			{
 				for (int size = 1; size < 2; size++)
+				{
 					for (int d = 0; d < 4; d++)
 					{
 						if (isCorrect(x + (size * dx[d]), y + (size * dy[d]))
@@ -339,6 +348,10 @@ void	Gomoku::BuildCovering(vector<pair<int, int> > *covering)
 							&& (board[x - (size * dx[d])][y - (size * dy[d])] == NEUTRAL))
 							covering->push_back(pair<int, int>(x - (size * dx[d]), y - (size * dy[d])));
 					}
+				}
+			}
+		}
+    }
 	if (covering->empty())
 		covering->push_back(pair<int, int>(size / 2, size / 2));
 }
@@ -346,8 +359,11 @@ void	Gomoku::BuildCovering(vector<pair<int, int> > *covering)
 pair<int, int>	Gomoku::CounterPairTaking(PlayerNumber p, PlayerNumber adv)
 {
 	for (int x = 0; x < this->size; x++)
+	{
 		for (int y = 0; y < this->size; y++)
+		{
 			if (board[x][y] == NEUTRAL)
+			{
 				for (int d = 0; d < 4; d++)
 				{
 					int size = 1;
@@ -372,14 +388,20 @@ pair<int, int>	Gomoku::CounterPairTaking(PlayerNumber p, PlayerNumber adv)
 						&& (board[x - ((size + 2) * dx[d])][y - ((size + 2) * dy[d])] == adv)))
 							return (pair<int, int>(x, y));
 				}
+			}
+		}
+	}
 	return (pair<int, int>(-1, -1));
 }
 
 pair<int, int>	Gomoku::OneMoveWin(PlayerNumber p)
 {
 	for (int x = 0; x < this->size; x++)
+	{
 		for (int y = 0; y < this->size; y++)
+		{
 			if (board[x][y] == NEUTRAL)
+			{
 				for (int d = 0; d < 4; d++)
 				{
 					int forward = 1;
@@ -395,6 +417,9 @@ pair<int, int>	Gomoku::OneMoveWin(PlayerNumber p)
 					if (forward + backward > LINE_SIZE)
 						return (pair<int, int>(x, y));
 				}
+			}
+		}
+	}
 	return (pair<int, int>(-1, -1));
 }
 
