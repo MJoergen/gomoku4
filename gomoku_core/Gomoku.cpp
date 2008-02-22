@@ -337,18 +337,15 @@ void	Gomoku::BuildCovering(vector<pair<int, int> > *covering)
 		{
 			if (board[x][y] != NEUTRAL)
 			{
-				for (int size = 1; size < 2; size++)
+				for (int d = 0; d < 4; d++)
 				{
-					for (int d = 0; d < 4; d++)
-					{
-						if (isCorrect(x + (size * dx[d]), y + (size * dy[d]))
-							&& (board[x + (size * dx[d])][y + (size * dy[d])] == NEUTRAL))
-							covering->push_back(pair<int, int>(x + (size * dx[d]), y + (size * dy[d])));
+					if (isCorrect(x + (1 * dx[d]), y + (1 * dy[d]))
+						&& (board[x + (1 * dx[d])][y + (1 * dy[d])] == NEUTRAL))
+							covering->push_back(pair<int, int>(x + (1 * dx[d]), y + (1 * dy[d])));
 
-						if (isCorrect(x - (size * dx[d]), y - (size * dy[d]))
-							&& (board[x - (size * dx[d])][y - (size * dy[d])] == NEUTRAL))
-							covering->push_back(pair<int, int>(x - (size * dx[d]), y - (size * dy[d])));
-					}
+					if (isCorrect(x - (1 * dx[d]), y - (1 * dy[d]))
+						&& (board[x - (1 * dx[d])][y - (1 * dy[d])] == NEUTRAL))
+							covering->push_back(pair<int, int>(x - (1 * dx[d]), y - (1 * dy[d])));
 				}
 			}
 		}
