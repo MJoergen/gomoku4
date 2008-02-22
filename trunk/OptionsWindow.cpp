@@ -163,7 +163,8 @@ void        OptionsWindow::valid()
     }
     Gomoku::GetInstance()->SetRules(this->cb_checkDoubleThree->checkState() == Qt::Checked,
                                     this->cb_checkAlternativeEndGame->checkState() == Qt::Checked);
-    Mainwindow::GetInstance()->checkGameState();
+    if (Mainwindow::GetInstance()->checkGameState() != IN_PROGRESS)
+        Mainwindow::GetInstance()->startNewGame();
     Mainwindow::GetInstance()->GetStatistics()->Reset();
     if ((Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_IA_ALPHABETA ||
          Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_IA_NEGAMAX))
