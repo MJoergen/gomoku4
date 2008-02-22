@@ -336,6 +336,11 @@ vector<pair<int, int> >	Gomoku::BuildCovering()
 							&& (board[x - (size * dx[d])][y - (size * dy[d])] == NEUTRAL))
 							covering.push_back(pair<int, int>(x - (size * dx[d]), y - (size * dy[d])));
 					}
+	if (isCorrect(size / 2, size / 2)
+		&& (board[size / 2][size / 2] == NEUTRAL))
+	{
+		covering.push_back(pair<int, int>(size / 2, size / 2));
+	}
 	return (covering);
 }
 

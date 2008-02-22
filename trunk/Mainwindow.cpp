@@ -169,12 +169,15 @@ void			Mainwindow::moveToCenter()
 
 void			Mainwindow::StartMoves()
 {
-	while ((this->moveActionState = Gomoku::GetInstance()->DoNextMove()) == DONE)
+	std::cout << "Youpi" << std::endl;
+	if ((this->moveActionState = Gomoku::GetInstance()->DoNextMove()) == DONE)
 	{
-		QTimer::singleShot(500, this, SLOT(updateDisplay()));
+		updateDisplay();
 	}
 	if (this->checkGameState() != IN_PROGRESS)
 		this->startNewGame();
+	else if (this->moveActionState == DONE)
+		QTimer::singleShot(500, this, SLOT(StartMoves()));
 }
 
 void			Mainwindow::updateDisplay()
