@@ -83,7 +83,6 @@ void                Gomoku::SetRules(bool doubleThree, bool alternativeEndGame)
 {
     this->doubleThree = doubleThree;
     this->alternativeEndGame = alternativeEndGame;
-    Mainwindow::GetInstance()->checkGameState();
 }
 
 // Public Game methods
