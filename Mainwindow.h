@@ -34,12 +34,14 @@ class Mainwindow : public QMainWindow
         static Mainwindow   *instance;
 
 	private:
-        QMenu               *fileMenu;
+        QMenu               *gomokuMenu;
         QMenu               *preferenceMenu;
         QAction             *newGameAction;
         QAction             *quitAction;
+        QAction             *pauseAction;
         QAction             *optionsAction;
         QFrame              *frame;
+        QTimer              *timer;
 
     private:
         int                 boardSize;
@@ -73,9 +75,10 @@ class Mainwindow : public QMainWindow
 
     public slots:
         void				startNewGame();
+        void                pauseGame();
         void				showOptionsWindow();
         void			    buttonClicked();
-        void			   StartMoves();
+        void			    StartMoves();
 };
 
 #endif //!_MAINWINDOW_H_

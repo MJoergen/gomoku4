@@ -27,12 +27,13 @@ Mainwindow::~Mainwindow()
     this->cleanButtonsArray();
     ButtonIconFactory::DestroyInstance();
     Gomoku::DestroyInstance();
-    delete this->fileMenu;
+    delete this->gomokuMenu;
     delete this->frame;
     delete this->optionsAction;
     delete this->preferenceMenu;
     delete this->quitAction;
     delete this->newGameAction;
+    delete this->timer;
 }
 
 // Singleton methods
@@ -80,6 +81,9 @@ void			Mainwindow::init()
     this->buttonsArray = NULL;
     this->statistics = NULL;
     this->boardSize = DEFAULT_BOARDSIZE;
+    this->timer = new QTimer();
+    this->timer->setInterval(500);
+    QObject::connect(this->timer, SIGNAL(timeout()), this, SLOT(StartMoves()));
     this->statistics = new Statistics(this);
     this->frame = new QFrame(this);
     Gomoku::GetInstance()->SetSize(DEFAULT_BOARDSIZE);
@@ -88,6 +92,7 @@ void			Mainwindow::init()
 void			Mainwindow::doConnects()
 {
     connect(this->newGameAction, SIGNAL(triggered()), this, SLOT(startNewGame()));
+    connect(this->pauseAction, SIGNAL(triggered()), this, SLOT(pauseGame()));
     connect(this->quitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(this->optionsAction, SIGNAL(triggered()), this, SLOT(showOptionsWindow()));
 }
@@ -114,17 +119,22 @@ void			Mainwindow::setSize()
 
 void			Mainwindow::createMenus()
 {
-    this->fileMenu = this->menuBar()->addMenu("&File");
+    this->gomokuMenu = this->menuBar()->addMenu("&Gomoku");
 
     this->newGameAction = new QAction(tr("&New game"), this);
     this->newGameAction->setShortcut(tr("Ctrl+N"));
     this->newGameAction->setStatusTip(tr("Start a new game"));
-    this->fileMenu->addAction(this->newGameAction);
+    this->gomokuMenu->addAction(this->newGameAction);
+
+    this->pauseAction = new QAction(tr("&Pause"), this);
+    this->pauseAction->setShortcut(tr("Ctrl+P"));
+    this->pauseAction->setStatusTip(tr("Pause application"));
+    this->gomokuMenu->addAction(this->pauseAction);
 
     this->quitAction = new QAction(tr("&Quit"), this);
     this->quitAction->setShortcut(tr("Ctrl+Q"));
     this->quitAction->setStatusTip(tr("Quit application"));
-    this->fileMenu->addAction(this->quitAction);
+    this->gomokuMenu->addAction(this->quitAction);
 
     this->preferenceMenu = this->menuBar()->addMenu("&Preferences");
 
@@ -183,8 +193,10 @@ void			Mainwindow::StartMoves()
 	}
 	if (this->checkGameState() != IN_PROGRESS)
 		this->startNewGame();
-	else if (this->moveActionState == DONE)
-		QTimer::singleShot(500, this, SLOT(StartMoves()));
+	else if (this->moveActionState == DONE && !this->timer->isActive())
+        this->timer->start();
+	else if (this->moveActionState == WAITING_PLAYER_ACTION)
+        this->timer->stop();
 }
 
 void			Mainwindow::updateDisplay()
@@ -211,16 +223,19 @@ GameState		Mainwindow::checkGameState()
     switch (gameState)
     {
         case VICTORY_PLAYER1 :
+            this->timer->stop();
             QMessageBox::information(this, "Gomoku - Game information",
                                      "Player 1 wins !");
 			break;
 
         case VICTORY_PLAYER2 :
+            this->timer->stop();
             QMessageBox::information(this, "Gomoku - Game information",
                                      "Player 2 wins !");
 			break;
 
         case BOARD_FULL :
+            this->timer->stop();
             QMessageBox::information(this, "Gomoku - Game information",
                                      "The board is full.\nA new game is being to start.");
 			break;
@@ -240,6 +255,14 @@ void			Mainwindow::startNewGame()
     Gomoku::GetInstance()->ResetGame();
     this->statistics->Reset();
 	this->StartMoves();
+}
+
+void            Mainwindow::pauseGame()
+{
+    if (!this->timer->isActive())
+        this->timer->start();
+    else
+        this->timer->stop();
 }
 
 void			Mainwindow::showOptionsWindow()
