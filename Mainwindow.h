@@ -58,7 +58,6 @@ class Mainwindow : public QMainWindow
     public:
         void               CreateBoard();
         void               SetBoardSize(int boardSize);
-        void			   StartMoves();
         Statistics         *GetStatistics();
 
     private:
@@ -76,6 +75,7 @@ class Mainwindow : public QMainWindow
         void				startNewGame();
         void				showOptionsWindow();
         void			    buttonClicked();
+        void			   StartMoves();
 };
 
 #endif //!_MAINWINDOW_H_
