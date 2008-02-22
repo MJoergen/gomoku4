@@ -323,10 +323,8 @@ unsigned int	Gomoku::evaluate() const
     return (eval);
 }
 
-vector<pair<int, int> >	Gomoku::BuildCovering()
+void	Gomoku::BuildCovering(vector<pair<int, int> > *covering)
 {
-	vector<pair<int, int> > covering;
-
     for (int x = 0; x < this->size; x++)
 		for (int y = 0; y < this->size; y++)
 			if (board[x][y] != NEUTRAL)
@@ -335,18 +333,14 @@ vector<pair<int, int> >	Gomoku::BuildCovering()
 					{
 						if (isCorrect(x + (size * dx[d]), y + (size * dy[d]))
 							&& (board[x + (size * dx[d])][y + (size * dy[d])] == NEUTRAL))
-							covering.push_back(pair<int, int>(x + (size * dx[d]), y + (size * dy[d])));
+							covering->push_back(pair<int, int>(x + (size * dx[d]), y + (size * dy[d])));
 
 						if (isCorrect(x - (size * dx[d]), y - (size * dy[d]))
 							&& (board[x - (size * dx[d])][y - (size * dy[d])] == NEUTRAL))
-							covering.push_back(pair<int, int>(x - (size * dx[d]), y - (size * dy[d])));
+							covering->push_back(pair<int, int>(x - (size * dx[d]), y - (size * dy[d])));
 					}
-	if (isCorrect(size / 2, size / 2)
-		&& (board[size / 2][size / 2] == NEUTRAL))
-	{
-		covering.push_back(pair<int, int>(size / 2, size / 2));
-	}
-	return (covering);
+	if (covering->empty())
+		covering->push_back(pair<int, int>(size / 2, size / 2));
 }
 
 pair<int, int>	Gomoku::CounterPairTaking(PlayerNumber p, PlayerNumber adv)
@@ -378,7 +372,6 @@ pair<int, int>	Gomoku::CounterPairTaking(PlayerNumber p, PlayerNumber adv)
 						&& (board[x - ((size + 2) * dx[d])][y - ((size + 2) * dy[d])] == adv)))
 							return (pair<int, int>(x, y));
 				}
-
 	return (pair<int, int>(-1, -1));
 }
 
@@ -402,7 +395,6 @@ pair<int, int>	Gomoku::OneMoveWin(PlayerNumber p)
 					if (forward + backward > LINE_SIZE)
 						return (pair<int, int>(x, y));
 				}
-
 	return (pair<int, int>(-1, -1));
 }
 

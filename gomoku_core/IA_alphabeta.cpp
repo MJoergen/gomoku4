@@ -12,7 +12,7 @@ AlphaBeta::AlphaBeta() : IA(IS_IA_ALPHABETA)
     this->time = 0;
 }
 
-int		AlphaBeta::AlgoAlphaBeta(vector<pair<int, int> > covering, int alpha, int beta, int level)
+int		AlphaBeta::AlgoAlphaBeta(vector<pair<int, int> > *covering, int alpha, int beta, int level)
 {
     this->treeNodes++;
 
@@ -24,8 +24,8 @@ int		AlphaBeta::AlgoAlphaBeta(vector<pair<int, int> > covering, int alpha, int b
         return (-(this->gomoku->evaluate()));
 
 	int val;
-	vector<pair<int, int> >::iterator it = covering.begin();
-	vector<pair<int, int> >::iterator eit = covering.end();
+	vector<pair<int, int> >::iterator it = covering->begin();
+	vector<pair<int, int> >::iterator eit = covering->end();
 
 	for (; it != eit; it++)
 	{
@@ -54,27 +54,33 @@ int		AlphaBeta::AlgoAlphaBeta(vector<pair<int, int> > covering, int alpha, int b
 
 void	AlphaBeta::findMove()
 {
-	int x = -1, y = -1;
 	PlayerNumber p = (PlayerNumber)((Gomoku::GetInstance()->GetNbMoves() % 2) + 1);
 	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
-
-	if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3 &&
-		((x = Gomoku::GetInstance()->CounterPairTaking(p, adv).first) != -1 &&
-		(y = Gomoku::GetInstance()->CounterPairTaking(p, adv).second) != -1))
+	pair<int, int> CounterPair = Gomoku::GetInstance()->CounterPairTaking(p, adv);
+	pair<int, int> oneMove = Gomoku::GetInstance()->OneMoveWin(p);
+	vector<pair<int, int> > *ThreeBorders = Gomoku::GetInstance()->GetFreeThreeBorders();
+	
+	if (!ThreeBorders->empty())
 	{
-		Gomoku::GetInstance()->CommitMove(new Move(x, y, p), true);
+		pair<int, int> CounterThree = (*ThreeBorders)[0];
+		Gomoku::GetInstance()->CommitMove(new Move(CounterThree.first, CounterThree.second, p), true);
+	}
+	else if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3 &&
+		(CounterPair.first != -1 && CounterPair.second != -1))
+	{
+		Gomoku::GetInstance()->CommitMove(new Move(CounterPair.first, CounterPair.second, p), true);
 	}	
-	else if ((x = Gomoku::GetInstance()->OneMoveWin(p).first) != -1 &&
-			 (y = Gomoku::GetInstance()->OneMoveWin(p).second) != -1)
+	else if (oneMove.first != -1 && oneMove.second != -1)
 	{
-		Gomoku::GetInstance()->CommitMove(new Move(x, y, p), true);
+		Gomoku::GetInstance()->CommitMove(new Move(oneMove.first, oneMove.second, p), true);
 	}
 	else
 	{
 		QTime chronometer;
-		vector<pair<int, int> > covering = Gomoku::GetInstance()->BuildCovering();
-
+		vector<pair<int, int> > *covering = new vector<pair<int, int> >;
+		
 		this->treeNodes = 0;
+		Gomoku::GetInstance()->BuildCovering(covering);
 		chronometer.start();
 		AlgoAlphaBeta(covering, -INFINITY, INFINITY, DEEP_MAX);
 		this->time = chronometer.elapsed();
