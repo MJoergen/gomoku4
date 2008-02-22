@@ -89,7 +89,5 @@ void	AlphaBeta::findMove()
 			Gomoku::GetInstance()->CommitMove(new Move(this->bestMove->GetX(), this->bestMove->GetY(), p), true);
 			this->bestMove = NULL;
 		}
-		else
-				std::cout << "Oh Jason fait du caca..." << std::endl;
 	}
 }
