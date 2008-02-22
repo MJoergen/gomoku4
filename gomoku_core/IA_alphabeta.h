@@ -11,7 +11,7 @@ class Mainwindow;
 class AlphaBeta : public IA
 {
     private:
-        static const unsigned int	DEEP_MAX = 3;
+        static const unsigned int	DEEP_MAX = 5;
 		Move						*bestMove;
 		Gomoku						*gomoku;
 
