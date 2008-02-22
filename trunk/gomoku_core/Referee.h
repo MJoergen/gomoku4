@@ -2,6 +2,7 @@
 # define _REFEREE_H_
 
 # include "Move.h"
+# include <vector>
 
 # define LINE_SIZE	5
 # define NB_PAIRS	5
@@ -28,7 +29,8 @@ class Referee
 		const static int	dy[4];
 
 	private:
-		int					size;
+		int										size;
+		std::vector<std::pair<int, int> >		*freeThreeBorders;
 
     public:
         Referee();
@@ -37,12 +39,13 @@ class Referee
 		void		SetSize(int s);
 
     public:
-        MoveState	CheckMove(Move *move, unsigned char **board, PlayerNumber p) const;
-        GameState	CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board);
+        MoveState								CheckMove(Move *move, unsigned char **board, PlayerNumber p) const;
+        GameState								CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board);
+		std::vector<std::pair<int, int> >		*GetFreeThreeBorders();
 
 	private:
-		bool		isCorrect(int x, int y) const;
-		bool		stoneCanBeTaken(int x, int y, unsigned char **board) const;
+		bool									isCorrect(int x, int y) const;
+		bool									stoneCanBeTaken(int x, int y, unsigned char **board) const;
 };
 
 #endif //!_REFEREE_H_

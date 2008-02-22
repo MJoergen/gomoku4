@@ -415,3 +415,8 @@ bool	Gomoku::IsCircled(int x, int y) const
 	}
 	return (false);
 }
+
+vector<pair<int, int> >	*Gomoku::GetFreeThreeBorders()
+{
+	return (this->referee.GetFreeThreeBorders());
+}

@@ -1,15 +1,16 @@
 #include "Referee.h"
 #include <sys/time.h>
 #include <time.h>
-
-
 #include <iostream>
+
+using namespace std;
 
 const int	Referee::dx[4] = { 0, -1, -1, -1};
 const int	Referee::dy[4] = {-1, -1, 0, 1};
 
 Referee::Referee()
 {
+	this->freeThreeBorders = new vector<pair<int, int> >();
 }
 
 void		Referee::SetSize(int s)
@@ -19,6 +20,7 @@ void		Referee::SetSize(int s)
 
 MoveState	Referee::CheckMove(Move *move, unsigned char **board, PlayerNumber p) const
 {
+	this->freeThreeBorders->clear();
     if (board && move)
     {
         int x = move->GetX();
@@ -79,6 +81,8 @@ MoveState	Referee::CheckMove(Move *move, unsigned char **board, PlayerNumber p) 
                                 && (board[x - ((4 - maxf) * dx[d])][y - ((4 - maxf) * dy[d])] == NEUTRAL))
                         {
                             nbFreeThree++;
+							this->freeThreeBorders->push_back(pair<int, int>(x + ((maxf + 1) * dx[d]), y + ((maxf + 1) * dy[d])));
+							this->freeThreeBorders->push_back(pair<int, int>(x - ((4 - maxf) * dx[d]), y - ((4 - maxf) * dy[d])));
                             break;
                         }
                     }
@@ -134,6 +138,11 @@ GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, uns
         }
     }
     return (IN_PROGRESS);
+}
+
+vector<pair<int, int> >		*Referee::GetFreeThreeBorders()
+{
+	return (this->freeThreeBorders);
 }
 
 bool		Referee::isCorrect(int x, int y) const
