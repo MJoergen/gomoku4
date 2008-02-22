@@ -13,6 +13,7 @@ Gomoku  *Gomoku::instance = NULL;
 Gomoku::Gomoku() : size(0), board(NULL)
 {
 	this->lastMove = NULL;
+	this->board = NULL;
 	this->players[0] = new Player(IS_HUMAN);
 	this->players[1] = new Player(IS_HUMAN);
 	this->doubleThree = true;
@@ -103,7 +104,10 @@ MoveState			Gomoku::CommitMove(Move *move, bool setState)
 {
     PlayerNumber p = move->GetPlayerNumber();
 	if (p == NEUTRAL)
+	{
 		p = this->GetPlayerToMove();
+		move->SetPlayerNumber(p);
+	}
     int x = move->GetX();
     int y = move->GetY();
 
@@ -174,6 +178,7 @@ void				Gomoku::ResetGame()
 	this->players[1]->ResetPlayer();
 	this->referee.SetSize(this->size);
 
+    this->deleteBoard();
 	this->board = new unsigned char*[this->size];
 	for (int i = 0; i < this->size; i++)
 	{
@@ -352,23 +357,23 @@ pair<int, int>	Gomoku::CounterPairTaking(PlayerNumber p, PlayerNumber adv)
 				for (int d = 0; d < 4; d++)
 				{
 					int size = 1;
-					
+
 					if ((isCorrect(x + (size * dx[d]), y + (size * dy[d]))
 						&& (board[x + (size * dx[d])][y + (size * dy[d])] == p)) &&
-						
+
 						(isCorrect(x + ((size + 1) * dx[d]), y + ((size + 1) * dy[d]))
 						&& (board[x + ((size + 1) * dx[d])][y + ((size + 1) * dy[d])] == p)) &&
-							
+
 						(isCorrect(x + ((size + 2) * dx[d]), y + ((size + 2) * dy[d]))
 						&& (board[x + ((size + 2) * dx[d])][y + ((size + 2) * dy[d])] == adv)))
 							return (pair<int, int>(x, y));
-							
+
 					if ((isCorrect(x - (size * dx[d]), y - (size * dy[d]))
 						&& (board[x - (size * dx[d])][y - (size * dy[d])] == p)) &&
-							
+
 						(isCorrect(x - ((size + 1) * dx[d]), y - ((size + 1) * dy[d]))
 						&& (board[x - ((size + 1) * dx[d])][y - ((size + 1) * dy[d])] == p)) &&
-							
+
 						(isCorrect(x - ((size + 2) * dx[d]), y - ((size + 2) * dy[d]))
 						&& (board[x - ((size + 2) * dx[d])][y - ((size + 2) * dy[d])] == adv)))
 							return (pair<int, int>(x, y));
@@ -388,12 +393,12 @@ pair<int, int>	Gomoku::OneMoveWin(PlayerNumber p)
 					while (isCorrect(x + (forward * dx[d]), y + (forward * dy[d]))
 						   && (board[x + (forward * dx[d])][y + (forward * dy[d])] == p))
 						   forward++;
-						   
+
 					int backward = 1;
 					while (isCorrect(x - (backward * dx[d]), y - (backward * dy[d]))
 						   && (board[x - (backward * dx[d])][y - (backward * dy[d])] == p))
 						   backward++;
-						   
+
 					if (forward + backward > LINE_SIZE)
 						return (pair<int, int>(x, y));
 				}
