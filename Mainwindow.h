@@ -69,9 +69,9 @@ class Mainwindow : public QMainWindow
         void				cleanButtonsArray();
         void				moveToCenter();
 		GameState			checkGameState();
+        void				updateDisplay();
 
     public slots:
-		void				updateDisplay();
         void				startNewGame();
         void				showOptionsWindow();
         void			    buttonClicked();

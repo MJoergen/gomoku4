@@ -167,6 +167,7 @@ void			Mainwindow::moveToCenter()
                desktop.screenGeometry().height() / 2 - this->height() / 2);
 }
 
+
 void			Mainwindow::StartMoves()
 {
 	std::cout << "Youpi" << std::endl;
@@ -183,6 +184,7 @@ void			Mainwindow::StartMoves()
 void			Mainwindow::updateDisplay()
 {
 	Move* move = Gomoku::GetInstance()->GetLastMove();
+
 	if (move != NULL)
 	{
 		this->buttonsArray[move->GetX()][move->GetY()]->SetState(Gomoku::GetInstance()->GetPlayerToMove());
