@@ -11,7 +11,7 @@ class Mainwindow;
 class NegaMax : public IA
 {
     private:
-        static const unsigned int	DEEP_MAX = 3;
+        static const unsigned int	DEEP_MAX = 2;
 		Move						*bestMove;
 		Gomoku						*gomoku;
 
