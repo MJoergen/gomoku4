@@ -65,7 +65,7 @@ void	AlphaBeta::findMove()
 		pair<int, int> CounterThree = (*ThreeBorders)[0];
 		Gomoku::GetInstance()->CommitMove(new Move(CounterThree.first, CounterThree.second, p), true);
 	}
-	else if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3 &&
+	else if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 2 &&
 		(CounterPair.first != -1 && CounterPair.second != -1))
 	{
 		Gomoku::GetInstance()->CommitMove(new Move(CounterPair.first, CounterPair.second, p), true);
@@ -82,6 +82,7 @@ void	AlphaBeta::findMove()
 		this->treeNodes = 0;
 		Gomoku::GetInstance()->BuildCovering(covering, adv);
 		chronometer.start();
+		this->DEEP_MAX = covering->size() > 10 ? 3 : 5;
 		AlgoAlphaBeta(covering, -INFINITY, INFINITY, DEEP_MAX);
 		this->time = chronometer.elapsed();
 		if (this->bestMove)
