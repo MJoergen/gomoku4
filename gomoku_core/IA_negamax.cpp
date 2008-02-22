@@ -56,8 +56,14 @@ void	NegaMax::findMove()
 	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
 	pair<int, int> Counter = Gomoku::GetInstance()->CounterPairTaking(p, adv);
 	pair<int, int> oneMove = Gomoku::GetInstance()->OneMoveWin(p);
+	vector<pair<int, int> > *ThreeBorders = Gomoku::GetInstance()->GetFreeThreeBorders();
 	
-	if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3 &&
+	if (!ThreeBorders->empty())
+	{
+		pair<int, int> CounterThree = (*ThreeBorders)[0];
+		Gomoku::GetInstance()->CommitMove(new Move(CounterThree.first, CounterThree.second, p), true);
+	}
+	else if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3 &&
 		(Counter.first != -1 && Counter.second != -1))
 	{
 		Gomoku::GetInstance()->CommitMove(new Move(Counter.first, Counter.second, p), true);
