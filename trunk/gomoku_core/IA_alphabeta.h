@@ -19,7 +19,7 @@ class AlphaBeta : public IA
 		AlphaBeta();
 
 	public:
-        int	AlgoAlphaBeta(vector<pair<int, int> > , int alpha, int beta, int level);
+        int	AlgoAlphaBeta(vector<pair<int, int> > *, int alpha, int beta, int level);
         void findMove();
 };
 

@@ -19,7 +19,7 @@ class NegaMax : public IA
 		NegaMax();
 
     public:
-        int	  AlgoNegaMax(vector<pair<int, int> > , int level);
+        int	  AlgoNegaMax(vector<pair<int, int> > *, int level);
         void  findMove();
 };
 

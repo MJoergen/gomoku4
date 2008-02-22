@@ -78,7 +78,7 @@ class Gomoku
 		int					GetSize() const;
 
         unsigned int        evaluate() const;
-		vector<pair<int, int> > BuildCovering();
+		void				BuildCovering(vector<pair<int, int> > *covering);
 		pair<int, int>		CounterPairTaking(PlayerNumber p, PlayerNumber adv);
 		pair<int, int>		OneMoveWin(PlayerNumber p);
 		bool				IsCircled(int x, int y) const;

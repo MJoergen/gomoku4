@@ -12,7 +12,7 @@ NegaMax::NegaMax() : IA(IS_IA_NEGAMAX)
     this->time = 0;
 }
 
-int		NegaMax::AlgoNegaMax(vector<pair<int, int> > covering, int level)
+int		NegaMax::AlgoNegaMax(vector<pair<int, int> > *covering, int level)
 {
     this->treeNodes++;
 
@@ -25,8 +25,8 @@ int		NegaMax::AlgoNegaMax(vector<pair<int, int> > covering, int level)
 
 	int best, val;
 	
-	vector<pair<int, int> >::iterator it = covering.begin();
-	vector<pair<int, int> >::iterator eit = covering.end();	
+	vector<pair<int, int> >::iterator it = covering->begin();
+	vector<pair<int, int> >::iterator eit = covering->end();	
 	best = -INFINITY;
 
 	for (; it != eit; it++)
@@ -52,27 +52,27 @@ int		NegaMax::AlgoNegaMax(vector<pair<int, int> > covering, int level)
 
 void	NegaMax::findMove()
 {
-	int x = -1, y = -1;
 	PlayerNumber p = (PlayerNumber)((Gomoku::GetInstance()->GetNbMoves() % 2) + 1);
 	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
+	pair<int, int> Counter = Gomoku::GetInstance()->CounterPairTaking(p, adv);
+	pair<int, int> oneMove = Gomoku::GetInstance()->OneMoveWin(p);
 	
 	if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3 &&
-		((x = Gomoku::GetInstance()->CounterPairTaking(p, adv).first) != -1 &&
-		(y = Gomoku::GetInstance()->CounterPairTaking(p, adv).second) != -1))
+		(Counter.first != -1 && Counter.second != -1))
 	{
-		Gomoku::GetInstance()->CommitMove(new Move(x, y, p), true);
+		Gomoku::GetInstance()->CommitMove(new Move(Counter.first, Counter.second, p), true);
 	}	
-	else if ((x = Gomoku::GetInstance()->OneMoveWin(p).first) != -1 &&
-			 (y = Gomoku::GetInstance()->OneMoveWin(p).second) != -1)
+	else if (oneMove.first != -1 && oneMove.second != -1)
 	{
-		Gomoku::GetInstance()->CommitMove(new Move(x, y, p), true);
+		Gomoku::GetInstance()->CommitMove(new Move(oneMove.first, oneMove.second, p), true);
 	}
 	else
 	{
 		QTime chronometer;
-		vector<pair<int, int> > covering = Gomoku::GetInstance()->BuildCovering();
-
+		vector<pair<int, int> > *covering = new vector<pair<int, int> >;
+		
 		this->treeNodes = 0;
+		Gomoku::GetInstance()->BuildCovering(covering);
 		chronometer.start();
 		AlgoNegaMax(covering, DEEP_MAX);
 		this->time = chronometer.elapsed();
