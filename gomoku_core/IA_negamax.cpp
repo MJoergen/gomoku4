@@ -24,29 +24,29 @@ int		NegaMax::AlgoNegaMax(vector<pair<int, int> > *covering, int level)
         return (-(this->gomoku->evaluate()));
 
 	int best, val;
-	
+
 	vector<pair<int, int> >::iterator it = covering->begin();
-	vector<pair<int, int> >::iterator eit = covering->end();	
+	vector<pair<int, int> >::iterator eit = covering->end();
 	best = -INFINITY;
 
 	for (; it != eit; it++)
 	{
-	
-		Move *move = new Move(it->first, it->second, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
-				
-		if (this->gomoku->CommitMove(move, false) == GOOD_MOVE)
+
+		Move move(it->first, it->second, (PlayerNumber)((this->gomoku->GetNbMoves() % 2) + 1));
+
+		if (this->gomoku->CommitMove(&move, false) == GOOD_MOVE)
 		{
 			val = -AlgoNegaMax(covering, level - 1);
-			this->gomoku->UndoMove(move);
+			this->gomoku->UndoMove(&move);
 			if (val > best)
 			{
 				best = val;
 				if (this->bestMove)
 					delete this->bestMove;
-				this->bestMove = move;
+				this->bestMove = new Move(move);
 			}
 		}
-	}		
+	}
     return (best);
 }
 
@@ -57,7 +57,7 @@ void	NegaMax::findMove()
 	pair<int, int> Counter = Gomoku::GetInstance()->CounterPairTaking(p, adv);
 	pair<int, int> oneMove = Gomoku::GetInstance()->OneMoveWin(p);
 	vector<pair<int, int> > *ThreeBorders = Gomoku::GetInstance()->GetFreeThreeBorders();
-	
+
 	if (!ThreeBorders->empty())
 	{
 		pair<int, int> CounterThree = (*ThreeBorders)[0];
@@ -67,7 +67,7 @@ void	NegaMax::findMove()
 		(Counter.first != -1 && Counter.second != -1))
 	{
 		Gomoku::GetInstance()->CommitMove(new Move(Counter.first, Counter.second, p), true);
-	}	
+	}
 	else if (oneMove.first != -1 && oneMove.second != -1)
 	{
 		Gomoku::GetInstance()->CommitMove(new Move(oneMove.first, oneMove.second, p), true);
@@ -76,7 +76,7 @@ void	NegaMax::findMove()
 	{
 		QTime chronometer;
 		vector<pair<int, int> > *covering = new vector<pair<int, int> >;
-		
+
 		this->treeNodes = 0;
 		Gomoku::GetInstance()->BuildCovering(covering);
 		chronometer.start();

@@ -165,9 +165,7 @@ void        OptionsWindow::valid()
                                     this->cb_checkAlternativeEndGame->checkState() == Qt::Checked);
     Mainwindow::GetInstance()->GetStatistics()->Reset();
     if ((Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_IA_ALPHABETA ||
-         Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_IA_NEGAMAX) &&
-        (Gomoku::GetInstance()->GetPlayer(PLAYER2)->GetType() == IS_IA_ALPHABETA ||
-         Gomoku::GetInstance()->GetPlayer(PLAYER2)->GetType() == IS_IA_NEGAMAX))
+         Gomoku::GetInstance()->GetPlayer(PLAYER1)->GetType() == IS_IA_NEGAMAX))
     {
         Mainwindow::GetInstance()->StartMoves();
     }

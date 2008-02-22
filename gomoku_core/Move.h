@@ -14,6 +14,7 @@ class Move
 
     public:
         Move(int _x, int _y, PlayerNumber playerNum);
+        Move(const Move &move);
 
     public:
         int						GetX() const;

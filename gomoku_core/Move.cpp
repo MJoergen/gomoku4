@@ -4,6 +4,10 @@ Move::Move(int _x, int _y, PlayerNumber playerNum) : p(_x, _y), playerNumber(pla
 {
 }
 
+Move::Move(const Move &move) : p(move.GetX(), move.GetY()), playerNumber(move.GetPlayerNumber())
+{
+}
+
 int					Move::GetX() const
 {
     return (this->p.GetX());
