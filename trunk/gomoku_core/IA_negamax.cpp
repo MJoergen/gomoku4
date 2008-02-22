@@ -63,7 +63,7 @@ void	NegaMax::findMove()
 		pair<int, int> CounterThree = (*ThreeBorders)[0];
 		Gomoku::GetInstance()->CommitMove(new Move(CounterThree.first, CounterThree.second, p), true);
 	}
-	else if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 3 &&
+	else if (Gomoku::GetInstance()->GetPlayer(adv)->GetPairs() >= 2 &&
 		(Counter.first != -1 && Counter.second != -1))
 	{
 		Gomoku::GetInstance()->CommitMove(new Move(Counter.first, Counter.second, p), true);
@@ -80,6 +80,7 @@ void	NegaMax::findMove()
 		this->treeNodes = 0;
 		Gomoku::GetInstance()->BuildCovering(covering, adv);
 		chronometer.start();
+		this->DEEP_MAX = covering->size() > 10 ? 1 : 3;
 		AlgoNegaMax(covering, DEEP_MAX);
 		this->time = chronometer.elapsed();
 		if (this->bestMove)
