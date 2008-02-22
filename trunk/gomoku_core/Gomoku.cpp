@@ -128,7 +128,7 @@ MoveState			Gomoku::CommitMove(Move *move, bool setState)
 		}
 		GameState tmp;
 
-		if ((tmp = this->referee.CheckGame(move, this->players[p - 1], this->stones, this->board)) != IN_PROGRESS)
+		if ((tmp = this->referee.CheckGame(move, this->players[p - 1], this->stones, this->board, this->alternativeEndGame)) != IN_PROGRESS)
 		{
 			this->tmpGameState = tmp;
 			if (setState)

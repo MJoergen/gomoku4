@@ -31,6 +31,7 @@ class Referee
 	private:
 		int										size;
 		std::vector<std::pair<int, int> >		*freeThreeBorders;
+		std::vector<std::pair<int, int> >		linesToCheck;  
 
     public:
         Referee();
@@ -40,12 +41,13 @@ class Referee
 
     public:
         MoveState								CheckMove(Move *move, unsigned char **board, PlayerNumber p) const;
-        GameState								CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board);
+        GameState								CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board, bool alternativeEndGame);
 		std::vector<std::pair<int, int> >		*GetFreeThreeBorders();
 
 	private:
 		bool									isCorrect(int x, int y) const;
 		bool									stoneCanBeTaken(int x, int y, unsigned char **board) const;
+		bool									isValidLine(int x, int y, unsigned char **board, bool alternativeEndGame);
 };
 
 #endif //!_REFEREE_H_
