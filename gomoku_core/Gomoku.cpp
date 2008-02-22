@@ -384,18 +384,13 @@ void	Gomoku::BuildCovering(vector<pair<int, int> > *covering, PlayerNumber adv)
 		}
     }
 	if (covering->empty())
-	{
-		if (isCorrect(size / 2, size / 2) && board[size / 2][size / 2] == NEUTRAL)
-			covering->push_back(pair<int, int>(size / 2, size / 2));
-		else
-			for (int x = 0; x < this->size; x++)
-				for (int y = 0; y < this->size; y++)
-					if (board[x][y] == NEUTRAL)
-					{
-						covering->push_back(pair<int, int>(x, y));
-						return ;
-					}
-	}
+		for (int x = 0; x < this->size; x++)
+			for (int y = 0; y < this->size; y++)
+				if (board[x][y] == NEUTRAL)
+				{
+					covering->push_back(pair<int, int>(x, y));
+					return ;
+				}
 }
 
 pair<int, int>	Gomoku::CounterPairTaking(PlayerNumber p, PlayerNumber adv)
