@@ -106,20 +106,24 @@ GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, uns
             for (int x = 0; x < this->size; x++)
                 for (int y = 0; y < this->size; y++)
                 {
-                    if (!stoneCanBeTaken(x, y, board) && board[x][y] == p)
+                    if (board[x][y] == p && !stoneCanBeTaken(x, y, board))
                         for (int d = 0; d < 4; d++)
                         {
                             int forward = 1;
                             while (isCorrect(x + (forward * dx[d]), y + (forward * dy[d]))
                                     && (board[x + (forward * dx[d])][y + (forward * dy[d])] == p)
                                     && (!stoneCanBeTaken(x + (forward * dx[d]), y + (forward * dy[d]), board)))
-                                forward++;
+							{                            
+								forward++;
+							}
 
                             int backward = 1;
                             while (isCorrect(x - (backward * dx[d]), y - (backward * dy[d]))
                                     && (board[x - (backward * dx[d])][y - (backward * dy[d])] == p)
                                     && (!stoneCanBeTaken(x - (backward * dx[d]), y - (backward * dy[d]), board)))
-                                backward++;
+							{
+								backward++;
+							}
 
                             if (forward + backward > LINE_SIZE)
                             {

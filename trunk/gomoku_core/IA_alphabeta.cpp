@@ -80,7 +80,7 @@ void	AlphaBeta::findMove()
 		this->time = chronometer.elapsed();
 		if (this->bestMove)
 		{
-			Gomoku::GetInstance()->CommitMove(this->bestMove, true);
+			Gomoku::GetInstance()->CommitMove(new Move(this->bestMove->GetX(), this->bestMove->GetY(), p), true);
 			this->bestMove = NULL;
 		}
 	}

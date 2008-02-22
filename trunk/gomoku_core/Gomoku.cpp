@@ -89,7 +89,6 @@ void                Gomoku::SetRules(bool doubleThree, bool alternativeEndGame)
 MoveActionState		Gomoku::DoNextMove()
 {
 	int num = this->nextPlayerNum - 1;
-	//this->nextPlayerNum = (this->nextPlayerNum == 1) ? 2 : 1;
 	if (this->players[num]->GetType() == IS_HUMAN)
 		return (WAITING_PLAYER_ACTION);
 	else
@@ -105,7 +104,6 @@ MoveState			Gomoku::CommitMove(Move *move, bool setState)
     PlayerNumber p = move->GetPlayerNumber();
 	if (p == NEUTRAL)
 		p = this->GetPlayerToMove();
-	//PlayerNumber p = (PlayerNumber)((this->nb_moves % 2) + 1);
     int x = move->GetX();
     int y = move->GetY();
 
@@ -130,9 +128,10 @@ MoveState			Gomoku::CommitMove(Move *move, bool setState)
 		{
 			this->tmpGameState = tmp;
 			if (setState)
+			{
 				this->gameState = tmp;
+			}
 		}
-//		this->gameState = this->referee.ChecTkGame(move, this->players[p - 1], this->stones, this->board);
 		this->nextPlayerNum = (this->nextPlayerNum == 1) ? 2 : 1;
 	}
 	return (moveState);
@@ -143,7 +142,6 @@ void				Gomoku::UndoMove(Move *move)
 	std::list<Point>::iterator it;
 	std::list<Point> l = move->GetPointsTaken();
     PlayerNumber p = move->GetPlayerNumber();
-	//PlayerNumber p = (PlayerNumber)((this->nb_moves % 2) + 1);
     int x = move->GetX();
     int y = move->GetY();
 	PlayerNumber adv = (p == PLAYER1) ? PLAYER2 : PLAYER1;
@@ -203,11 +201,6 @@ void				Gomoku::checkTakenStones(Move *move)
 			&& isCorrect(x + (3 * dx[d]), y + (3 * dy[d]))
 			&& (board[x + (3 * dx[d])][y + (3 * dy[d])] == p))
 		{
-			std::cout << "+Stone for player " << (int)board[x][y] << " played at x:" << x << " y:" << y << std::endl;
-			std::cout << " -Stone for player " << (int)board[x + (1 * dx[d])][y + (1 * dy[d])] << " captured at x:" << x + (1 * dx[d]) << " y:" << y + (1 * dy[d]) << std::endl;
-			std::cout << " -Stone for player " << (int)board[x + (2 * dx[d])][y + (2 * dy[d])] << " captured at x:" << x + (2 * dx[d]) << " y:" << y + (2 * dy[d]) << std::endl;
-			std::cout << "+Stone for player " << (int)board[x + (3 * dx[d])][y + (3 * dy[d])] << " borned at x:" << x + (3 * dx[d]) << " y:" << y + (3 * dy[d]) << std::endl;
-
 			board[x + (1 * dx[d])][y + (1 * dy[d])] = NEUTRAL;
 			board[x + (2 * dx[d])][y + (2 * dy[d])] = NEUTRAL;
 			move->NewPointTaken(x + (1 * dx[d]), y + (1 * dy[d]));
@@ -223,11 +216,6 @@ void				Gomoku::checkTakenStones(Move *move)
 			&& isCorrect(x - (3 * dx[d]), y - (3 * dy[d]))
 			&& (board[x - (3 * dx[d])][y - (3 * dy[d])] == p))
 		{
-			std::cout << "+Stone for player " << (int)board[x][y] << " played at x:" << x << " y:" << y << std::endl;
-			std::cout << " -Stone for player " << (int)board[x - (1 * dx[d])][y - (1 * dy[d])] << " captured at x:" << x - (1 * dx[d]) << " y:" << y - (1 * dy[d]) << std::endl;
-			std::cout << " -Stone for player " << (int)board[x - (2 * dx[d])][y - (2 * dy[d])] << " captured at x:" << x - (2 * dx[d]) << " y:" << y - (2 * dy[d]) << std::endl;
-			std::cout << "+Stone for player " << (int)board[x - (3 * dx[d])][y - (3 * dy[d])] << " borned at x:" << x - (3 * dx[d]) << " y:" << y - (3 * dy[d]) << std::endl;
-
 			board[x - (1 * dx[d])][y - (1 * dy[d])] = NEUTRAL;
 			board[x - (2 * dx[d])][y - (2 * dy[d])] = NEUTRAL;
 			move->NewPointTaken(x - (1 * dx[d]), y - (1 * dy[d]));
@@ -258,7 +246,7 @@ void				Gomoku::deleteBoard()
 
 PlayerNumber		Gomoku::GetPlayerToMove() const
 {
-    return ((this->nextPlayerNum == PLAYER1) ? PLAYER2 : PLAYER1);
+    return ((PlayerNumber)this->nextPlayerNum);
 }
 
 Player				*Gomoku::GetPlayer(PlayerNumber playerNum)

@@ -189,7 +189,6 @@ void			Mainwindow::updateDisplay()
 		for (it = pointsTaken.begin(); it != pointsTaken.end(); it++)
 		{
 			this->buttonsArray[(*it).GetX()][(*it).GetY()]->SetState(NEUTRAL);
-			std::cout << "Point pris X:" << (*it).GetX() << " Y:" << (*it).GetY() << std::endl;
 		}
         this->statistics->UpdateStatistics();
 	}
@@ -245,7 +244,9 @@ void			Mainwindow::buttonClicked()
     {
 		if (this->moveActionState == WAITING_PLAYER_ACTION)
 		{
-			MoveState moveState = Gomoku::GetInstance()->CommitMove(button->GetPos(), true);
+			Move* move = button->GetPos();
+			move->SetPlayerNumber(Gomoku::GetInstance()->GetPlayerToMove());
+			MoveState moveState = Gomoku::GetInstance()->CommitMove(move, true);
 			switch (moveState)
 			{
 				case GOOD_MOVE :
