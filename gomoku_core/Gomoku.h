@@ -82,6 +82,7 @@ class Gomoku
 		pair<int, int>		CounterPairTaking(PlayerNumber p, PlayerNumber adv);
 		pair<int, int>		OneMoveWin(PlayerNumber p);
 		bool				IsCircled(int x, int y) const;
+		vector<pair<int, int> >	*GetFreeThreeBorders();
 };
 
 #endif //!__GOMOKU_H__
