@@ -18,7 +18,7 @@ void		Referee::SetSize(int s)
     this->size = s;
 }
 
-MoveState	Referee::CheckMove(Move *move, unsigned char **board, PlayerNumber p) const
+MoveState	Referee::CheckMove(Move *move, unsigned char **board, PlayerNumber p, bool doubleThree) const
 {
 	this->freeThreeBorders->clear();
     if (board && move)
@@ -28,7 +28,7 @@ MoveState	Referee::CheckMove(Move *move, unsigned char **board, PlayerNumber p) 
 
         if (board[x][y] != NEUTRAL)
             return (NOT_FREE);
-        else
+        else if (doubleThree)
         {
             int nbFreeThree = 0;
             for (int d = 0; d < 4; d++)
@@ -107,26 +107,9 @@ GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, uns
             return (BOARD_FULL);
         if (lastPlayer->GetPairs() >= NB_PAIRS)
             return ((GameState)p);
-		if (!this->linesToCheck.empty())
-		{
-			vector<pair<int, int> >::iterator it = this->linesToCheck.begin();
-			vector<pair<int, int> >::iterator eit = this->linesToCheck.end();
-
-			for (; it != eit; it++)
-			{
-				if (board[it->first][it->second] == NEUTRAL || !isValidLine(it->first, it->second, board, false))
-				{
-					it = this->linesToCheck.erase(it);
-					eit = this->linesToCheck.end();
-					it--;
-				}
-				else if (isValidLine(it->first, it->second, board, alternativeEndGame))
-				{
-					this->linesToCheck.clear();
-					return ((GameState)p);
-				}
-			}
-		}
+		GameState testLines = CheckLinesRegistered(board, alternativeEndGame);
+		if (testLines != IN_PROGRESS)
+			return (testLines);
 
 		if (isValidLine(x, y, board, alternativeEndGame))
 			return ((GameState)p);					
@@ -139,6 +122,32 @@ GameState	Referee::CheckGame(Move *lastMove, Player *lastPlayer, int stones, uns
 vector<pair<int, int> >		*Referee::GetFreeThreeBorders()
 {
 	return (this->freeThreeBorders);
+}
+
+GameState					Referee::CheckLinesRegistered(unsigned char **board, bool alternativeEndGame)
+{
+	if (!this->linesToCheck.empty())
+	{
+		vector<pair<int, int> >::iterator it = this->linesToCheck.begin();
+		vector<pair<int, int> >::iterator eit = this->linesToCheck.end();
+
+		for (; it != eit; it++)
+		{
+			if (board[it->first][it->second] == NEUTRAL || !isValidLine(it->first, it->second, board, false))
+			{
+				it = this->linesToCheck.erase(it);
+				eit = this->linesToCheck.end();
+				it--;
+			}
+			else if (isValidLine(it->first, it->second, board, alternativeEndGame))
+			{
+				GameState winner = (GameState)board[it->first][it->second];
+				this->linesToCheck.clear();
+				return (winner);
+			}
+		}
+	}
+	return (IN_PROGRESS);
 }
 
 bool		Referee::isCorrect(int x, int y) const

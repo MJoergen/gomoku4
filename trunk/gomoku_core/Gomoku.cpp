@@ -83,6 +83,7 @@ void                Gomoku::SetRules(bool doubleThree, bool alternativeEndGame)
 {
     this->doubleThree = doubleThree;
     this->alternativeEndGame = alternativeEndGame;
+	this->gameState = this->referee.CheckLinesRegistered(this->board, this->alternativeEndGame);
 }
 
 // Public Game methods
@@ -111,7 +112,7 @@ MoveState			Gomoku::CommitMove(Move *move, bool setState)
     int x = move->GetX();
     int y = move->GetY();
 
-	MoveState moveState = this->referee.CheckMove(move, this->board, p);
+	MoveState moveState = this->referee.CheckMove(move, this->board, p, this->doubleThree);
 
 	if (moveState == GOOD_MOVE)
 	{

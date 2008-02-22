@@ -40,9 +40,10 @@ class Referee
 		void		SetSize(int s);
 
     public:
-        MoveState								CheckMove(Move *move, unsigned char **board, PlayerNumber p) const;
+        MoveState								CheckMove(Move *move, unsigned char **board, PlayerNumber p, bool doubleThree) const;
         GameState								CheckGame(Move *lastMove, Player *lastPlayer, int stones, unsigned char **board, bool alternativeEndGame);
 		std::vector<std::pair<int, int> >		*GetFreeThreeBorders();
+		GameState								CheckLinesRegistered(unsigned char **board, bool alternativeEndGame);
 
 	private:
 		bool									isCorrect(int x, int y) const;
