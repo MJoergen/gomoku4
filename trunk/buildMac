@@ -23,7 +23,7 @@ echo '-------------------------------------'
 echo 'Building Gomoku...'
 echo '-------------------------------------'
 qmake -project || error
-qmake || error
+qmake -spec macx-g++ || error
 make clean
 make || error 
 echo '-------------------------------------'
